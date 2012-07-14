@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class HiWorldTest extends TestCase{
+public class HelloTest extends TestCase{
 
 	@Test
 	public void testGetMessage() {

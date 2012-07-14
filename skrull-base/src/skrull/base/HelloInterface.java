@@ -1,4 +1,4 @@
-package skrull.server;
+package skrull.base;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

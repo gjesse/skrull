@@ -2,6 +2,8 @@ package skrull.server;
 
 import java.rmi.RemoteException;
 
+import skrull.base.HelloInterface;
+
 
 public class Hello implements HelloInterface{
 	// public static void main(String[] args){

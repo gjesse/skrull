@@ -8,7 +8,7 @@ public class HelloTest extends TestCase{
 
 	@Test
 	public void testGetMessage() {
-		Hello h = new Hello();
+		HelloClient h = new HelloClient();
 		assertNotNull(h.getMessage());
 	}
 

@@ -8,7 +8,7 @@ public class HiWorldTest extends TestCase{
 
 	@Test
 	public void testGetMessage() {
-		HiWorld h = new HiWorld();
+		Hello h = new Hello();
 		assertNotNull(h.getMessage());
 	}
 

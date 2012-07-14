@@ -4,13 +4,13 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import skrull.client.HiWorld;
+import skrull.client.Hello;
 
 public class HiWorldTest extends TestCase{
 
 	@Test
 	public void testGetMessage() {
-		HiWorld h = new HiWorld();
+		Hello h = new Hello();
 		assertNotNull(h.getMessage());
 	}
 

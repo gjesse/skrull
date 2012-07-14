@@ -10,7 +10,7 @@ import skrull.base.rmi.HelloInterface;
 import skrull.base.rmi.RmiStarter;
 
 
-public class Hello extends UnicastRemoteObject implements HelloInterface{
+public class Hello  implements HelloInterface{
 	// public static void main(String[] args){
 	//	Hello hi = new Hello();
 	//	System.out.println(hi.getMessage());

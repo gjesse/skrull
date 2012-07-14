@@ -1,10 +1,12 @@
 package skrull.client;
 
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 
-import skrull.base.rmi.HelloInterface;
+import skrull.base.rmi.ControllerInterface;
+import skrull.base.rmi.ViewInterface;
 
-public class HelloClient {
+public class HelloClient implements ViewInterface {
 
 	
 	  /**
@@ -13,8 +15,8 @@ public class HelloClient {
 	   */
 	  public static void main (String[] argv) {
 	    try {
-	      HelloInterface hello = 
-	        (HelloInterface) Naming.lookup ("//localhost/Hello");
+	      ControllerInterface hello = 
+	        (ControllerInterface) Naming.lookup ("//localhost/Hello");
 	      System.out.println (hello.say());
 	    } catch (Exception e) {
 	      System.out.println ("HelloClient exception: " + e);
@@ -23,5 +25,10 @@ public class HelloClient {
 	
 	public String getMessage(){
 		return "my msg";
+	}
+
+	@Override
+	public void update() throws RemoteException {
+		System.out.println("update received from server");
 	}
 }

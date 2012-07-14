@@ -5,7 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import skrull.base.rmi.HelloInterface;
+import skrull.base.rmi.ControllerInterface;
 import skrull.base.rmi.RmiStarter;
 
 public class SkrullServerStarter extends RmiStarter {
@@ -26,7 +26,7 @@ public class SkrullServerStarter extends RmiStarter {
 	  
 			
 			public SkrullServerStarter() {
-					super(HelloInterface.class);
+					super(ControllerInterface.class);
 			}
 			
 
@@ -35,12 +35,12 @@ public class SkrullServerStarter extends RmiStarter {
 			@Override
 			    public void doCustomRmiHandling() {
 			        try {
-			            Hello hello = new Hello("hi there");
+			            Controller hello = new Controller("hi there");
 			           // UnicastRemoteObject.unexportObject(hello, true);
 			           Remote engineStub = UnicastRemoteObject.exportObject(hello, 0);
 
 			            Registry registry = LocateRegistry.getRegistry();
-			            registry.rebind(HelloInterface.SERVICE_NAME, engineStub);
+			            registry.rebind(ControllerInterface.SERVICE_NAME, engineStub);
 			        }
 			        catch(Exception e) {
 			            e.printStackTrace();

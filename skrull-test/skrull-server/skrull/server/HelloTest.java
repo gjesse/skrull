@@ -6,14 +6,14 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import skrull.base.rmi.HelloInterface;
-import skrull.server.Hello;
+import skrull.base.rmi.ControllerInterface;
+import skrull.server.Controller;
 
 public class HelloTest extends TestCase{
 
 	@Test
 	public void testGetMessage() throws RemoteException {
-		HelloInterface h = new Hello("hellomessage");
+		ControllerInterface h = new Controller("hellomessage");
 		assertNotNull(h.say());
 	}
 

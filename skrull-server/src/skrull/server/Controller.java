@@ -1,16 +1,11 @@
 package skrull.server;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-
-import skrull.base.rmi.HelloInterface;
-import skrull.base.rmi.RmiStarter;
+import skrull.base.rmi.ControllerInterface;
+import skrull.base.rmi.ViewInterface;
 
 
-public class Hello  implements HelloInterface{
+public class Controller  implements ControllerInterface{
 	// public static void main(String[] args){
 	//	Hello hi = new Hello();
 	//	System.out.println(hi.getMessage());
@@ -24,8 +19,12 @@ public class Hello  implements HelloInterface{
 
 
 	private String msg;
+
+
+
+	private ViewInterface view;
 	
-	Hello(String msg) throws RemoteException{
+	Controller(String msg) throws RemoteException{
 		this.msg = msg;
 	}
 	private String getMessage(){
@@ -35,6 +34,13 @@ public class Hello  implements HelloInterface{
 	@Override
 	public String say() throws RemoteException {
 		return getMessage();
+	}
+	@Override
+	public void registerView(ViewInterface view) throws RemoteException {
+
+			this.view = view;
+			view.update();
+		
 	}
 	
 	

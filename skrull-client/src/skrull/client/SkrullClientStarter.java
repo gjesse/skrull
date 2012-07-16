@@ -14,7 +14,6 @@ public class SkrullClientStarter extends RmiStarter {
 
 	public SkrullClientStarter(Class clazzToAddToServerCodebase) {
 		super(clazzToAddToServerCodebase);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args){

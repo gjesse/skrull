@@ -11,9 +11,9 @@ Components will include a single Game Engine that will handle overall management
 
 1. Users will choose a unique non-persistent username when first connecting to the engine.
 
-2. Users of the system will be start a new game from a list of existing games. 
+2. Users of the system will be able to start a new game from a list of existing games. 
 
-3. Users will be able to joine a previously created game that needs more players to begin.
+3. Users will be able to join an existing game that needs more players to begin.
 
 4. Once a game has enough players, play will begin and all users will be notified.
 

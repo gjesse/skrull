@@ -9,5 +9,10 @@ public class ClientAction implements IClientAction {
 	private String chatMsg;
 	private IMove move;
 	// public ClientInputHandler unnamed_ClientInputHandler_;
+	@Override
+	public ActionType getActionType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

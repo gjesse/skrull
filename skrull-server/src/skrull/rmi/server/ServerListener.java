@@ -18,7 +18,10 @@ public class ServerListener implements IServerListener {
 	
 	@Override
 	public void ProcessClientAction(IClientAction action) {
-		// TODO Auto-generated method stub
+		
+		// TODO: this is mutch to simplistic. we
+		// need to spawn a thread here
+		serverController.ProcessClientAction(action);
 
 	}
 

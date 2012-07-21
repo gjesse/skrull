@@ -14,7 +14,7 @@ public class ActionWorker implements IActionWorker {
 
 	@Override
 	public void run() {
-		serverController.ProcessClientAction(action);
+		serverController.processClientAction(action);
 	}
 
 }

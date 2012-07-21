@@ -13,7 +13,7 @@ public interface IServerController {
 	 *   
 	 * @param action
 	 */
-	public abstract void ProcessClientAction(IClientAction action);
+	public abstract void processClientAction(IClientAction action);
 
 	/**
 	 * a thread-safe array of all active gameControllers

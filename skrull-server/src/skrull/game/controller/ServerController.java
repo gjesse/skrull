@@ -24,7 +24,7 @@ public class ServerController implements IServerController {
 	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public void ProcessClientAction(IClientAction action) {
+	public void processClientAction(IClientAction action) {
 		switch (action.getActionType())
 		{
 			case CHAT:

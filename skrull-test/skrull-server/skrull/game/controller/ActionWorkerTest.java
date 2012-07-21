@@ -21,7 +21,7 @@ public class ActionWorkerTest {
 	public void testWorker() {
 		IActionWorker worker = new ActionWorker(action, serverController);
 		
-		serverController.ProcessClientAction(action);
+		serverController.processClientAction(action);
 		EasyMock.expectLastCall();
 		
 		EasyMock.replay(serverController);

@@ -18,13 +18,17 @@ public class ServerControllerTest {
 	private IGameFactory gameFactory;
 	private IClientAction action;
 	private IGameController gameController;
+	private IGameController defaultGameController;
 
 	@Before
 	public void setUp() throws Exception {
 		gameFactory = EasyMock.createNiceMock(IGameFactory.class);
-		controller = new ServerController(gameFactory);
+
 		action = EasyMock.createNiceMock(IClientAction.class);
+		defaultGameController = EasyMock.createNiceMock(IGameController.class);
 		gameController = EasyMock.createNiceMock(IGameController.class);
+		EasyMock.expect(gameFactory.setupGame(GameType.DEFAULT, null)).andReturn(defaultGameController);
+
 	}
 
 	// need to test all the action types: 		JOIN_SERVER, CREATE_GAME, JOIN_GAME, MOVE, CHAT, QUIT;
@@ -46,7 +50,9 @@ public class ServerControllerTest {
 			EasyMock.expectLastCall();
 			
 			EasyMock.replay(action, gameFactory, gameController);
-			controller.ProcessClientAction(action);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
 			EasyMock.verify(action, gameFactory, gameController);
 
 		}
@@ -56,7 +62,6 @@ public class ServerControllerTest {
 
 
 			ActionType t = ActionType.JOIN_GAME;
-			controller.addGameController(gameController);
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
 			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
@@ -71,7 +76,9 @@ public class ServerControllerTest {
 			EasyMock.expectLastCall();
 			
 			EasyMock.replay(action, gameController);
-			controller.ProcessClientAction(action);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
 			EasyMock.verify(action, gameController);
 			
 
@@ -83,7 +90,6 @@ public class ServerControllerTest {
 
 
 			ActionType t = ActionType.MOVE;
-			controller.addGameController(gameController);
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
 			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
@@ -98,7 +104,9 @@ public class ServerControllerTest {
 			EasyMock.expectLastCall();
 			
 			EasyMock.replay(action, gameController);
-			controller.ProcessClientAction(action);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
 			EasyMock.verify(action, gameController);
 			
 
@@ -109,7 +117,6 @@ public class ServerControllerTest {
 
 
 			ActionType t = ActionType.CHAT;
-			controller.addGameController(gameController);
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
 			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
@@ -124,7 +131,9 @@ public class ServerControllerTest {
 			EasyMock.expectLastCall();
 			
 			EasyMock.replay(action, gameController);
-			controller.ProcessClientAction(action);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
 			EasyMock.verify(action, gameController);
 			
 
@@ -134,10 +143,15 @@ public class ServerControllerTest {
 		public void testProcessClientActionJoinServer() throws Exception {
 			final ActionType t = ActionType.JOIN_SERVER;
 			EasyMock.expect(action.getActionType()).andReturn(t);
-			EasyMock.expect(gameFactory.listAvailableGames()).andReturn(new String[]{"game1","game2","game3"});
+			//EasyMock.expect(gameFactory.listAvailableGames()).andReturn(new String[]{"game1","game2","game3"});
 
+			defaultGameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
 			EasyMock.replay(action, gameFactory);
-			controller.ProcessClientAction(action);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
 			EasyMock.verify(action, gameFactory);
 		}
 

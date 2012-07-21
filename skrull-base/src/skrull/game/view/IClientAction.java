@@ -1,5 +1,7 @@
 package skrull.game.view;
 
+import skrull.game.model.IPlayer;
+
 public interface IClientAction {
 
 	public enum ActionType {
@@ -7,4 +9,13 @@ public interface IClientAction {
 	}
 
 	ActionType getActionType();
+	
+	/**
+	 * can represent a particular game or
+	 * other details depending on the actionType
+	 * @return
+	 */
+	String getActionMessage();
+	
+	IPlayer getPlayer();
 }

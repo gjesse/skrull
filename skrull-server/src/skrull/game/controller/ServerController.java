@@ -1,30 +1,63 @@
 package skrull.game.controller;
 
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import skrull.rmi.server.IServerListener;
-import skrull.game.factory.GameFactory;
+import skrull.game.factory.IGameFactory;
 import skrull.game.view.IClientAction;
 
 public class ServerController implements IServerController {
-	private IGameController[] _activeGamesArray;
-	private ActivityMonitor _activityMonitor;
-	private IActionWorker[] _actionWorkers;
-	private IServerListener _unnamed_ServerListener_;
-	private IGameController _unnamed_GameController_;
-	private GameFactory _unnamed_Game_Factory_;
-	private ActivityMonitor _unnamed_ActivityMonitor_;
-	private IActionWorker _unnamed_ActionWorker_;
+	private List<IGameController> activeGames = new CopyOnWriteArrayList<IGameController>();
+	private IGameFactory gameFactory;
+	
+	// TODO: implement this
+	private ActivityMonitor activityMontor;
 	
 
+	public ServerController(IGameFactory gameFactory){
+		this.gameFactory = gameFactory;
+	}
 	/* (non-Javadoc)
 	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
 	 */
 	@Override
 	public void ProcessClientAction(IClientAction action) {
-		throw new UnsupportedOperationException();
+		switch (action.getActionType()){
+		case CHAT:
+		case MOVE:
+			// move and  chat stuff go to the game controller
+		break;
+		
+		// setting up a new game
+		case CREATE_GAME:
+			IGameController game = gameFactory.setupGame(action.getActionMessage(), action.getPlayer());
+			activeGames.add(game);
+			game.processGameAction(action);
+			
+		break;
+		
+		// trying to join an existing game
+		case JOIN_GAME:
+			
+		break;
+		
+		// first-time connection, come on!
+		case JOIN_SERVER:
+			
+		break;
+		
+		// something bad happened or the client 
+		// was close. Hey, it happens
+		case QUIT:
+			
+			
+		break;
+			
+		}
+	
 	}
 
 	/* (non-Javadoc)

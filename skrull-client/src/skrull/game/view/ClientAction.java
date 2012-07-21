@@ -1,18 +1,26 @@
 package skrull.game.view;
 
 import skrull.game.model.IMove;
+import skrull.game.model.IPlayer;
 
 public class ClientAction implements IClientAction {
 	private int gameId;
-	private String playerId;
+	private IPlayer player;
 	private ActionType actionType;
-	private String chatMsg;
+	private String actionMessage;
 	private IMove move;
 	// public ClientInputHandler unnamed_ClientInputHandler_;
 	@Override
 	public ActionType getActionType() {
-		// TODO Auto-generated method stub
-		return null;
+		return actionType;
+	}
+	@Override
+	public String getActionMessage() {
+		return actionMessage;
+	}
+	@Override
+	public IPlayer getPlayer() {
+		return player;
 	}
 
 }

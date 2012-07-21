@@ -5,18 +5,23 @@ import skrull.game.controller.IServerController;
 import skrull.game.model.IPlayer;
 import skrull.game.model.tictactoe.TicTacToe;
 
-public class GameFactory {
+public class GameFactory implements IGameFactory {
 	private String[] availableGames;
 	public IServerController _unnamed_ServerConttroller_;
 	public TicTacToe _unnamed_TicTacToe_;
 
-	/**
-	 * Should return a single GameController, with attendant gameModel and all leaf objects instantiated (except for additional players)
+	/* (non-Javadoc)
+	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
 	 */
+	@Override
 	public IGameController setupGame(String aGameType, IPlayer startingPlayer) {
 		throw new UnsupportedOperationException();
 	}
 
+	/* (non-Javadoc)
+	 * @see skrull.game.factory.IGameFactory#listGames()
+	 */
+	@Override
 	public String listGames() {
 		throw new UnsupportedOperationException();
 	}

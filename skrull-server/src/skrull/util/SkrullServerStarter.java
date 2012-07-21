@@ -8,6 +8,8 @@ import java.rmi.server.UnicastRemoteObject;
 import skrull.game.controller.ActionWorkerFactory;
 import skrull.game.controller.IServerController;
 import skrull.game.controller.ServerController;
+import skrull.game.factory.GameFactory;
+import skrull.game.factory.IGameFactory;
 import skrull.rmi.server.IServerListener;
 import skrull.rmi.server.ServerListener;
 
@@ -25,7 +27,8 @@ public class SkrullServerStarter extends RmiStarter {
 	@Override
 	public void doCustomRmiHandling() {
        try {
-    	    IServerController controller = new ServerController();
+    	    IGameFactory factory = new GameFactory();
+    	    IServerController controller = new ServerController(factory);
             IServerListener listener = new ServerListener(controller, new ActionWorkerFactory());
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 

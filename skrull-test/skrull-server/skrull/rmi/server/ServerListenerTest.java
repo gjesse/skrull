@@ -5,6 +5,8 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import skrull.game.controller.IActionWorker;
+import skrull.game.controller.IActionWorkerFactory;
 import skrull.game.controller.IServerController;
 import skrull.game.view.IClientAction;
 
@@ -12,25 +14,33 @@ public class ServerListenerTest {
 
 	IServerController mockController;
 	private IServerListener listener;
+	private IActionWorkerFactory workerFactory;
+	private IActionWorker worker;
 	
 	@Before
 	public void setUp(){
 		mockController = EasyMock.createNiceMock(IServerController.class);
-		listener = new ServerListener(mockController);
+		workerFactory = EasyMock.createNiceMock(IActionWorkerFactory.class);
+		worker = EasyMock.createNiceMock(IActionWorker.class);
+		listener = new ServerListener(mockController, workerFactory);
 	}
 	
 	
 	@Test
-	public void testProcessClientActionCreateGame() throws Exception {
+	public void testProcessClientAction() throws Exception {
 		IClientAction action = EasyMock.createNiceMock(IClientAction.class);
 
-		mockController.ProcessClientAction(action);
-		EasyMock.expectLastCall();
+		EasyMock.expect(workerFactory.newWorker(action, mockController)).andReturn(worker);
 		
+		worker.run();
+		EasyMock.expectLastCall();
 	
-		EasyMock.replay(mockController);
+		EasyMock.replay(workerFactory);
+		EasyMock.replay(worker);
 		listener.ProcessClientAction(action);
-		EasyMock.verify(mockController);
+		EasyMock.verify(workerFactory);
+		EasyMock.verify(worker);
+
 
 		
 	}

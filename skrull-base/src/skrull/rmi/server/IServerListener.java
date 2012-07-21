@@ -6,6 +6,15 @@ import java.rmi.RemoteException;
 import skrull.game.view.IClientAction;
 
 
+/**
+ * This class should really be a singleton and enforce that.
+ * 
+ * responsible for receiving input from clients and dispatching worker threads
+ * to handle that input
+ * 
+ * @author jesse
+ *
+ */
 public interface IServerListener extends Remote{
 
 	String SERVICE_NAME = "Skrull.Server.Listener";

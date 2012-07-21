@@ -30,7 +30,6 @@ public class ServerListener implements IServerListener {
 	
 	@Override
 	public void ProcessClientAction(IClientAction action) {
-		
 		executor.submit(workerFactory.newWorker(action, serverController));
 	}
 

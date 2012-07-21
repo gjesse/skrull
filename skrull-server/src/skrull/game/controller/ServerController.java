@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import skrull.rmi.server.IServerListener;
-import skrull.game.factory.Game_Factory;
+import skrull.game.factory.GameFactory;
 import skrull.game.view.IClientAction;
 
 public class ServerController implements IServerController {
@@ -14,7 +14,7 @@ public class ServerController implements IServerController {
 	private IActionWorker[] _actionWorkers;
 	private IServerListener _unnamed_ServerListener_;
 	private IGameController _unnamed_GameController_;
-	private Game_Factory _unnamed_Game_Factory_;
+	private GameFactory _unnamed_Game_Factory_;
 	private ActivityMonitor _unnamed_ActivityMonitor_;
 	private IActionWorker _unnamed_ActionWorker_;
 	

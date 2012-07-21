@@ -5,7 +5,7 @@ import skrull.game.controller.IServerController;
 import skrull.game.model.IPlayer;
 import skrull.game.model.tictactoe.TicTacToe;
 
-public class Game_Factory {
+public class GameFactory {
 	private String[] availableGames;
 	public IServerController _unnamed_ServerConttroller_;
 	public TicTacToe _unnamed_TicTacToe_;
@@ -13,11 +13,11 @@ public class Game_Factory {
 	/**
 	 * Should return a single GameController, with attendant gameModel and all leaf objects instantiated (except for additional players)
 	 */
-	public IGameController SetupGame(String aGameType, IPlayer startingPlayer) {
+	public IGameController setupGame(String aGameType, IPlayer startingPlayer) {
 		throw new UnsupportedOperationException();
 	}
 
-	public String ListGames() {
+	public String listGames() {
 		throw new UnsupportedOperationException();
 	}
 }

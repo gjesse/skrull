@@ -1,7 +1,7 @@
 package skrull.game.model.tictactoe;
 
-import skrull.game.factory.Game_Factory;
+import skrull.game.factory.GameFactory;
 
 public class TicTacToe {
-	public Game_Factory _unnamed_Game_Factory_;
+	public GameFactory _unnamed_Game_Factory_;
 }

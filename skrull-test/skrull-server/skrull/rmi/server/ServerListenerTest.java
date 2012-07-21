@@ -1,6 +1,5 @@
 package skrull.rmi.server;
 
-import static org.junit.Assert.*;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -8,7 +7,6 @@ import org.junit.Test;
 
 import skrull.game.controller.IServerController;
 import skrull.game.view.IClientAction;
-import skrull.game.view.IClientAction.ActionType;
 
 public class ServerListenerTest {
 

@@ -1,5 +1,6 @@
 package skrull.game.controller;
 
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 
 public interface IGameController {
@@ -11,7 +12,7 @@ public interface IGameController {
 
 	public void processGameAction(IClientAction action);
 	
-	public String getGameType();
+	public GameType getGameType();
 	
 	public int getGameId();
 }

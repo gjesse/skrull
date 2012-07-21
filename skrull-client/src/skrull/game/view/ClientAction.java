@@ -1,5 +1,6 @@
 package skrull.game.view;
 
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 
@@ -23,7 +24,7 @@ public class ClientAction implements IClientAction {
 		return player;
 	}
 	@Override
-	public String getGameType() {
+	public GameType getGameType() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,6 @@
 package skrull.game.view;
 
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
 
 public interface IClientAction {
@@ -18,7 +19,7 @@ public interface IClientAction {
 	
 	public IPlayer getPlayer();
 	
-	public String getGameType();
+	public GameType getGameType();
 	
 	public int getGameId();
 }

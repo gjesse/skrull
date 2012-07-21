@@ -14,7 +14,7 @@ public class GameFactory implements IGameFactory {
 	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
 	 */
 	@Override
-	public IGameController setupGame(String aGameType, IPlayer startingPlayer) {
+	public IGameController setupGame(GameType type, IPlayer startingPlayer) {
 		throw new UnsupportedOperationException();
 	}
 

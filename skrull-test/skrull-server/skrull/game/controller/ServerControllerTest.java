@@ -5,13 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
 
 public class ServerControllerTest {
 
-	private static final String GAME_TYPE = "THEMOSTAWESOMEGAMEEVER";
+	private static final GameType GAME_TYPE = GameType.DEFAULT;
 	private static final Integer GAME_ID = 42;
 	private ServerController controller;
 	private IGameFactory gameFactory;
@@ -39,7 +40,7 @@ public class ServerControllerTest {
 		public void testProcessClientActionCreateGame() throws Exception {
 
 			EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME);
-			EasyMock.expect(gameFactory.setupGame(EasyMock.anyObject(String.class), EasyMock.anyObject(IPlayer.class))).andReturn(gameController);
+			EasyMock.expect(gameFactory.setupGame(EasyMock.anyObject(GameType.class), EasyMock.anyObject(IPlayer.class))).andReturn(gameController);
 			
 			gameController.processGameAction(action);
 			EasyMock.expectLastCall();

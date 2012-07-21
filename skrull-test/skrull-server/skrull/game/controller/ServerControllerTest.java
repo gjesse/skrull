@@ -11,7 +11,9 @@ import skrull.game.view.IClientAction.ActionType;
 
 public class ServerControllerTest {
 
-	private IServerController controller;
+	private static final String GAME_TYPE = "THEMOSTAWESOMEGAMEEVER";
+	private static final Integer GAME_ID = 42;
+	private ServerController controller;
 	private IGameFactory gameFactory;
 	private IClientAction action;
 	private IGameController gameController;
@@ -47,5 +49,83 @@ public class ServerControllerTest {
 			EasyMock.verify(action, gameFactory, gameController);
 
 		}
+		
+		@Test
+		public void testProcessClientActionJoin() throws Exception {
 
+
+			ActionType t = ActionType.JOIN_GAME;
+			controller.addGameController(gameController);
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+
+
+			
+			gameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(action, gameController);
+			controller.ProcessClientAction(action);
+			EasyMock.verify(action, gameController);
+			
+
+		}
+
+		
+		@Test
+		public void testProcessClientActionMove() throws Exception {
+
+
+			ActionType t = ActionType.MOVE;
+			controller.addGameController(gameController);
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+
+
+			
+			gameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(action, gameController);
+			controller.ProcessClientAction(action);
+			EasyMock.verify(action, gameController);
+			
+
+		}
+		
+		@Test
+		public void testProcessClientActionChat() throws Exception {
+
+
+			ActionType t = ActionType.CHAT;
+			controller.addGameController(gameController);
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+
+
+			
+			gameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(action, gameController);
+			controller.ProcessClientAction(action);
+			EasyMock.verify(action, gameController);
+			
+
+		}
 }

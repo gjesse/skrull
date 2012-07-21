@@ -8,14 +8,17 @@ public interface IClientAction {
 		JOIN_SERVER, CREATE_GAME, JOIN_GAME, MOVE, CHAT, QUIT;
 	}
 
-	ActionType getActionType();
+	public ActionType getActionType();
 	
 	/**
-	 * can represent a particular game or
 	 * other details depending on the actionType
 	 * @return
 	 */
-	String getActionMessage();
+	public String getActionMessage();
 	
-	IPlayer getPlayer();
+	public IPlayer getPlayer();
+	
+	public String getGameType();
+	
+	public int getGameId();
 }

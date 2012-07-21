@@ -10,4 +10,8 @@ public interface IGameController {
 	public void checkActivity();
 
 	public void processGameAction(IClientAction action);
+	
+	public String getGameType();
+	
+	public int getGameId();
 }

@@ -22,5 +22,15 @@ public class ClientAction implements IClientAction {
 	public IPlayer getPlayer() {
 		return player;
 	}
+	@Override
+	public String getGameType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int getGameId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

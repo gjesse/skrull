@@ -33,16 +33,19 @@ public class ServerControllerTest {
 		 * @throws Exception
 		 */
 	
-	// broken until a real game comes back from 
 		@Test
 		public void testProcessClientActionCreateGame() throws Exception {
 
 			EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME);
 			EasyMock.expect(gameFactory.setupGame(EasyMock.anyObject(String.class), EasyMock.anyObject(IPlayer.class))).andReturn(gameController);
 			
-			EasyMock.replay(action);
+			gameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(action, gameFactory, gameController);
 			controller.ProcessClientAction(action);
-			EasyMock.verify(action);
+			EasyMock.verify(action, gameFactory, gameController);
+
 		}
 
 }

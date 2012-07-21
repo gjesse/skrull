@@ -1,5 +1,6 @@
 package skrull.game.controller;
 
+import java.rmi.UnexpectedException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,9 @@ public class ServerController implements IServerController {
 			
 			
 		break;
+		
+		default:
+			throw new RuntimeException("Action type " + action.getActionType() + " is not handled - it must be handled!");
 			
 		}
 	

@@ -1,5 +1,7 @@
 package skrull.game.controller;
 
+import java.util.Collection;
+
 import skrull.rmi.server.IServerListener;
 import skrull.game.factory.Game_Factory;
 import skrull.game.view.IClientAction;
@@ -26,21 +28,9 @@ public class ServerController implements IServerController {
 	 * @see skrull.game.controller.IServerController#getControllers()
 	 */
 	@Override
-	public IGameController[] getControllers() {
+	public Collection<IGameController> getControllers() {
 		throw new UnsupportedOperationException();
 	}
 
-	/* (non-Javadoc)
-	 * @see skrull.game.controller.IServerController#listGames()
-	 */
-	@Override
-	public String[] listGames() {
-		throw new UnsupportedOperationException();
-	}
 
-	@Override
-	public void addGameController(IGameController controller) {
-		// TODO Auto-generated method stub
-		
-	}
 }

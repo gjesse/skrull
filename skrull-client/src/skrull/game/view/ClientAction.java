@@ -9,7 +9,5 @@ public class ClientAction implements IClientAction {
 	private String chatMsg;
 	private IMove move;
 	// public ClientInputHandler unnamed_ClientInputHandler_;
-	public enum ActionType {
-		JOIN_SERVER, CREATE_GAME, JOIN_GAME, MOVE, CHAT, QUIT;
-	}
+
 }

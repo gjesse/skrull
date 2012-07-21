@@ -22,7 +22,7 @@ public class GameFactory implements IGameFactory {
 	 * @see skrull.game.factory.IGameFactory#listGames()
 	 */
 	@Override
-	public String listGames() {
+	public String[] listAvailableGames() {
 		throw new UnsupportedOperationException();
 	}
 }

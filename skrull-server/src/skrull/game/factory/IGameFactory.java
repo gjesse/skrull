@@ -8,9 +8,9 @@ public interface IGameFactory {
 	/**
 	 * Should return a single GameController, with attendant gameModel and all leaf objects instantiated (except for additional players)
 	 */
-	public abstract IGameController setupGame(String aGameType,
+	public IGameController setupGame(String aGameType,
 			IPlayer startingPlayer);
 
-	public abstract String listGames();
+	public String[] listAvailableGames();
 
 }

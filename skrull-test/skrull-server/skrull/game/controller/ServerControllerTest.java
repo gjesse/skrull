@@ -128,4 +128,16 @@ public class ServerControllerTest {
 			
 
 		}
+		
+		@Test
+		public void testProcessClientActionJoinServer() throws Exception {
+			final ActionType t = ActionType.JOIN_SERVER;
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			EasyMock.expect(gameFactory.listAvailableGames()).andReturn(new String[]{"game1","game2","game3"});
+
+			EasyMock.replay(action, gameFactory);
+			controller.ProcessClientAction(action);
+			EasyMock.verify(action, gameFactory);
+		}
+
 }

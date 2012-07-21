@@ -47,13 +47,21 @@ public class ServerController implements IServerController {
 			
 			// first-time connection, come on!
 			case JOIN_SERVER:
-				
+				// what to do here?
+				// 1. hook up the client listener for later notifications
+				// 2. add the player to some global player array?
+				// 3. send some type of update including existing games and possible new ones
+				// 4. notify other clients
+				// we should make the default to be just another game type!
 			break;
 			
 			// something bad happened or the client 
 			// was closed. Hey, it happens
 			case QUIT:
-				
+				// what to do here?
+				// 1. remove the player
+				// 2. remove any games
+				// 3. notify other clients
 				
 			break;
 			

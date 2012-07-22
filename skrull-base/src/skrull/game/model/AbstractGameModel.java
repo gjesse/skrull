@@ -1,6 +1,7 @@
 package skrull.game.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import skrull.game.controller.IGameController;
@@ -14,7 +15,7 @@ import skrull.rmi.server.IClientUpdater;
  *
  */
 public class AbstractGameModel implements IGameModel {
-	private CopyOnWriteArrayList<IPlayer> players;
+	private List<IPlayer> players = new CopyOnWriteArrayList<IPlayer>();
 	private IBoard board;
 	private IPlayer activeplayer;
 	private IPlayer winner;
@@ -24,8 +25,10 @@ public class AbstractGameModel implements IGameModel {
 	private IGameController gameController;
 	private IClientUpdater clientUpdater;
 	int gameId;
+	private GameType gameType;
 
-	public AbstractGameModel(IPlayer startingPlayer, int gameId) {
+	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type) {
+		this.gameType = type;
 		this.gameId = gameId;
 		this.players.add(startingPlayer);
 	}
@@ -92,14 +95,12 @@ public class AbstractGameModel implements IGameModel {
 
 	@Override
 	public GameType getGameType() {
-		// TODO Auto-generated method stub
-		return null;
+		return gameType;
 	}
 
 	@Override
 	public int getGameId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gameId;
 	}
 
 	@Override

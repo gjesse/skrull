@@ -4,9 +4,13 @@ import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.UUID;
 
+import skrull.game.view.ClientInputHandler;
+import skrull.game.view.GameClientView;
 import skrull.rmi.client.ClientListener;
 import skrull.rmi.client.IClientListener;
+import skrull.rmi.client.ServerUpdater;
 
 public class SkrullClientStarter extends RmiStarter {
 
@@ -21,16 +25,19 @@ public class SkrullClientStarter extends RmiStarter {
 	@Override
 	public void doCustomRmiHandling() {
 		try {
+			UUID playerId = UUID.randomUUID();
+			
+			ServerUpdater serverUpdater = new ServerUpdater();
+			ClientInputHandler cih = new ClientInputHandler(serverUpdater);
+			GameClientView view = new GameClientView(cih, playerId);
+
+            IClientListener listener = new ClientListener(view);
+
             final Registry registry = LocateRegistry.getRegistry();
-           // IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME);
-            
-            // this needs to do some work to hook up
-            // the server methods as well
-            
-            IClientListener listener = new ClientListener();
+
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
-            registry.rebind(IClientListener.SERVICE_NAME, engineStub);
+            registry.rebind(IClientListener.SERVICE_NAME + "." + playerId, engineStub);
             
            
             

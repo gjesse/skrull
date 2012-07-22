@@ -1,11 +1,19 @@
 package skrull.game.view;
 
+import java.util.UUID;
+
 import skrull.rmi.client.IClientListener;
 
-public class GameCientView {
+public class GameClientView {
 	private Object _clientController;
 	public IClientListener _unnamed_ClientListener_;
-	public ClientInputHandler _unnamed_ClientInputHandler_;
+	public ClientInputHandler cih;
+	private UUID playerId;
+
+	public GameClientView(ClientInputHandler cih, UUID playerId) {
+		this.cih = cih;
+		this.playerId = playerId;
+	}
 
 	public void ModelChanged() {
 		throw new UnsupportedOperationException();

@@ -1,19 +1,17 @@
 package skrull.rmi.client;
 
+import skrull.game.model.IGameModel;
+
 
 public class ClientListener implements IClientListener {
 
 	@Override
-	public void modelChanged() {
+	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub 
 		System.out.println("modelChanged...");
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public void updateListener() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
-	}
+
 
 }

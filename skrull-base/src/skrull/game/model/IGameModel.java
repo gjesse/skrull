@@ -1,5 +1,7 @@
 package skrull.game.model;
 
+import java.util.Collection;
+
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 
@@ -15,8 +17,6 @@ public interface IGameModel {
 
 	public abstract IPlayer getWinner();
 
-	public abstract void updateListener(IGameModel aGameModel);
-
 	public abstract void checkActivity();
 
 	public abstract GameType getGameType();
@@ -25,4 +25,6 @@ public interface IGameModel {
 
 	public abstract void quit(IClientAction action);
 
+	public abstract Collection<IPlayer> getPlayers();
+	
 }

@@ -1,19 +1,15 @@
 package skrull.rmi.server;
 
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 
 public class SkrullClientUpdater implements IClientUpdater {
 
 	@Override
-	public void modelChanged(IGameModel aModel) {
-		throw new UnsupportedOperationException();
+	public void modelChanged(IGameModel model) {
+		for (IPlayer player: model.getPlayers()){
+			// here we need to get the rmi exposed interface for each player, and call it
+		}
 
 	}
-
-	@Override
-	public void updateListener(IGameModel aModel) {
-		throw new UnsupportedOperationException();
-
-	}
-
 }

@@ -9,7 +9,7 @@ import skrull.game.view.IClientAction;
  * @author jesse
  *
  */
-public class AbstractGameController implements IGameController {
+public abstract class AbstractGameController implements IGameController {
 
 
 	private IGameModel gameModel;

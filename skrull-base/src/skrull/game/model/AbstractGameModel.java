@@ -1,5 +1,7 @@
 package skrull.game.model;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -14,7 +16,7 @@ import skrull.rmi.server.IClientUpdater;
  * @author jhodges
  *
  */
-public class AbstractGameModel implements IGameModel {
+public abstract class AbstractGameModel implements IGameModel {
 	private List<IPlayer> players = new CopyOnWriteArrayList<IPlayer>();
 	private IBoard board;
 	private IPlayer activeplayer;
@@ -26,6 +28,7 @@ public class AbstractGameModel implements IGameModel {
 	private IClientUpdater clientUpdater;
 	int gameId;
 	private GameType gameType;
+	private StringBuffer chatBuffer = new StringBuffer(1024);
 
 	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
 		this.gameType = type;
@@ -38,32 +41,29 @@ public class AbstractGameModel implements IGameModel {
 	 * @see skrull.game.model.IGameModel#chatUpdate(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public void chatUpdate(IClientAction aAction) {
-		throw new UnsupportedOperationException();
+	public void chatUpdate(IClientAction action) {
+		this.chatBuffer.append(action.getActionMessage());
+		updateListener();
 	}
 
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#joinGame(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public void joinGame(IClientAction aAction) {
-		throw new UnsupportedOperationException();
-	}
+	public abstract void joinGame(IClientAction action);
 
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#processMove(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public void processMove(IClientAction aAction) {
-		throw new UnsupportedOperationException();
-	}
-
+	public abstract void processMove(IClientAction action);
+	
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#isGameOver()
 	 */
 	@Override
 	public boolean isGameOver() {
-		throw new UnsupportedOperationException();
+		return finished;
 	}
 
 	/* (non-Javadoc)
@@ -71,15 +71,12 @@ public class AbstractGameModel implements IGameModel {
 	 */
 	@Override
 	public IPlayer getWinner() {
-		throw new UnsupportedOperationException();
+		return winner;
 	}
 
-	/* (non-Javadoc)
-	 * @see skrull.game.model.IGameModel#updateListener(skrull.game.model.IGameModel)
-	 */
 	@Override
-	public void updateListener(IGameModel aGameModel) {
-		throw new UnsupportedOperationException();
+	public Collection<IPlayer> getPlayers(){
+		return Collections.unmodifiableCollection(players);
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +87,8 @@ public class AbstractGameModel implements IGameModel {
 		throw new UnsupportedOperationException();
 	}
 
-	private void validateMove(IMove aMove) {
-		throw new UnsupportedOperationException();
+	public void updateListener() {
+		clientUpdater.modelChanged(this);
 	}
 
 	@Override

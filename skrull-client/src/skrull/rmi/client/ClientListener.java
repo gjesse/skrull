@@ -16,7 +16,7 @@ public class ClientListener implements IClientListener {
 	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub 
 		System.out.println("modelChanged...");
-		throw new UnsupportedOperationException();
+		gameClientView.modelChanged(model);
 	}
 
 

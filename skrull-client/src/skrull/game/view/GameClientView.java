@@ -2,6 +2,7 @@ package skrull.game.view;
 
 import java.util.UUID;
 
+import skrull.game.model.IGameModel;
 import skrull.rmi.client.IClientListener;
 
 public class GameClientView {
@@ -15,8 +16,8 @@ public class GameClientView {
 		this.playerId = playerId;
 	}
 
-	public void ModelChanged() {
-		throw new UnsupportedOperationException();
+	public void modelChanged(IGameModel model) {
+		System.out.println("model changed.. " + model);
 	}
 
 	public void DrawBoard() {

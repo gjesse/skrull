@@ -39,7 +39,7 @@ public class SkrullClientStarter extends RmiStarter {
 
             registry.rebind(IClientListener.SERVICE_NAME + "." + playerId, engineStub);
             
-           
+            
             
 		}catch(Exception e){
 			e.printStackTrace();

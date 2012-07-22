@@ -14,7 +14,7 @@ public class SkrullClientUpdater implements IClientUpdater {
 
 	Registry registry;
 	
-	SkrullClientUpdater() throws RemoteException{
+	public SkrullClientUpdater() throws RemoteException{
 		registry = LocateRegistry.getRegistry();		
 	}
 

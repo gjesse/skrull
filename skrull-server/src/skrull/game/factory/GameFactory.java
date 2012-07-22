@@ -9,9 +9,6 @@ import skrull.game.model.IPlayer;
 import skrull.game.model.tictactoe.TicTacToe;
 
 public class GameFactory implements IGameFactory {
-	private String[] availableGames;
-	public IServerController _unnamed_ServerConttroller_;
-	public TicTacToe _unnamed_TicTacToe_;
 
 	/* (non-Javadoc)
 	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
@@ -44,8 +41,10 @@ public class GameFactory implements IGameFactory {
 	/* (non-Javadoc)
 	 * @see skrull.game.factory.IGameFactory#listGames()
 	 */
+	@Deprecated /* this probably isn't needed now that game types are an enum */
 	@Override
 	public String[] listAvailableGames() {
+	
 		throw new UnsupportedOperationException();
 	}
 }

@@ -6,8 +6,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import skrull.game.factory.IGameFactory;
-import skrull.game.factory.IGameFactory.GameType;
-import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 
 public class ServerController implements IServerController {

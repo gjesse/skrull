@@ -22,12 +22,12 @@ public class ServerControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gameFactory = EasyMock.createNiceMock(IGameFactory.class);
+		gameFactory = EasyMock.createMock(IGameFactory.class);
 
 		action = EasyMock.createNiceMock(IClientAction.class);
 		defaultGameController = EasyMock.createNiceMock(IGameController.class);
 		gameController = EasyMock.createNiceMock(IGameController.class);
-		EasyMock.expect(gameFactory.setupGame(GameType.DEFAULT, null)).andReturn(defaultGameController);
+		EasyMock.expect(gameFactory.setupGame(GameType.DEFAULT, null,0)).andReturn(defaultGameController);
 
 	}
 
@@ -42,16 +42,19 @@ public class ServerControllerTest {
 	
 		@Test
 		public void testProcessClientActionCreateGame() throws Exception {
+			IPlayer mockPlayer = EasyMock.createNiceMock(IPlayer.class);
+			EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME).atLeastOnce();
+			EasyMock.expect(action.getPlayer()).andReturn(mockPlayer);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE);
 
-			EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME);
-			EasyMock.expect(gameFactory.setupGame(EasyMock.anyObject(GameType.class), EasyMock.anyObject(IPlayer.class))).andReturn(gameController);
+			EasyMock.expect(gameFactory.setupGame(GameType.TIC_TAC_TOE, mockPlayer, 1)).andReturn(gameController);
 			
 			gameController.processGameAction(action);
 			EasyMock.expectLastCall();
 			
 			EasyMock.replay(action, gameFactory, gameController);
 			controller = new ServerController(gameFactory);
-			controller.addGameController(gameController);
+			//controller.addGameController(gameController);
 			controller.processClientAction(action);
 			EasyMock.verify(action, gameFactory, gameController);
 

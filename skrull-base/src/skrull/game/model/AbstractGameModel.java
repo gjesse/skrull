@@ -1,8 +1,10 @@
 package skrull.game.model;
 
 import java.util.Date;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import skrull.game.controller.IGameController;
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
 
@@ -12,7 +14,7 @@ import skrull.rmi.server.IClientUpdater;
  *
  */
 public class AbstractGameModel implements IGameModel {
-	private IPlayer[] players;
+	private CopyOnWriteArrayList<IPlayer> players;
 	private IBoard board;
 	private IPlayer activeplayer;
 	private IPlayer winner;
@@ -21,6 +23,12 @@ public class AbstractGameModel implements IGameModel {
 	private IClientAction lastAction;
 	private IGameController gameController;
 	private IClientUpdater clientUpdater;
+	int gameId;
+
+	public AbstractGameModel(IPlayer startingPlayer, int gameId) {
+		this.gameId = gameId;
+		this.players.add(startingPlayer);
+	}
 
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#chatUpdate(skrull.game.view.ClientAction)
@@ -80,5 +88,23 @@ public class AbstractGameModel implements IGameModel {
 
 	private void validateMove(IMove aMove) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public GameType getGameType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getGameId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void quit(IClientAction action) {
+		// TODO Auto-generated method stub
+		
 	}
 }

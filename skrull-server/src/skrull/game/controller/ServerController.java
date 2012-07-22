@@ -3,8 +3,11 @@ package skrull.game.controller;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 
 public class ServerController implements IServerController {
@@ -12,13 +15,16 @@ public class ServerController implements IServerController {
 	private IGameFactory gameFactory;
 	private IGameController defaultGameController;
 
-	// TODO: implement this
+	// maintains a sequence of id numbers for each game
+	private AtomicInteger gameIdSequence = new AtomicInteger(0);
+
+	// TODO: implement activity monitor
 	private ActivityMonitor activityMontor;
 	
 
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;
-		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null);
+		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, nextGameId());
 	}
 	/* (non-Javadoc)
 	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
@@ -37,22 +43,7 @@ public class ServerController implements IServerController {
 				game.processGameAction(action);
 			}	
 			break;
-			
-			// setting up a new game
-			case CREATE_GAME:
-			{
-				// first we should remove the player from the default game...
-				defaultGameController.processGameAction(action);
-
-				// then setup a new game and assign this player
-				final IGameController gameController = gameFactory.setupGame(action.getGameType(), action.getPlayer());
-				activeGameControllers.add(gameController);
-				
-				// finally process the action via the game controller
-				gameController.processGameAction(action);
-			}	
-			break;
-			
+	
 			// first-time connection, come on!
 			case JOIN_SERVER:
 				// what to do here?
@@ -77,6 +68,21 @@ public class ServerController implements IServerController {
 				}	
 			break;
 			
+			// setting up a new game
+			case CREATE_GAME:
+			{
+				// first we should remove the player from the default game...
+				defaultGameController.processGameAction(action);
+
+				// then setup a new game and assign this player
+				final IGameController gameController = gameFactory.setupGame(action.getGameType(),action.getPlayer(), nextGameId());
+				activeGameControllers.add(gameController);
+				
+				// finally process the action via the game controller
+				gameController.processGameAction(action);
+			}	
+			break;
+			
 			default:
 				throw new RuntimeException("Action type " + action.getActionType() + " is not handled - it must be handled!");
 		
@@ -84,6 +90,10 @@ public class ServerController implements IServerController {
 	
 	}
 
+	private int nextGameId() {
+		return gameIdSequence.getAndIncrement();
+	}
+	
 	/**
 	 * Get the controller matched to the current game action
 	 * @param action

@@ -13,6 +13,7 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.game.model.tictactoe.TicTacToe;
+import skrull.rmi.server.IClientUpdater;
 
 public class GameFactoryTest {
 
@@ -20,7 +21,7 @@ public class GameFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		factory = new GameFactory();
+		factory = new GameFactory(EasyMock.createNiceMock(IClientUpdater.class));
 	}
 
 	@Test
@@ -35,6 +36,8 @@ public class GameFactoryTest {
 		
 	}
 
+	// failing now but should start passing when
+	// tic tac toe is implemented
 	@Test
 	public void testSetupTicTacToe() {
 		IPlayer player = EasyMock.createMock(IPlayer.class);

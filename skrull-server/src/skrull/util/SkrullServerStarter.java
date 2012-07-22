@@ -10,14 +10,15 @@ import skrull.game.controller.IServerController;
 import skrull.game.controller.ServerController;
 import skrull.game.factory.GameFactory;
 import skrull.game.factory.IGameFactory;
+import skrull.rmi.server.IClientUpdater;
 import skrull.rmi.server.IServerListener;
 import skrull.rmi.server.ServerListener;
+import skrull.rmi.server.SkrullClientUpdater;
 
 public class SkrullServerStarter extends RmiStarter {
 
 	public SkrullServerStarter(Class<IServerListener> clazzToAddToServerCodebase) {
 		super(clazzToAddToServerCodebase);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
@@ -27,7 +28,8 @@ public class SkrullServerStarter extends RmiStarter {
 	@Override
 	public void doCustomRmiHandling() {
        try {
-    	    IGameFactory factory = new GameFactory();
+    	    IClientUpdater updater = new SkrullClientUpdater();
+    	    IGameFactory factory = new GameFactory(updater);
     	    IServerController controller = new ServerController(factory);
             IServerListener listener = new ServerListener(controller, new ActionWorkerFactory());
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);

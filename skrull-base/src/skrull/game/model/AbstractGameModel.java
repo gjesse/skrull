@@ -27,10 +27,11 @@ public class AbstractGameModel implements IGameModel {
 	int gameId;
 	private GameType gameType;
 
-	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type) {
+	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
 		this.gameType = type;
 		this.gameId = gameId;
 		this.players.add(startingPlayer);
+		this.clientUpdater = updater;
 	}
 
 	/* (non-Javadoc)

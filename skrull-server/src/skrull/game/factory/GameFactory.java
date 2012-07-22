@@ -7,8 +7,15 @@ import skrull.game.model.DefaultGameModel;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.game.model.tictactoe.TicTacToe;
+import skrull.rmi.server.IClientUpdater;
 
 public class GameFactory implements IGameFactory {
+
+	private IClientUpdater updater;
+	
+	public GameFactory(IClientUpdater updater) {
+		this.updater = updater;
+	}
 
 	/* (non-Javadoc)
 	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
@@ -33,7 +40,7 @@ public class GameFactory implements IGameFactory {
 	}
 
 	private IGameController setupDefaultGame(IPlayer startingPlayer, int gameId) {
-		IGameModel model = new DefaultGameModel(startingPlayer, gameId);
+		IGameModel model = new DefaultGameModel(startingPlayer, gameId, updater);
 		IGameController defaultController = new DefaultGameController(model);
 		return defaultController;
 	}
@@ -47,4 +54,9 @@ public class GameFactory implements IGameFactory {
 	
 		throw new UnsupportedOperationException();
 	}
+
+	public IClientUpdater getUpdater() {
+		return updater;
+	}
+
 }

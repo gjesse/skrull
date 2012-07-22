@@ -10,6 +10,14 @@ public class ClientAction implements IClientAction {
 	private ActionType actionType;
 	private String actionMessage;
 	private IMove move;
+
+	public ClientAction(int gameId, IPlayer player, ActionType type, String actionMessage, IMove move){
+		this.gameId =gameId;
+		this.player = player;
+		this.actionType = type;
+		this.actionMessage = actionMessage;
+		this.move = move;
+	}
 	// public ClientInputHandler unnamed_ClientInputHandler_;
 	@Override
 	public ActionType getActionType() {

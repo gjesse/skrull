@@ -6,14 +6,16 @@ import skrull.rmi.server.IClientUpdater;
 
 public class DefaultGameModel extends AbstractGameModel {
 
-	public DefaultGameModel(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
-		super(startingPlayer, gameId, GameType.DEFAULT, updater);
+	public DefaultGameModel(int gameId, IClientUpdater updater) {
+		super(gameId, GameType.DEFAULT, updater);
 	}
 
 	@Override
 	public void joinGame(IClientAction action) {
-		// TODO Auto-generated method stub
-		
+		// for the default game, no validation is needed. 
+		// anyone can join
+		super.addPlayer(action.getPlayer());
+		super.updateListener();
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class GameFactory implements IGameFactory {
 		switch(type)
 		{
 		case DEFAULT:
-			return setupDefaultGame(startingPlayer, gameId);
+			return setupDefaultGame(gameId);
 		
 		case TIC_TAC_TOE:
 		case ROCK_PAPER_SCISSORS:
@@ -39,8 +39,9 @@ public class GameFactory implements IGameFactory {
 		
 	}
 
-	private IGameController setupDefaultGame(IPlayer startingPlayer, int gameId) {
-		IGameModel model = new DefaultGameModel(startingPlayer, gameId, updater);
+	// default game is setup before any players connect
+	private IGameController setupDefaultGame(int gameId) {
+		IGameModel model = new DefaultGameModel(gameId, updater);
 		IGameController defaultController = new DefaultGameController(model);
 		return defaultController;
 	}

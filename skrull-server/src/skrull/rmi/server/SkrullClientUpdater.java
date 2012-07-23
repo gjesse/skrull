@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.UUID;
 
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
@@ -30,7 +31,8 @@ public class SkrullClientUpdater implements IClientUpdater {
 	private void notifyListener(IGameModel model, IPlayer player) {
 		 // TODO: might be good to put this in a map for later
 		 try {
-			IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + player.getPlayerId());
+			UUID playerId = player.getPlayerId();
+			IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + playerId);
 			listener.modelChanged(model);
 		} catch (AccessException e) {
 			// TODO Auto-generated catch block

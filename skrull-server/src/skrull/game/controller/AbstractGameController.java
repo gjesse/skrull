@@ -69,7 +69,7 @@ public abstract class AbstractGameController implements IGameController {
 		
 		} // end switch
 		
-		gameModel.processMove(action);
+		// gameModel.processMove(action);
 
 	}
 

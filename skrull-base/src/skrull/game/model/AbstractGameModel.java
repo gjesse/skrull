@@ -33,11 +33,19 @@ public abstract class AbstractGameModel implements IGameModel {
 	private StringBuffer chatBuffer = new StringBuffer(1024);
 
 	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
+		this(gameId, type, updater);
+		this.players.add(startingPlayer);
+
+	}
+	
+	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {
 		this.gameType = type;
 		this.gameId = gameId;
-		this.players.add(startingPlayer);
 		this.clientUpdater = updater;
 	}
+
+		
+	
 
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#chatUpdate(skrull.game.view.ClientAction)
@@ -78,7 +86,8 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	@Override
 	public Collection<IPlayer> getPlayers(){
-		return Collections.unmodifiableCollection(players);
+		// return Collections.unmodifiableCollection(players);
+		return players;
 	}
 
 	/* (non-Javadoc)
@@ -106,6 +115,9 @@ public abstract class AbstractGameModel implements IGameModel {
 	@Override
 	public void quit(IClientAction action) {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	protected void addPlayer(IPlayer player){
+		this.players.add(player);
 	}
 }

@@ -4,21 +4,23 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 
-public class ClientAction implements IClientAction {
-	private int gameId;
-	private IPlayer player;
-	private ActionType actionType;
-	private String actionMessage;
-	private IMove move;
+public final class ClientAction implements IClientAction {
+	private final int gameId;
+	private final IPlayer player;
+	private final ActionType actionType;
+	private final String actionMessage;
+	private final IMove move;
+	private final GameType gameType;
 
-	public ClientAction(int gameId, IPlayer player, ActionType type, String actionMessage, IMove move){
+	public ClientAction(int gameId, IPlayer player, ActionType actionType, GameType gameType, String actionMessage, IMove move){
 		this.gameId =gameId;
 		this.player = player;
-		this.actionType = type;
+		this.actionType = actionType;
+		this.gameType = gameType;
 		this.actionMessage = actionMessage;
 		this.move = move;
 	}
-	// public ClientInputHandler unnamed_ClientInputHandler_;
+
 	@Override
 	public ActionType getActionType() {
 		return actionType;
@@ -33,13 +35,15 @@ public class ClientAction implements IClientAction {
 	}
 	@Override
 	public GameType getGameType() {
-		// TODO Auto-generated method stub
-		return null;
+		return gameType;
 	}
 	@Override
 	public int getGameId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gameId;
+	}
+	@Override
+	public IMove getMove() {
+		return move;
 	}
 
 }

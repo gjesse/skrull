@@ -20,6 +20,7 @@ public class SkrullClientStarter extends RmiStarter {
 
 	public static void main(String[] args) {
 		SkrullClientStarter starter = new SkrullClientStarter(IClientListener.class);
+		
 	}
 
 	@Override
@@ -38,6 +39,8 @@ public class SkrullClientStarter extends RmiStarter {
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
             registry.rebind(IClientListener.SERVICE_NAME + "." + playerId, engineStub);
+            
+            serverUpdater.ProcessClientAction(null);
             
             
             

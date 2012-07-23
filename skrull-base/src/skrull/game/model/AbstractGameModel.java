@@ -4,7 +4,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import skrull.game.controller.IGameController;
 import skrull.game.factory.IGameFactory.GameType;
@@ -17,7 +19,7 @@ import skrull.rmi.server.IClientUpdater;
  *
  */
 public abstract class AbstractGameModel implements IGameModel {
-	private List<IPlayer> players = new CopyOnWriteArrayList<IPlayer>();
+	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
 	private IBoard board;
 	private IPlayer activeplayer;
 	private IPlayer winner;

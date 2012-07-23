@@ -17,10 +17,16 @@ import skrull.rmi.server.SkrullClientUpdater;
 
 public class SkrullServerStarter extends RmiStarter {
 
+	private boolean multiThreaded;
+
 	public SkrullServerStarter(Class<IServerListener> clazzToAddToServerCodebase) {
-		super(clazzToAddToServerCodebase);
+		this(clazzToAddToServerCodebase, true);
 	}
 
+	public SkrullServerStarter(Class<IServerListener> clazzToAddToServerCodebase, boolean multiThreaded) {
+		super(clazzToAddToServerCodebase);
+		this.multiThreaded = multiThreaded;
+	}
 	public static void main(String[] args) {
 		SkrullServerStarter starter = new SkrullServerStarter(IServerListener.class);
 	}
@@ -31,7 +37,7 @@ public class SkrullServerStarter extends RmiStarter {
     	    IClientUpdater updater = new SkrullClientUpdater();
     	    IGameFactory factory = new GameFactory(updater);
     	    IServerController controller = new ServerController(factory);
-            IServerListener listener = new ServerListener(controller, new ActionWorkerFactory());
+            IServerListener listener = new ServerListener(controller, new ActionWorkerFactory(), multiThreaded);
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
             Registry registry = LocateRegistry.getRegistry();

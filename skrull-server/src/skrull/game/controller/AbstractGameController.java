@@ -62,6 +62,8 @@ public abstract class AbstractGameController implements IGameController {
 			break;
 			
 			case CREATE_GAME:
+				gameModel.joinGame(action);
+			break;
 			default:
 				throw new RuntimeException("Action type " + action.getActionType() + " was unexpected here");
 		

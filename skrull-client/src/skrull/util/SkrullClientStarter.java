@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import skrull.game.view.ClientInputHandler;
 import skrull.game.view.GameClientView;
+import skrull.game.view.IClientAction;
 import skrull.rmi.client.ClientListener;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.client.ServerUpdater;
@@ -29,7 +30,7 @@ public class SkrullClientStarter extends RmiStarter {
 			UUID playerId = UUID.randomUUID();
 			
 			ServerUpdater serverUpdater = new ServerUpdater();
-			ClientInputHandler cih = new ClientInputHandler(serverUpdater);
+			ClientInputHandler cih = new ClientInputHandler(serverUpdater, playerId);
 			GameClientView view = new GameClientView(cih, playerId);
 
             IClientListener listener = new ClientListener(view);
@@ -40,7 +41,9 @@ public class SkrullClientStarter extends RmiStarter {
 
             registry.rebind(IClientListener.SERVICE_NAME + "." + playerId, engineStub);
             
-            serverUpdater.ProcessClientAction(null);
+            
+            IClientAction action = cih.getStartupAction();
+            serverUpdater.ProcessClientAction(action);
             
             
             
@@ -48,5 +51,10 @@ public class SkrullClientStarter extends RmiStarter {
 			e.printStackTrace();
 		}		
 		
+	}
+
+	private IClientAction getStartupAction(UUID playerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

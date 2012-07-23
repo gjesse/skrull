@@ -6,6 +6,9 @@ import skrull.rmi.server.IClientUpdater;
 
 public class DefaultGameModel extends AbstractGameModel {
 
+
+	private static final long serialVersionUID = 4248612423826766248L;
+
 	public DefaultGameModel(int gameId, IClientUpdater updater) {
 		super(gameId, GameType.DEFAULT, updater);
 	}
@@ -20,7 +23,7 @@ public class DefaultGameModel extends AbstractGameModel {
 
 	@Override
 	public void processMove(IClientAction action) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("I'm not expecting a move here");
 		
 	}
 

@@ -5,6 +5,10 @@ import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 
 public final class ClientAction implements IClientAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2751588500379934614L;
 	private final int gameId;
 	private final IPlayer player;
 	private final ActionType actionType;

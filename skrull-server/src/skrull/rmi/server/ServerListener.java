@@ -3,8 +3,6 @@ package skrull.rmi.server;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import skrull.game.controller.ActionWorker;
-import skrull.game.controller.IActionWorker;
 import skrull.game.controller.IActionWorkerFactory;
 import skrull.game.controller.IServerController;
 import skrull.game.view.IClientAction;

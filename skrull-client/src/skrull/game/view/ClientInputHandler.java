@@ -1,20 +1,30 @@
 package skrull.game.view;
 
+import java.awt.event.ActionEvent;
+import java.util.UUID;
+
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IPlayer;
+import skrull.game.view.IClientAction.ActionType;
 import skrull.rmi.client.IServerUpdater;
 import skrull.rmi.client.ServerUpdater;
 
 public class ClientInputHandler {
-	private Object _playerID;
-	private Object _gameID;
-	public GameClientView _unnamed_GameCientView_;
+	private IPlayer player;
+	private int gameId; // is this necessary?
 	public IServerUpdater serverUpdater;
-	public IClientAction _unnamed_Client_Actions_;
 
-	public ClientInputHandler(ServerUpdater serverUpdater) {
+	public ClientInputHandler(ServerUpdater serverUpdater, UUID playerId ) {
 		this.serverUpdater = serverUpdater;
+		this.player = new Player(playerId);
+		this.gameId = -1;
 	}
 
-	public void handleClick() {
+	public void handleInput(ActionEvent e) {
 		throw new UnsupportedOperationException();
+	}
+
+	public IClientAction getStartupAction() {
+		return new ClientAction(gameId, player, ActionType.JOIN_SERVER, GameType.DEFAULT, null, null);
 	}
 }

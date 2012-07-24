@@ -14,10 +14,9 @@ public abstract class RmiStarter {
      *
      * @param clazzToAddToServerCodebase a class that should be in the java.rmi.server.codebase property.
      */
-    public RmiStarter(Class clazzToAddToServerCodebase) {
+    public RmiStarter(String paths) {
 
-        System.setProperty("java.rmi.server.codebase", clazzToAddToServerCodebase
-            .getProtectionDomain().getCodeSource().getLocation().toString());
+        System.setProperty("java.rmi.server.codebase", paths);
 
         System.setProperty("java.security.policy", PolicyFileLocater.getLocationOfPolicyFile());
 

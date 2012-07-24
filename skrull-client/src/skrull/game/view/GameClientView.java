@@ -40,7 +40,7 @@ public class GameClientView extends JFrame {
 	}
 
 	public void updateBoard() {
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException("actually really great!");
 	}
 	
     // Inner classes for Event Handling 

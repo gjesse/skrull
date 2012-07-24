@@ -19,16 +19,20 @@ public class SkrullServerStarter extends RmiStarter {
 
 	private boolean multiThreaded;
 
-	public SkrullServerStarter(Class<IServerListener> clazzToAddToServerCodebase) {
-		this(clazzToAddToServerCodebase, true);
+	public SkrullServerStarter(String codebase) {
+		this(codebase, true);
 	}
 
-	public SkrullServerStarter(Class<IServerListener> clazzToAddToServerCodebase, boolean multiThreaded) {
-		super(clazzToAddToServerCodebase);
+	public SkrullServerStarter(String codebase, boolean multiThreaded) {
+		super(codebase);
 		this.multiThreaded = multiThreaded;
 	}
 	public static void main(String[] args) {
-		SkrullServerStarter starter = new SkrullServerStarter(IServerListener.class);
+	// TODO: this kind of config needs to be in a properties file, not hard-coded here
+		String codebase="file:///home/jesse/gitrepos/skrull/skrull-base/bin/ ";
+		codebase+="file:///home/jesse/gitrepos/skrull/skrull-server/bin/ ";
+
+		SkrullServerStarter starter = new SkrullServerStarter(codebase);
 	}
 
 	@Override

@@ -35,6 +35,7 @@ public class SkrullClientStarter extends RmiStarter {
 			ServerUpdater serverUpdater = new ServerUpdater();
 			ClientInputHandler cih = new ClientInputHandler(serverUpdater, playerId);
 			GameClientView view = new GameClientView(cih, playerId);
+			cih.setView(view);
 
             IClientListener listener = new ClientListener(view);
 

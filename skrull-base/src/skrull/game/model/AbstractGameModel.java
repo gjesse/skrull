@@ -52,10 +52,15 @@ public abstract class AbstractGameModel implements IGameModel {
 	 */
 	@Override
 	public void chatUpdate(IClientAction action) {
-		this.chatBuffer.append(action.getActionMessage());
+		this.chatBuffer.append(action.getActionMessage() + "\n");
 		updateListener();
 	}
 
+	@Override
+	public String getChatContents() {
+		return chatBuffer.toString();
+	};
+	
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#joinGame(skrull.game.view.ClientAction)
 	 */

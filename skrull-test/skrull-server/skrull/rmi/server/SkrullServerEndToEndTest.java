@@ -53,8 +53,10 @@ public class SkrullServerEndToEndTest {
 	@Test
 	public void testEndToEndJoinServerBasic() throws Exception {
 
-		// starts the server
-		SkrullServerStarter starter = new SkrullServerStarter(IServerListener.class, false);
+		// starts the server. this is u.g.l.y
+		String codebase="file:///home/jesse/gitrepos/skrull/skrull-base/bin/ ";
+		codebase+="file:///home/jesse/gitrepos/skrull/skrull-server/bin/ ";
+		SkrullServerStarter starter = new SkrullServerStarter(codebase, false);
 
 		
 		IServerUpdater serverUpdater = new ServerUpdater();

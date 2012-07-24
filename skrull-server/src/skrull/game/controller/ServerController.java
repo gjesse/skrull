@@ -95,7 +95,7 @@ public class ServerController implements IServerController {
 	/**
 	 * Get the controller matched to the current game action
 	 * @param action
-	 * @return the active game, or null if no match
+	 * @return the active game, or default game if no match
 	 */
 	private IGameController getActiveGameController(IClientAction action) {
 		
@@ -107,7 +107,7 @@ public class ServerController implements IServerController {
 			}
 		}
 		
-		return null;
+		return defaultGameController;
 	}
 
 	protected void addGameController(IGameController controller){

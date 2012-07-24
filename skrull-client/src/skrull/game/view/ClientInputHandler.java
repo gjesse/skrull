@@ -13,6 +13,7 @@ public class ClientInputHandler {
 	private IPlayer player;
 	private int gameId; // is this necessary?
 	public IServerUpdater serverUpdater;
+	private GameClientView view;
 
 	public ClientInputHandler(ServerUpdater serverUpdater, UUID playerId ) {
 		this.serverUpdater = serverUpdater;
@@ -21,10 +22,25 @@ public class ClientInputHandler {
 	}
 
 	public void handleInput(ActionEvent e) {
-		throw new UnsupportedOperationException();
+		ActionType type = ActionType.valueOf(e.getActionCommand());
+		
+		switch(type){
+		case CHAT:
+			// TODO: need to determine the game type from the view. this will break once we have actual games going
+			// TODO: a builder or factory seems to be in order for the ClientActions
+			serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));
+			
+			break;
+		default:
+			throw new UnsupportedOperationException(e + e.getActionCommand());
+		}
 	}
 
 	public IClientAction getStartupAction() {
 		return new ClientAction(gameId, player, ActionType.JOIN_SERVER, GameType.DEFAULT, null, null);
+	}
+
+	public void setView(GameClientView view) {
+		this.view = view;
 	}
 }

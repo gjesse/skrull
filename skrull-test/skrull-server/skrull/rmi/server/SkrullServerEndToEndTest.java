@@ -18,6 +18,7 @@ import skrull.game.view.ClientAction;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
 import skrull.rmi.PolicyFileLocater;
+import skrull.rmi.SystemPropertyReader;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.client.IServerUpdater;
 import skrull.rmi.client.ServerUpdater;
@@ -33,9 +34,9 @@ public class SkrullServerEndToEndTest {
 		
 		playerId = UUID.randomUUID();
 		clientListener = EasyMock.createMock(IClientListener.class);
-		//clientListener = new ClientListener(null);
-		
-
+	
+		System.setProperty("skrull.properties", "skrull.server.properties");
+		SystemPropertyReader.readProperties();
         System.setProperty("java.rmi.server.codebase", IClientListener.class
             .getProtectionDomain().getCodeSource().getLocation().toString());
 
@@ -53,12 +54,9 @@ public class SkrullServerEndToEndTest {
 	@Test
 	public void testEndToEndJoinServerBasic() throws Exception {
 
-		// starts the server. this is u.g.l.y
-		String codebase="file:///home/jesse/gitrepos/skrull/skrull-base/bin/ ";
-		codebase+="file:///home/jesse/gitrepos/skrull/skrull-server/bin/ ";
+
 		SkrullServerStarter starter = new SkrullServerStarter(false);
 
-		
 		IServerUpdater serverUpdater = new ServerUpdater();
 		
 		

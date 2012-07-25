@@ -5,7 +5,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import skrull.game.controller.ActionWorkerFactory;
 import skrull.game.controller.IServerController;
 import skrull.game.controller.ServerController;
 import skrull.game.factory.GameFactory;
@@ -38,7 +37,7 @@ public class SkrullServerStarter extends RmiStarter {
     	    IClientUpdater updater = new SkrullClientUpdater();
     	    IGameFactory factory = new GameFactory(updater);
     	    IServerController controller = new ServerController(factory);
-            IServerListener listener = new ServerListener(controller, new ActionWorkerFactory(), multiThreaded);
+            IServerListener listener = new ServerListener(controller);
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
             Registry registry = LocateRegistry.getRegistry();

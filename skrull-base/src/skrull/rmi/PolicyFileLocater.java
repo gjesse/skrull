@@ -12,13 +12,10 @@ import java.io.InputStream;
  */
 public class PolicyFileLocater {
 
-    public static final String POLICY_FILE_NAME = "allow_all.policy";
-
     public static String getLocationOfPolicyFile() {
         try {
             File tempFile = File.createTempFile("rmi-base", ".policy");
-            String policyFile = System.getProperty("policy.file");
-            System.getProperties().list(System.out);
+            final String policyFile = System.getProperty("policy.file");
             InputStream is = PolicyFileLocater.class.getResourceAsStream(policyFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
             int read = 0;

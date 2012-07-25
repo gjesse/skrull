@@ -49,4 +49,19 @@ public class GameFactoryTest {
 		assertEquals(GameType.TIC_TAC_TOE, controller.getGameType());
 		
 	}
+	
+
+	// failing now but should start passing when
+	// tic tac toe is implemented
+	@Test
+	public void testSetupRockPaperScissors() {
+		IPlayer player = EasyMock.createMock(IPlayer.class);
+		IGameController controller = factory.setupGame(GameType.ROCK_PAPER_SCISSORS, player, 44);
+		assertNotNull(controller);
+		assertTrue(controller instanceof TicTacToeController);
+		
+		assertEquals(44, controller.getGameId());
+		assertEquals(GameType.ROCK_PAPER_SCISSORS, controller.getGameType());
+		
+	}
 }

@@ -27,6 +27,9 @@ public class GameClientView extends JFrame {
 		
 		initBoard();
 		
+		/*		String codebase="file:///C:/Users/Jeremiah/Code/skrull/skrull-base/bin/ ";
+		codebase+="file:///C:/Users/Jeremiah/Code/skrull/skrull-client/bin/";*/
+		
 		
 		
 	}

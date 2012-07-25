@@ -20,6 +20,14 @@ public class GameClientView extends JFrame {
 	private UUID playerId;
 	private JTextField chatTextInputField;
 	JTextArea chatWindow;
+	JButton exitButton;
+	JButton sendButton;
+	JButton startButton;
+	JButton joinButton;
+	
+	String sampleGameList[] = {"Tic-Tac-Toe", "Rock-Paper-Scissors","No Game"};
+	String sampleGamesToJoin[] = {"sampleGame1","sampleGame2","sampleGame3","sampleGame4"};
+	
 
 	public GameClientView(ClientInputHandler cih, UUID playerId) {
 		this.cih = cih;

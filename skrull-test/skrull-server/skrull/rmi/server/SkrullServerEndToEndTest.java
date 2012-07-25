@@ -56,7 +56,7 @@ public class SkrullServerEndToEndTest {
 		// starts the server. this is u.g.l.y
 		String codebase="file:///home/jesse/gitrepos/skrull/skrull-base/bin/ ";
 		codebase+="file:///home/jesse/gitrepos/skrull/skrull-server/bin/ ";
-		SkrullServerStarter starter = new SkrullServerStarter(codebase, false);
+		SkrullServerStarter starter = new SkrullServerStarter(false);
 
 		
 		IServerUpdater serverUpdater = new ServerUpdater();

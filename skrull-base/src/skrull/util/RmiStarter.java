@@ -19,6 +19,7 @@ public abstract class RmiStarter {
     public RmiStarter() throws Exception {
 
     	SystemPropertyReader.readProperties();
+    	
         System.setProperty("java.security.policy", PolicyFileLocater.getLocationOfPolicyFile());
 
         if(System.getSecurityManager() == null) {

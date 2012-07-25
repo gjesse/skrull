@@ -17,7 +17,9 @@ public class PolicyFileLocater {
     public static String getLocationOfPolicyFile() {
         try {
             File tempFile = File.createTempFile("rmi-base", ".policy");
-            InputStream is = PolicyFileLocater.class.getResourceAsStream(POLICY_FILE_NAME);
+            String policyFile = System.getProperty("policy.file");
+            System.getProperties().list(System.out);
+            InputStream is = PolicyFileLocater.class.getResourceAsStream(policyFile);
             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
             int read = 0;
             while((read = is.read()) != -1) {

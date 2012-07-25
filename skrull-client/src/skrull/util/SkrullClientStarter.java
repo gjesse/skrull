@@ -15,15 +15,12 @@ import skrull.rmi.client.ServerUpdater;
 
 public class SkrullClientStarter extends RmiStarter {
 
-	public SkrullClientStarter(String codebase) {
-		super(codebase);
+	public SkrullClientStarter() throws Exception {
+		super();
 	}
 
-	public static void main(String[] args) {
-		// TODO: this kind of config needs to be in a properties file, not hard-coded here
-		String codebase="file:///home/jesse/gitrepos/skrull/skrull-base/bin/ ";
-		codebase+="file:///home/jesse/gitrepos/skrull/skrull-client/bin/ ";
-		SkrullClientStarter starter = new SkrullClientStarter(codebase);
+	public static void main(String[] args) throws Exception {	
+		SkrullClientStarter starter = new SkrullClientStarter();
 		
 	}
 

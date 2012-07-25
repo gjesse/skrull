@@ -1,6 +1,7 @@
 package skrull.util;
 
 import skrull.rmi.PolicyFileLocater;
+import skrull.rmi.SystemPropertyReader;
 
 /**
  * handles bootstrapping and starting of client/server apps
@@ -13,11 +14,11 @@ public abstract class RmiStarter {
     /**
      *
      * @param clazzToAddToServerCodebase a class that should be in the java.rmi.server.codebase property.
+     * @throws Exception 
      */
-    public RmiStarter(String paths) {
+    public RmiStarter() throws Exception {
 
-        System.setProperty("java.rmi.server.codebase", paths);
-
+    	SystemPropertyReader.readProperties();
         System.setProperty("java.security.policy", PolicyFileLocater.getLocationOfPolicyFile());
 
         if(System.getSecurityManager() == null) {

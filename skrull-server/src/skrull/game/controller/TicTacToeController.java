@@ -4,7 +4,7 @@ import skrull.game.model.IGameModel;
 
 public class TicTacToeController extends AbstractGameController {
 
-	TicTacToeController(IGameModel model) {
+	public TicTacToeController(IGameModel model) {
 		super(model);
 	}
 

@@ -25,6 +25,7 @@ public class ClientInputHandler {
 		ActionType type = ActionType.valueOf(e.getActionCommand());
 		
 		switch(type){
+		
 		case CHAT:
 			// TODO: need to determine the game type from the view. this will break once we have actual games going
 			// TODO: a builder or factory seems to be in order for the ClientActions

@@ -1,4 +1,5 @@
 
+# sample for client
 java.rmi.server.codebase=file:///home/jhodges/Workspaces/school/skrull/skrull-base/bin/ file:///home/jhodges/Workspaces/school/skrull/skrull-client/bin/
 policy.file=allow_all.policy
 

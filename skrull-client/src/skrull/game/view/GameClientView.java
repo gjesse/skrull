@@ -21,6 +21,7 @@ import skrull.rmi.client.IClientListener;
 public class GameClientView extends JFrame {
 
 	private static final long serialVersionUID = 733356106858477245L;
+	private static final String IMAGE_DIR = System.getProperty("image.dir");
 	private ClientInputHandler cih;
 	private UUID playerId;
 	private JTextField chatTextInputField;
@@ -329,12 +330,13 @@ public class GameClientView extends JFrame {
 		BufferedImage buttonIcon3 = null;
 		
 		try {
-			buttonIcon = ImageIO.read(new File("C:/Users/Jeremiah/Code/skrull/skrull-client/src/res/Paperscaled.jpg"));
-			buttonIcon2 = ImageIO.read(new File("C:/Users/Jeremiah/Code/skrull/skrull-client/src/res/Rockscaled2.jpg"));
-			buttonIcon3 = ImageIO.read(new File("C:/Users/Jeremiah/Code/skrull/skrull-client/src/res/Scissorsscaled.jpg"));
+			buttonIcon = ImageIO.read(new File(IMAGE_DIR + "Paperscaled.jpg"));
+			buttonIcon2 = ImageIO.read(new File(IMAGE_DIR + "Rockscaled2.jpg"));
+			buttonIcon3 = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("error reading from " + IMAGE_DIR);
 			e.printStackTrace();
 		}
 		

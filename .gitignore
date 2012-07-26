@@ -5,3 +5,4 @@
 *.ear
 bin
 .settings
+.properties

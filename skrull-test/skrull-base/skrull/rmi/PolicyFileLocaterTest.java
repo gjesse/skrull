@@ -8,7 +8,15 @@ public class PolicyFileLocaterTest {
 
 	@Test
 	public void testGetLocationOfPolicyFile() {
-		fail("Not yet implemented");
+		 System.setProperty("policy.file", "allow_all.policy");
+		assertNotNull(PolicyFileLocater.getLocationOfPolicyFile());
 	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testGetLocationOfMissingPolicyFile() {
+		 System.setProperty("policy.file", "nonexistent.policy");
+		 assertNotNull(PolicyFileLocater.getLocationOfPolicyFile());
+	}
+
 
 }

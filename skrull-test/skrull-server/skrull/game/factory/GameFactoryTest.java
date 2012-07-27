@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import skrull.game.controller.DefaultGameController;
 import skrull.game.controller.IGameController;
+import skrull.game.controller.RockPaperScissorsController;
 import skrull.game.controller.TicTacToeController;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
@@ -58,7 +59,7 @@ public class GameFactoryTest {
 		IPlayer player = EasyMock.createMock(IPlayer.class);
 		IGameController controller = factory.setupGame(GameType.ROCK_PAPER_SCISSORS, player, 44);
 		assertNotNull(controller);
-		assertTrue(controller instanceof TicTacToeController);
+		assertTrue(controller instanceof RockPaperScissorsController);
 		
 		assertEquals(44, controller.getGameId());
 		assertEquals(GameType.ROCK_PAPER_SCISSORS, controller.getGameType());

@@ -16,7 +16,6 @@ import skrull.rmi.server.SkrullClientUpdater;
 
 public class SkrullServerStarter extends RmiStarter {
 
-	private boolean multiThreaded;
 
 	public SkrullServerStarter() throws Exception {
 		this(true);
@@ -24,7 +23,6 @@ public class SkrullServerStarter extends RmiStarter {
 
 	public SkrullServerStarter(boolean multiThreaded) throws Exception {
 		super();
-		this.multiThreaded = multiThreaded;
 	}
 	public static void main(String[] args) throws Exception {
 

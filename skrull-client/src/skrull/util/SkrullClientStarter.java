@@ -55,8 +55,4 @@ public class SkrullClientStarter extends RmiStarter {
 		
 	}
 
-	private IClientAction getStartupAction(UUID playerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

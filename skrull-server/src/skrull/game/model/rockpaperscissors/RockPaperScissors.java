@@ -1,4 +1,4 @@
-package skrull.game.model.tictactoe;
+package skrull.game.model.rockpaperscissors;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
@@ -7,10 +7,10 @@ import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
 
 
-public class TicTacToe extends AbstractGameModel{
+public class RockPaperScissors extends AbstractGameModel{
 
-	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
-		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater);
+	public RockPaperScissors(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
+		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater);
 	}
 
 	@Override

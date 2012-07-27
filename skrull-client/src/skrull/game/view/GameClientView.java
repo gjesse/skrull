@@ -18,7 +18,7 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.rmi.client.IClientListener;
 
-public class GameClientView extends JFrame {
+public class GameClientView extends JFrame implements IGameClientView {
 
 	private static final long serialVersionUID = 733356106858477245L;
 	private static final String IMAGE_DIR = System.getProperty("image.dir");
@@ -56,6 +56,10 @@ public class GameClientView extends JFrame {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see skrull.game.view.IGameClientView#modelChanged(skrull.game.model.IGameModel)
+	 */
+	@Override
 	public void modelChanged(IGameModel model) {
 		System.out.println("model changed.. " + model);
 		updateBoard(model);
@@ -114,7 +118,7 @@ public class GameClientView extends JFrame {
 	        setVisible(true);
 
 	}
-	public void buildClientGameView() {
+	private void buildClientGameView() {
 				Handler handler = new Handler();
 		//		exitButton = new JButton("Exit");
 		//		exitButton.addActionListener(handler);
@@ -156,7 +160,7 @@ public class GameClientView extends JFrame {
 				
 			}
 		/************************************************************************************************************/
-	public void buildClientMainView(){
+	private void buildClientMainView(){
 				
 				JFrame mainFrame = new JFrame("User: " + playerId.toString());
 				
@@ -373,6 +377,10 @@ public class GameClientView extends JFrame {
 		chatWindow.setText(model.getChatContents());
 	}
 	
+	/* (non-Javadoc)
+	 * @see skrull.game.view.IGameClientView#getChatText()
+	 */
+	@Override
 	public String getChatText(){
 		return chatTextInputField.getText();
 	}

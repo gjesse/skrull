@@ -9,6 +9,7 @@ import java.util.UUID;
 import skrull.game.view.ClientInputHandler;
 import skrull.game.view.GameClientView;
 import skrull.game.view.IClientAction;
+import skrull.game.view.IGameClientView;
 import skrull.rmi.client.ClientListener;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.client.ServerUpdater;
@@ -31,7 +32,7 @@ public class SkrullClientStarter extends RmiStarter {
 			
 			ServerUpdater serverUpdater = new ServerUpdater();
 			ClientInputHandler cih = new ClientInputHandler(serverUpdater, playerId);
-			GameClientView view = new GameClientView(cih, playerId);
+			IGameClientView view = new GameClientView(cih, playerId);
 			cih.setView(view);
 
             IClientListener listener = new ClientListener(view);

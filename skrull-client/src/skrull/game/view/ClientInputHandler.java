@@ -13,7 +13,7 @@ public class ClientInputHandler {
 	private IPlayer player;
 	private int gameId; // is this necessary?
 	public IServerUpdater serverUpdater;
-	private GameClientView view;
+	private IGameClientView view;
 
 	public ClientInputHandler(ServerUpdater serverUpdater, UUID playerId ) {
 		this.serverUpdater = serverUpdater;
@@ -41,7 +41,7 @@ public class ClientInputHandler {
 		return new ClientAction(gameId, player, ActionType.JOIN_SERVER, GameType.DEFAULT, null, null);
 	}
 
-	public void setView(GameClientView view) {
+	public void setView(IGameClientView view) {
 		this.view = view;
 	}
 }

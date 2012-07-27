@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 import skrull.game.model.IGameModel;
 
 /**
- * entry point for updates to the client/player side
+ * entry point for updates to the client/player side.
  * @author jesse
  *
  */

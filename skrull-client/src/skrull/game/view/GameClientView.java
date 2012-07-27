@@ -30,6 +30,7 @@ public class GameClientView extends JFrame {
 	JButton sendButton;
 	JButton startButton;
 	JButton joinButton;
+	JPanel cards;
 	
 	String sampleGameList[] = {"Tic-Tac-Toe", "Rock-Paper-Scissors","No Game"};
 	String sampleGamesToJoin[] = {"sampleGame1","sampleGame2","sampleGame3","sampleGame4",
@@ -46,8 +47,11 @@ public class GameClientView extends JFrame {
 		
 		
 		//initBoard();
+	//	cards = new JPanel(new CardLayout());
+		//cards.add(buildClientMainView());
+	//	cards.add(buildClientGameView());
 		buildClientMainView();
-		buildClientGameView();
+	//	buildClientGameView();
 		
 		
 	}
@@ -67,7 +71,7 @@ public class GameClientView extends JFrame {
 	        
 	        Panel p = new Panel();
 	        
-	        chatWindow = new JTextArea(44,4);
+	        chatWindow = new JTextArea(5,20);
 	        chatWindow.setText("...");
 	        
 	        p.add(chatWindow);
@@ -111,24 +115,26 @@ public class GameClientView extends JFrame {
 
 	}
 	public void buildClientGameView() {
-
-				exitButton = new JButton("Exit");
+				Handler handler = new Handler();
+		//		exitButton = new JButton("Exit");
+		//		exitButton.addActionListener(handler);
+				
 				JFrame gameWindowFrame = new JFrame("Skrull");						//overall window frame title
 				
-				JPanel userPanel = new JPanel();									
-				userPanel.add(exitButton, null);
+	//			JPanel userPanel = new JPanel();									
+	//			userPanel.add(exitButton, null);
 				
 				
 		/*******************************************************************************************		
 				//hoping to set up UI in a way that we have the left side of the window as the game 
 				//and the right side as the housing for the chat client
 		*********************************************************************************************/		
-				JPanel myChattingPanel = new JPanel();
-				myChattingPanel.add(buildChatClient());
+		//		JPanel myChattingPanel = new JPanel();
+		//		myChattingPanel.add(buildChatClient());
 				
 				
 				JPanel gameBoardPanel = new JPanel();
-				gameBoardPanel.setPreferredSize(new Dimension(550,0));
+				gameBoardPanel.setPreferredSize(new Dimension(600,0));
 				gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	//trying to create a border that will surround the game panel; not sure what the 3 does
 				gameBoardPanel.setBackground(Color.WHITE);
 				
@@ -138,11 +144,11 @@ public class GameClientView extends JFrame {
 				//within the game panel
 				
 				//gameBoardPanel.add(sampleTicTacToeBoard());
-				gameBoardPanel.add(sampleRockPaperScissorBoard());
+				//gameBoardPanel.add(sampleRockPaperScissorBoard());
 				
 				gameWindowFrame.getContentPane().add(gameBoardPanel,BorderLayout.WEST);		
-				gameWindowFrame.getContentPane().add(myChattingPanel, BorderLayout.EAST);	
-				gameWindowFrame.getContentPane().add(userPanel,BorderLayout.SOUTH);
+		//		gameWindowFrame.getContentPane().add(myChattingPanel, BorderLayout.EAST);	
+		//		gameWindowFrame.getContentPane().add(userPanel,BorderLayout.SOUTH);
 				
 				gameWindowFrame.setSize(800, 600);
 				gameWindowFrame.setResizable(false);
@@ -344,7 +350,6 @@ public class GameClientView extends JFrame {
 		JButton rockButton = new JButton(new ImageIcon(buttonIcon2));
 		JButton scissorButton = new JButton(new ImageIcon(buttonIcon3));
 ;
-		
 		paperButton.setBorder(BorderFactory.createEmptyBorder());
 		rockButton.setBorder(BorderFactory.createEmptyBorder());
 		scissorButton.setBorder(BorderFactory.createEmptyBorder());

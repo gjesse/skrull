@@ -55,7 +55,7 @@ public class SkrullServerEndToEndTest {
 	public void testEndToEndJoinServerBasic() throws Exception {
 
 
-		SkrullServerStarter starter = new SkrullServerStarter(false);
+		SkrullServerStarter starter = new SkrullServerStarter();
 
 		IServerUpdater serverUpdater = new ServerUpdater();
 		

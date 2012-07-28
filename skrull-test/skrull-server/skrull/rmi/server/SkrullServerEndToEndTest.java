@@ -67,7 +67,7 @@ public class SkrullServerEndToEndTest {
 		this.actionMessage = actionMessage;
 		this.move = move;
 		 */
-		int gameId = -1;
+		int gameId = 0;
 		IPlayer player = EasyMock.createMock(IPlayer.class);
 		IMove move = EasyMock.createMock(IMove.class);
 		IClientAction action = new ClientAction(gameId, player, ActionType.JOIN_SERVER, GameType.DEFAULT, null, move );

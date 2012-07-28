@@ -30,6 +30,7 @@ public class SkrullClientUpdater implements IClientUpdater {
 
 	private void notifyListener(IGameModel model, IPlayer player) {
 		 // TODO: might be good to put this in a map for later
+		// TODO: we should be able to deal with failure here somehow
 		 try {
 			UUID playerId = player.getPlayerId();
 			IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + playerId);

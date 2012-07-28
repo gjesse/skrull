@@ -100,7 +100,11 @@ public abstract class AbstractGameModel implements IGameModel {
 	 */
 	@Override
 	public void checkActivity() {
-		throw new UnsupportedOperationException();
+		final long now = System.currentTimeMillis();
+		for (IPlayer p : getPlayers()){
+			// check each player last activity time against some timeout
+			// and verify network
+		}
 	}
 
 	public void updateListener() {

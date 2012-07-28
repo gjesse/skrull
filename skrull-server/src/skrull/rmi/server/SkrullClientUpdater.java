@@ -29,12 +29,10 @@ public class SkrullClientUpdater implements IClientUpdater {
 	}
 
 	private void notifyListener(IGameModel model, IPlayer player) {
-		 // TODO: might be good to put this in a map for later
-		// TODO: we should be able to deal with failure here somehow
 		 try {
-			UUID playerId = player.getPlayerId();
-			IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + playerId);
-			listener.modelChanged(model);
+			//final UUID playerId = player.getPlayerId();
+			getListener(player.getPlayerId()).modelChanged(model);
+//			listener.modelChanged(model);
 		} catch (AccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,5 +43,26 @@ public class SkrullClientUpdater implements IClientUpdater {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+	}
+
+	private IClientListener getListener(UUID playerId) throws AccessException, RemoteException, NotBoundException {
+		// TODO Cache this!
+		// TODO: figure out how to deal with failure
+
+		final IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + playerId);
+		return listener;
+		
+	}
+
+	@Override
+	public boolean isPlayerConnected(IPlayer p) {
+		boolean isConnected = false;
+		try {
+			isConnected = getListener(p.getPlayerId()).isConnected();
+		}catch(Exception e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isConnected;
 	}
 }

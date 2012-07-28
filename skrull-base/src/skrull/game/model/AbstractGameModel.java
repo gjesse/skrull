@@ -19,14 +19,16 @@ import skrull.rmi.server.IClientUpdater;
  *
  */
 public abstract class AbstractGameModel implements IGameModel {
+
+	private static final long serialVersionUID = -5970164504419304864L;
 	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
 	private IBoard board;
 	private IPlayer activeplayer;
 	private IPlayer winner;
 	private boolean finished;
-	private Date lastActivity;
+	private long lastActivity;
 	private IClientAction lastAction;
-	private IGameController gameController;
+	//private IGameController gameController;
 	private IClientUpdater clientUpdater;
 	int gameId;
 	private GameType gameType;
@@ -102,9 +104,14 @@ public abstract class AbstractGameModel implements IGameModel {
 	public void checkActivity() {
 		final long now = System.currentTimeMillis();
 		for (IPlayer p : getPlayers()){
-			// check each player last activity time against some timeout
-			// and verify network
+			if (!clientUpdater.isPlayerConnected(p)){
+				throw new RuntimeException("player id " + p.getPlayerId() + " is disconnected");
+			}
 		}
+		
+		// TODO: update last activity time and also check that here
+		// for the active player (to guard against 'walk-aways'
+		
 	}
 
 	public void updateListener() {
@@ -128,5 +135,29 @@ public abstract class AbstractGameModel implements IGameModel {
 	
 	protected void addPlayer(IPlayer player){
 		this.players.add(player);
+	}
+
+	public IBoard getBoard() {
+		return board;
+	}
+
+	public void setBoard(IBoard board) {
+		this.board = board;
+	}
+
+	public IPlayer getActiveplayer() {
+		return activeplayer;
+	}
+
+	public void setActiveplayer(IPlayer activeplayer) {
+		this.activeplayer = activeplayer;
+	}
+
+	public IClientAction getLastAction() {
+		return lastAction;
+	}
+
+	public void setLastAction(IClientAction lastAction) {
+		this.lastAction = lastAction;
 	}
 }

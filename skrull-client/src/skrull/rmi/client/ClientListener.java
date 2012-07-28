@@ -19,6 +19,11 @@ public class ClientListener implements IClientListener {
 		gameClientView.modelChanged(model);
 	}
 
+	@Override
+	public boolean isConnected() {
+		return true;
+	}
+
 
 
 }

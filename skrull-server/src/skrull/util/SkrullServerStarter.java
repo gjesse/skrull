@@ -4,6 +4,11 @@ import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import skrull.game.controller.ActivityMonitor;
 import skrull.game.controller.IActivityMonitor;
@@ -19,11 +24,8 @@ import skrull.rmi.server.SkrullClientUpdater;
 public class SkrullServerStarter extends RmiStarter {
 
 
-	public SkrullServerStarter() throws Exception {
-		this(true);
-	}
 
-	public SkrullServerStarter(boolean multiThreaded) throws Exception {
+	public SkrullServerStarter() throws Exception {
 		super();
 	}
 	public static void main(String[] args) throws Exception {
@@ -42,6 +44,7 @@ public class SkrullServerStarter extends RmiStarter {
     	    IGameFactory factory = new GameFactory(updater);
     	    IServerController controller = new ServerController(factory);
     	    IActivityMonitor monitor = new ActivityMonitor(controller);
+    	    spawnThread(monitor);
             IServerListener listener = new ServerListener(controller);
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
@@ -53,5 +56,12 @@ public class SkrullServerStarter extends RmiStarter {
         }
 
 		
+	}
+
+	private void spawnThread(IActivityMonitor monitor) {
+
+		ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor();
+		// svc.execute(monitor);
+		svc.scheduleAtFixedRate(monitor, 2000, IActivityMonitor.CHECK_INTERVAL_MS, TimeUnit.MILLISECONDS);
 	}
 }

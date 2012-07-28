@@ -5,30 +5,31 @@ import java.util.concurrent.TimeUnit;
 public class ActivityMonitor implements IActivityMonitor {
 	
 	private static final long serialVersionUID = 3015280422260700785L;
-	final private int CHECK_INTERVAL_SECONDS = 20;
 	final private IServerController serverController;
+	private int checkInterval = CHECK_INTERVAL_MS;
 
 	
 	public ActivityMonitor (IServerController serverController){
 		this.serverController = serverController;
-		this.run();
+	}
+	
+	/**
+	 * override the default check interval
+	 * time unit is in milliseconds
+	 * @param checkInterval
+	 */
+	public void setCheckInterval(int checkInterval){
+		this.checkInterval  = checkInterval;
 	}
 	
 	/* (non-Javadoc)
 	 * @see skrull.game.controller.IActivityMonitor#checkActivity(java.lang.Object)
 	 */
 	@Override
-	public void checkActivity(IServerController serverController) {
-	
+	public void checkActivity() {
 		
-		try {
-			TimeUnit.SECONDS.sleep(CHECK_INTERVAL_SECONDS);
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
+		// TODO: log this instead
+		System.out.println("activity monitor running");
 		for (IGameController c : serverController.getControllers()){
 			c.checkActivity();
 		}
@@ -37,7 +38,6 @@ public class ActivityMonitor implements IActivityMonitor {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		checkActivity();
 	}
 }

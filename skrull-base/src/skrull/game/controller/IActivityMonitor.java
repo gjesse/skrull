@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public interface IActivityMonitor extends Runnable, Serializable{
 
-	public abstract void checkActivity(IServerController serverController);
+	final static public int CHECK_INTERVAL_MS = 5000;
+
+	public abstract void checkActivity();
 
 }

@@ -6,20 +6,10 @@ public class ActivityMonitor implements IActivityMonitor {
 	
 	private static final long serialVersionUID = 3015280422260700785L;
 	final private IServerController serverController;
-	private int checkInterval = CHECK_INTERVAL_MS;
 
 	
 	public ActivityMonitor (IServerController serverController){
 		this.serverController = serverController;
-	}
-	
-	/**
-	 * override the default check interval
-	 * time unit is in milliseconds
-	 * @param checkInterval
-	 */
-	public void setCheckInterval(int checkInterval){
-		this.checkInterval  = checkInterval;
 	}
 	
 	/* (non-Javadoc)
@@ -38,6 +28,13 @@ public class ActivityMonitor implements IActivityMonitor {
 
 	@Override
 	public void run() {
-		checkActivity();
+		try {
+			checkActivity();
+		}
+		// catch anything and log it
+		catch (Throwable t){
+			// TODO: log this
+			t.printStackTrace();
+		}
 	}
 }

@@ -33,8 +33,7 @@ public abstract class AbstractGameController implements IGameController {
 
 	@Override
 	public void checkActivity() {
-		// TODO Auto-generated method stub
-
+		gameModel.checkActivity();
 	}
 
 	@Override

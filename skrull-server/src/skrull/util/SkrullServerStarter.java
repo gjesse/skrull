@@ -58,10 +58,13 @@ public class SkrullServerStarter extends RmiStarter {
 		
 	}
 
-	private void spawnThread(IActivityMonitor monitor) {
+	private void spawnThread(Runnable monitor) {
 
 		ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor();
 		// svc.execute(monitor);
-		svc.scheduleAtFixedRate(monitor, 2000, IActivityMonitor.CHECK_INTERVAL_MS, TimeUnit.MILLISECONDS);
+		long interval = Long.parseLong(
+				System.getProperty("activity.monitor.interval", String.valueOf(IActivityMonitor.CHECK_INTERVAL_MS))
+				);
+		svc.scheduleAtFixedRate(monitor, 1000, interval, TimeUnit.MILLISECONDS);
 	}
 }

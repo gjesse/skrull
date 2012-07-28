@@ -1,6 +1,8 @@
 package skrull.game.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,6 +24,7 @@ public class ServerController implements IServerController {
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;
 		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, nextGameId());
+		activeGameControllers.add(defaultGameController);
 	}
 	/* (non-Javadoc)
 	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
@@ -33,6 +36,7 @@ public class ServerController implements IServerController {
 			case CHAT:
 			case MOVE:
 			case JOIN_GAME:
+			case JOIN_SERVER:
 			{
 				final IGameController game = getActiveGameController(action);
 				// for now if the game isn't found this will throw  
@@ -42,12 +46,12 @@ public class ServerController implements IServerController {
 			break;
 	
 			// first-time connection, come on!
-			case JOIN_SERVER:
+			//case JOIN_SERVER:
 				// what to do here?
 				// assign player into the default game, give them a player id
 				// 1. hook up the client listener for later notifications
-				defaultGameController.processGameAction(action);
-			break;
+				//defaultGameController.processGameAction(action);
+			//break;
 			
 
 			case QUIT:
@@ -106,7 +110,7 @@ public class ServerController implements IServerController {
 			}
 		}
 		
-		return defaultGameController;
+		return null;
 	}
 
 	protected void addGameController(IGameController controller){
@@ -118,7 +122,7 @@ public class ServerController implements IServerController {
 	 */
 	@Override
 	public Collection<IGameController> getControllers() {
-		throw new UnsupportedOperationException();
+		return Collections.unmodifiableList(activeGameControllers);
 	}
 
 

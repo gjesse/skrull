@@ -35,7 +35,6 @@ public class ActivityMonitorTest {
 		
 		
 		monitor = new ActivityMonitor(serverController);
-		monitor.setCheckInterval(5);
 	}
 
 	@Test

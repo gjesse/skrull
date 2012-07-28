@@ -174,10 +174,10 @@ public class GameClientView extends JFrame implements IGameClientView {
 				middle.setPreferredSize(new Dimension(300,0));
 				right.setPreferredSize(new Dimension(200,0));
 				
-				startButton = new JButton("Start Game");
+				startButton = new JButton("CREATE_GAME");
 				startButton.addActionListener(handler);
 				
-				joinButton = new JButton("Join Game");
+				joinButton = new JButton("JOIN_GAME");
 				joinButton.addActionListener(handler);
 				
 				/*******************LEFT PROPERTIES************************/
@@ -372,6 +372,7 @@ public class GameClientView extends JFrame implements IGameClientView {
 		rpsBoard.add(scissorButton,c);
 		return rpsBoard;
 	}
+	
 	private void updateBoard(IGameModel model) {
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
 		chatWindow.setText(model.getChatContents());

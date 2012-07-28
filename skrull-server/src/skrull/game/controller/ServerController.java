@@ -16,8 +16,7 @@ public class ServerController implements IServerController {
 	// maintains a sequence of id numbers for each game
 	private AtomicInteger gameIdSequence = new AtomicInteger(0);
 
-	// TODO: implement activity monitor
-	private ActivityMonitor activityMontor;
+	private IActivityMonitor activityMontor;
 	
 
 	public ServerController(IGameFactory gameFactory){

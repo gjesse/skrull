@@ -40,12 +40,28 @@ public class ServerControllerTest {
 		 * @throws Exception
 		 */
 	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testProcessClientActionCreateGameDefault() throws Exception {
+		IPlayer mockPlayer = EasyMock.createNiceMock(IPlayer.class);
+		EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME).atLeastOnce();
+		EasyMock.expect(action.getPlayer()).andReturn(mockPlayer);
+		EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
+
+		
+		EasyMock.replay(action, gameFactory, defaultGameController);
+		controller = new ServerController(gameFactory);
+		//controller.addGameController(gameController);
+		controller.processClientAction(action);
+		EasyMock.verify(action, gameFactory, defaultGameController);
+
+	}
+	
 		@Test
-		public void testProcessClientActionCreateGame() throws Exception {
+		public void testProcessClientActionCreateGameSpecific() throws Exception {
 			IPlayer mockPlayer = EasyMock.createNiceMock(IPlayer.class);
 			EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME).atLeastOnce();
 			EasyMock.expect(action.getPlayer()).andReturn(mockPlayer);
-			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE).atLeastOnce();
 
 			EasyMock.expect(gameFactory.setupGame(GameType.TIC_TAC_TOE, mockPlayer, 1)).andReturn(gameController);
 			
@@ -54,117 +70,256 @@ public class ServerControllerTest {
 			
 			EasyMock.replay(action, gameFactory, gameController);
 			controller = new ServerController(gameFactory);
-			//controller.addGameController(gameController);
+			controller.addGameController(gameController);
 			controller.processClientAction(action);
 			EasyMock.verify(action, gameFactory, gameController);
 
 		}
 		
 		@Test
-		public void testProcessClientActionJoin() throws Exception {
+		public void testProcessClientActionJoinDefault() throws Exception {
 
 
 			ActionType t = ActionType.JOIN_GAME;
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
-			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
 			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
 			
-			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
-			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT).atLeastOnce();
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID);
 
 
 			
-			gameController.processGameAction(action);
+			defaultGameController.processGameAction(action);
 			EasyMock.expectLastCall();
 			
-			EasyMock.replay(action, gameController);
+			EasyMock.replay(gameFactory, action, defaultGameController);
 			controller = new ServerController(gameFactory);
-			controller.addGameController(gameController);
+			//controller.addGameController(gameController);
 			controller.processClientAction(action);
-			EasyMock.verify(action, gameController);
+			EasyMock.verify(gameFactory, action, defaultGameController);
 			
 
 		}
 
 		
 		@Test
-		public void testProcessClientActionMove() throws Exception {
+		public void testProcessClientActionJoinSpecific() throws Exception {
+
+
+			final ActionType t = ActionType.JOIN_GAME;
+			
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE).atLeastOnce();
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID + 1).atLeastOnce();
+			
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT).anyTimes();
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID).anyTimes();
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GameType.TIC_TAC_TOE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID + 1);
+			
+			
+			
+
+
+			
+			gameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(gameController, gameFactory, action, defaultGameController);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
+			EasyMock.verify(gameController, gameFactory, action, defaultGameController);
+			
+
+		}
+		
+		@Test
+		public void testProcessClientActionMoveDefault() throws Exception {
 
 
 			ActionType t = ActionType.MOVE;
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
-			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
 			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
 			
-			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
-			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT);
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID);
+
+
+			
+			defaultGameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(gameFactory,action, defaultGameController);
+			controller = new ServerController(gameFactory);
+			//controller.addGameController(gameController);
+			controller.processClientAction(action);
+			EasyMock.verify(gameFactory,action, defaultGameController);
+			
+
+		}
+		
+		
+		@Test
+		public void testProcessClientActionMoveSpecific() throws Exception {
+
+
+			final ActionType t = ActionType.MOVE;
+			
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE).atLeastOnce();
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID + 1).atLeastOnce();
+			
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT).anyTimes();
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID).anyTimes();
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GameType.TIC_TAC_TOE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID + 1);
+			
+			
+			
 
 
 			
 			gameController.processGameAction(action);
 			EasyMock.expectLastCall();
 			
-			EasyMock.replay(action, gameController);
+			EasyMock.replay(gameController, gameFactory, action, defaultGameController);
 			controller = new ServerController(gameFactory);
 			controller.addGameController(gameController);
 			controller.processClientAction(action);
-			EasyMock.verify(action, gameController);
+			EasyMock.verify(gameController, gameFactory, action, defaultGameController);
 			
 
 		}
 		
+		
 		@Test
-		public void testProcessClientActionChat() throws Exception {
+		public void testProcessClientActionChatDefault() throws Exception {
 
 
 			ActionType t = ActionType.CHAT;
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
-			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
 			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
 			
-			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
-			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT);
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID);
 
 
 			
-			gameController.processGameAction(action);
+			defaultGameController.processGameAction(action);
 			EasyMock.expectLastCall();
 			
-			EasyMock.replay(action, gameController);
+			EasyMock.replay(gameFactory, action, defaultGameController);
 			controller = new ServerController(gameFactory);
-			controller.addGameController(gameController);
+			//controller.addGameController(gameController);
 			controller.processClientAction(action);
-			EasyMock.verify(action, gameController);
+			EasyMock.verify(gameFactory, action, defaultGameController);
 			
 
 		}
 		
 		@Test
-		public void testProcessClientActionQuit() throws Exception {
+		public void testProcessClientActionChatSpecific() throws Exception {
 
 
-			ActionType t = ActionType.QUIT;
+			final ActionType t = ActionType.CHAT;
+			
 			EasyMock.expect(action.getActionType()).andReturn(t);
 			
-			EasyMock.expect(action.getGameType()).andReturn(GAME_TYPE);
-			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE).atLeastOnce();
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID + 1).atLeastOnce();
 			
-			EasyMock.expect(gameController.getGameType()).andReturn(GAME_TYPE);
-			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID);
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT).anyTimes();
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID).anyTimes();
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GameType.TIC_TAC_TOE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID + 1);
+			
+			
+			
 
 
 			
 			gameController.processGameAction(action);
 			EasyMock.expectLastCall();
 			
-			EasyMock.replay(action, gameController);
+			EasyMock.replay(gameController, gameFactory, action, defaultGameController);
 			controller = new ServerController(gameFactory);
 			controller.addGameController(gameController);
 			controller.processClientAction(action);
-			EasyMock.verify(action, gameController);
+			EasyMock.verify(gameController, gameFactory, action, defaultGameController);
+			
+
+		}
+		
+		
+		@Test
+		public void testProcessClientActionQuitDefault() throws Exception {
+
+
+			ActionType t = ActionType.QUIT;
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
+			
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT);
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID);
+
+
+			
+			defaultGameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(gameFactory, action, defaultGameController);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
+			EasyMock.verify(gameFactory, action, defaultGameController);
+			
+
+		}
+		
+		@Test
+		public void testProcessClientActionQuitSpecific() throws Exception {
+
+
+			final ActionType t = ActionType.QUIT;
+			
+			EasyMock.expect(action.getActionType()).andReturn(t);
+			
+			EasyMock.expect(action.getGameType()).andReturn(GameType.TIC_TAC_TOE).atLeastOnce();
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID + 1).atLeastOnce();
+			
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT).anyTimes();
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID).anyTimes();
+			
+			EasyMock.expect(gameController.getGameType()).andReturn(GameType.TIC_TAC_TOE);
+			EasyMock.expect(gameController.getGameId()).andReturn(GAME_ID + 1);
+			
+			
+			
+
+
+			
+			gameController.processGameAction(action);
+			EasyMock.expectLastCall();
+			
+			EasyMock.replay(gameController, gameFactory, action, defaultGameController);
+			controller = new ServerController(gameFactory);
+			controller.addGameController(gameController);
+			controller.processClientAction(action);
+			EasyMock.verify(gameController, gameFactory, action, defaultGameController);
 			
 
 		}
@@ -178,11 +333,17 @@ public class ServerControllerTest {
 			defaultGameController.processGameAction(action);
 			EasyMock.expectLastCall();
 			
-			EasyMock.replay(action, gameFactory);
+			EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
+			EasyMock.expect(action.getGameId()).andReturn(GAME_ID);
+			
+			EasyMock.expect(defaultGameController.getGameType()).andReturn(GameType.DEFAULT);
+			EasyMock.expect(defaultGameController.getGameId()).andReturn(GAME_ID);
+			
+			EasyMock.replay(defaultGameController, action, gameFactory);
 			controller = new ServerController(gameFactory);
-			controller.addGameController(gameController);
+			//controller.addGameController(gameController);
 			controller.processClientAction(action);
-			EasyMock.verify(action, gameFactory);
+			EasyMock.verify(defaultGameController, action, gameFactory);
 		}
 
 }

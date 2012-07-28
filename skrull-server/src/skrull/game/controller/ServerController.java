@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 
 public class ServerController implements IServerController {
@@ -23,7 +24,8 @@ public class ServerController implements IServerController {
 
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;
-		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, nextGameId());
+		int next =  nextGameId();
+		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, next);
 		activeGameControllers.add(defaultGameController);
 	}
 	/* (non-Javadoc)
@@ -36,12 +38,12 @@ public class ServerController implements IServerController {
 			case CHAT:
 			case MOVE:
 			case JOIN_GAME:
-			case JOIN_SERVER:
+			case JOIN_SERVER: // TODO: join server is not needed - we can just use JOIN_GAME for the default game in this case
 			{
-				final IGameController game = getActiveGameController(action);
+				final IGameController gameController = getActiveGameController(action);
 				// for now if the game isn't found this will throw  
 				// NullPointerException. 
-				game.processGameAction(action);
+				gameController.processGameAction(action);
 			}	
 			break;
 	
@@ -72,6 +74,10 @@ public class ServerController implements IServerController {
 			// setting up a new game
 			case CREATE_GAME:
 			{
+				if (action.getGameType().equals(GameType.DEFAULT)){
+					throw new UnsupportedOperationException("Cannot create additional default games");
+				}
+				
 				// first we should remove the player from the default game...
 				defaultGameController.processGameAction(action);
 
@@ -102,11 +108,11 @@ public class ServerController implements IServerController {
 	 */
 	private IGameController getActiveGameController(IClientAction action) {
 		
-		for (IGameController game : activeGameControllers)
+		for (IGameController gameController : activeGameControllers)
 		{
-			if (game.getGameType().equals(action.getGameType())
-					&& game.getGameId() == action.getGameId()){
-				return game;
+			if (gameController.getGameType().equals(action.getGameType())
+					&& gameController.getGameId() == action.getGameId()){
+				return gameController;
 			}
 		}
 		

@@ -19,12 +19,12 @@ import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
 import skrull.game.view.IGameClientView;
 import skrull.rmi.PolicyFileLocater;
-import skrull.rmi.SystemPropertyReader;
 import skrull.rmi.client.ClientListener;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.server.IServerListener;
 import skrull.rmi.server.ServerListener;
 import skrull.util.SkrullClientStarter;
+import skrull.util.SystemPropertyReader;
 
 /**
  * Tests the startup config

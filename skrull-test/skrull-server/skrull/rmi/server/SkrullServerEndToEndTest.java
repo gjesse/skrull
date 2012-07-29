@@ -18,11 +18,11 @@ import skrull.game.view.ClientAction;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
 import skrull.rmi.PolicyFileLocater;
-import skrull.rmi.SystemPropertyReader;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.client.IServerUpdater;
 import skrull.rmi.client.ServerUpdater;
 import skrull.util.SkrullServerStarter;
+import skrull.util.SystemPropertyReader;
 
 public class SkrullServerEndToEndTest {
 

@@ -1,7 +1,8 @@
 package skrull.util;
 
+import org.apache.log4j.BasicConfigurator;
+
 import skrull.rmi.PolicyFileLocater;
-import skrull.rmi.SystemPropertyReader;
 
 /**
  * handles bootstrapping and starting of client/server apps
@@ -25,7 +26,6 @@ public abstract class RmiStarter {
         if(System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
-
         doCustomRmiHandling();
     }
 

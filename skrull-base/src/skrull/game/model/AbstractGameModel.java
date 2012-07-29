@@ -1,20 +1,17 @@
 package skrull.game.model;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+
+import org.apache.log4j.Logger;
 
 import skrull.SkrullException;
 import skrull.SkrullGameException;
-import skrull.game.controller.IGameController;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
-import skrull.rmi.SkrullRMIException;
 import skrull.rmi.server.IClientUpdater;
+import skrull.util.logging.SkrullLogger;
 
 /**
  * General logic common to all games.
@@ -38,6 +35,8 @@ public abstract class AbstractGameModel implements IGameModel {
 	private StringBuffer chatBuffer = new StringBuffer(1024);
 	private String broadcastMsg;
 
+	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);
+	
 	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
 		this(gameId, type, updater);
 		this.players.add(startingPlayer);
@@ -141,8 +140,9 @@ public abstract class AbstractGameModel implements IGameModel {
 			}
 
 		} catch (SkrullException e) {
-			// TODO: log this
-			e.printStackTrace();
+			
+			logger.error(e.getMessage(), e);
+			
 			if (!this.getGameType().equals(GameType.DEFAULT)){
 				this.finished = true;
 			}

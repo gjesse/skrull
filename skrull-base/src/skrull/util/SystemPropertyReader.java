@@ -1,7 +1,8 @@
-package skrull.rmi;
+package skrull.util;
 
 import java.io.InputStream;
 import java.util.Properties;
+
 
 public class SystemPropertyReader {
     public static void readProperties()
@@ -9,7 +10,7 @@ public class SystemPropertyReader {
 
 
     	final String propertyFile = System.getProperty("skrull.properties");
-    	InputStream is = PolicyFileLocater.class.getResourceAsStream(propertyFile);
+    	InputStream is = SystemPropertyReader.class.getResourceAsStream(propertyFile);
         
         Properties p =
             new Properties(System.getProperties());
@@ -17,5 +18,6 @@ public class SystemPropertyReader {
 
         // set the system properties
         System.setProperties(p);
+
     }
 }

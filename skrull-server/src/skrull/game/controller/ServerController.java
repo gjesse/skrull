@@ -17,7 +17,7 @@ public class ServerController implements IServerController {
 	private IGameController defaultGameController;
 
 	// maintains a sequence of id numbers for each game
-	private AtomicInteger gameIdSequence = new AtomicInteger(0);
+	private AtomicInteger gameIdSequence = new AtomicInteger( IGameFactory.DEFAULT_GAME_ID );
 
 	private IActivityMonitor activityMontor;
 	

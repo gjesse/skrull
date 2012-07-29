@@ -123,24 +123,32 @@ public abstract class AbstractGameModel implements IGameModel {
 	public void checkActivity() {
 
 		
+		IPlayer playerBeingChecked = null;
+		
 		final long now = System.currentTimeMillis();
 
 		try {
 
 			for (IPlayer p : getPlayers()){
-					clientUpdater.checkPlayerConnected(p);
+					playerBeingChecked = p;
+					clientUpdater.checkPlayerConnected(playerBeingChecked);
 					
 			}
 			
 			if ((lastMoveTime + getInactivityTimeout()) < now){
-				throw new SkrullGameException("Player " + activeplayer.getPlayerId() + " timed out. game over");
+				playerBeingChecked = activeplayer;
+				throw new SkrullGameException("Player " + playerBeingChecked.getPlayerId() + " timed out. game over");
 			}
 
 		} catch (SkrullException e) {
 			// TODO: log this
 			e.printStackTrace();
-			this.finished = true;
+			if (!this.getGameType().equals(GameType.DEFAULT)){
+				this.finished = true;
+			}
+			
 			this.broadcastMsg = e.getMessage();
+			this.players.remove(playerBeingChecked);
 			clientUpdater.modelChanged(this);
 		}
 

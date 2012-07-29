@@ -79,8 +79,9 @@ public class AbstractGameModelTest {
 
 			
 		EasyMock.replay(updater,player1, player2);
-		game.checkActivity();
-		assertEquals(msg, game.getBroadcastMessage());
+			game.checkActivity();
+			assertEquals(msg, game.getBroadcastMessage());
+			assertFalse(game.getPlayers().contains(player2));
 		EasyMock.verify(updater, player1, player2);
 	
 	}

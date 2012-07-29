@@ -12,4 +12,6 @@ public interface IGameClientView {
 
 	public abstract String getChatText();
 
+	public abstract int getGameId();
+
 }

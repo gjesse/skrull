@@ -28,11 +28,11 @@ public class GameFactoryTest {
 	@Test
 	public void testSetupDefaultGame() {
 		IPlayer player = EasyMock.createMock(IPlayer.class);
-		IGameController controller = factory.setupGame(GameType.DEFAULT, player, 44);
+		IGameController controller = factory.setupGame(GameType.DEFAULT, player,  IGameFactory.DEFAULT_GAME_ID);
 		assertNotNull(controller);
 		assertTrue(controller instanceof DefaultGameController);
 		
-		assertEquals(44, controller.getGameId());
+		assertEquals( IGameFactory.DEFAULT_GAME_ID, controller.getGameId());
 		assertEquals(GameType.DEFAULT, controller.getGameType());
 		
 	}

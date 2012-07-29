@@ -12,8 +12,7 @@ import skrull.game.view.IClientAction.ActionType;
 
 public class ServerControllerTest {
 
-	private static final GameType GAME_TYPE = GameType.DEFAULT;
-	private static final Integer GAME_ID = 0;
+	private static final Integer GAME_ID =  IGameFactory.DEFAULT_GAME_ID;
 	private ServerController controller;
 	private IGameFactory gameFactory;
 	private IClientAction action;

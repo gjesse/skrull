@@ -25,6 +25,7 @@ public class GameClientView extends JFrame implements IGameClientView {
 	private ClientInputHandler cih;
 	private UUID playerId;
 	private JTextField chatTextInputField;
+	private int gameId = IGameFactory.DEFAULT_GAME_ID;
 	JTextArea chatWindow;
 	JButton exitButton;
 	JButton sendButton;
@@ -63,6 +64,7 @@ public class GameClientView extends JFrame implements IGameClientView {
 	public void modelChanged(IGameModel model) {
 		System.out.println("model changed.. " + model);
 		updateBoard(model);
+		this.gameId = model.getGameId();
 	}
 
 	private void initBoard() {
@@ -396,7 +398,12 @@ public class GameClientView extends JFrame implements IGameClientView {
 
 	
    }
-   
+
+	@Override
+	public int getGameId() {
+		return gameId;
+	}
+	   
 
 
 	

@@ -9,6 +9,8 @@ public interface IGameFactory {
 		DEFAULT,TIC_TAC_TOE,ROCK_PAPER_SCISSORS;
 	}
 
+	public static final int DEFAULT_GAME_ID = 0;
+
 	/**
 	 * Should return a single GameController,
 	 *  with attendant gameModel and all leaf objects instantiated (except for additional players)

@@ -19,7 +19,7 @@ public class ActivityMonitor implements IActivityMonitor {
 	public void checkActivity() {
 		
 		// TODO: log this instead
-		System.out.println("activity monitor running");
+	//	System.out.println("activity monitor running");
 		for (IGameController c : serverController.getControllers()){
 			c.checkActivity();
 		}

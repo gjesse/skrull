@@ -3,6 +3,7 @@ package skrull.game.view;
 import java.awt.event.ActionEvent;
 import java.util.UUID;
 
+import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction.ActionType;
@@ -18,10 +19,11 @@ public class ClientInputHandler {
 	public ClientInputHandler(ServerUpdater serverUpdater, UUID playerId ) {
 		this.serverUpdater = serverUpdater;
 		this.player = new Player(playerId);
-		this.gameId = -1;
+		this.gameId =  IGameFactory.DEFAULT_GAME_ID; // starting game id
 	}
 
 	public void handleInput(ActionEvent e) {
+		gameId = view.getGameId();
 		ActionType type = ActionType.valueOf(e.getActionCommand());
 		
 		switch(type){

@@ -7,8 +7,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.UUID;
 
+import skrull.SkrullGameException;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
+import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IClientListener;
 
 public class SkrullClientUpdater implements IClientUpdater {
@@ -55,14 +57,15 @@ public class SkrullClientUpdater implements IClientUpdater {
 	}
 
 	@Override
-	public boolean isPlayerConnected(IPlayer p) {
-		boolean isConnected = false;
-		try {
-			isConnected = getListener(p.getPlayerId()).isConnected();
-		}catch(Exception e){
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return isConnected;
+	public void checkPlayerConnected(IPlayer p) throws SkrullRMIException {
+			try {
+				// can we call a method on the client w/out exception?
+				getListener(p.getPlayerId()).isConnected();
+			} catch (Exception e) {
+				// TODO: log this!
+				e.printStackTrace();
+				throw new SkrullRMIException("Player " + p.getPlayerId() + " is unreachable", e);
+			}
+		
 	}
 }

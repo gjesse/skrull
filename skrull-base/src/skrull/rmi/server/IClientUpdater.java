@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
+import skrull.rmi.SkrullRMIException;
 
 public interface IClientUpdater extends Serializable {
 
@@ -17,6 +18,7 @@ public interface IClientUpdater extends Serializable {
 	/**
 	 * Verify that the player client is connected still
 	 * @param p
+	 * @throws SkrullGameException 
 	 */
-	public boolean isPlayerConnected(IPlayer p);
+	public void checkPlayerConnected(IPlayer p) throws SkrullRMIException;
 }

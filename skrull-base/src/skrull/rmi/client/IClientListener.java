@@ -22,6 +22,6 @@ public interface IClientListener extends Remote {
 	 * the connection isn't there
 	 * @return TRUE
 	 */
-	public boolean isConnected();
+	public boolean isConnected() throws RemoteException;
 
 }

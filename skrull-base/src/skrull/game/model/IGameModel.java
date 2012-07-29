@@ -39,5 +39,7 @@ public interface IGameModel extends Serializable {
 	public abstract Collection<IPlayer> getPlayers();
 	
 	public abstract String getChatContents();
+
+	public abstract String getBroadcastMessage();
 	
 }

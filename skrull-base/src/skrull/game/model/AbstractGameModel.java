@@ -8,9 +8,12 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import skrull.SkrullException;
+import skrull.SkrullGameException;
 import skrull.game.controller.IGameController;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
+import skrull.rmi.SkrullRMIException;
 import skrull.rmi.server.IClientUpdater;
 
 /**
@@ -26,13 +29,14 @@ public abstract class AbstractGameModel implements IGameModel {
 	private IPlayer activeplayer;
 	private IPlayer winner;
 	private boolean finished;
-	private long lastActivity;
+	private long lastMoveTime;
 	private IClientAction lastAction;
 	//private IGameController gameController;
 	private IClientUpdater clientUpdater;
 	int gameId;
 	private GameType gameType;
 	private StringBuffer chatBuffer = new StringBuffer(1024);
+	private String broadcastMsg;
 
 	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
 		this(gameId, type, updater);
@@ -73,7 +77,22 @@ public abstract class AbstractGameModel implements IGameModel {
 	 * @see skrull.game.model.IGameModel#processMove(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public abstract void processMove(IClientAction action);
+	public final void processMove(IClientAction action){
+		// let the subclass do the actual move logic
+		doProcessMove(action);
+		
+		// then do some common move housekeeping
+		this.lastMoveTime = System.currentTimeMillis();
+		this.activeplayer = action.getPlayer();
+		this.lastAction = action;
+	}
+	
+	/**
+	 * implemented by subclasses
+	 * to implement the actual move logic
+	 * @param action
+	 */
+	protected abstract void doProcessMove(IClientAction action);
 	
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#isGameOver()
@@ -102,17 +121,46 @@ public abstract class AbstractGameModel implements IGameModel {
 	 */
 	@Override
 	public void checkActivity() {
-		final long now = System.currentTimeMillis();
-		for (IPlayer p : getPlayers()){
-			if (!clientUpdater.isPlayerConnected(p)){
-				throw new RuntimeException("player id " + p.getPlayerId() + " is disconnected");
-			}
-		}
+
 		
-		// TODO: update last activity time and also check that here
-		// for the active player (to guard against 'walk-aways'
+		final long now = System.currentTimeMillis();
+
+		try {
+
+			for (IPlayer p : getPlayers()){
+					clientUpdater.checkPlayerConnected(p);
+					
+			}
+			
+			if ((lastMoveTime + getInactivityTimeout()) < now){
+				throw new SkrullGameException("Player " + activeplayer.getPlayerId() + " timed out. game over");
+			}
+
+		} catch (SkrullException e) {
+			// TODO: log this
+			e.printStackTrace();
+			this.finished = true;
+			this.broadcastMsg = e.getMessage();
+			clientUpdater.modelChanged(this);
+		}
+
+		
 		
 	}
+
+	/**
+	 * Must return the value, in milliseconds, in which the active player
+	 * has to make a move. If no move is made within this time, the game is forfeit
+	 * 
+	 * Subclasses should override this if they need something besides
+	 * the default.
+	 * 
+	 * @return number of milliseconds to timeout on
+	 */
+	protected long getInactivityTimeout(){
+		return Long.parseLong(System.getProperty("inactivity.timeout", String.valueOf( 5 * 60 * 1000 )));
+	}
+	
 
 	public void updateListener() {
 		clientUpdater.modelChanged(this);
@@ -137,27 +185,33 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.players.add(player);
 	}
 
-	public IBoard getBoard() {
+	protected IBoard getBoard() {
 		return board;
 	}
 
-	public void setBoard(IBoard board) {
+	protected void setBoard(IBoard board) {
 		this.board = board;
 	}
 
-	public IPlayer getActiveplayer() {
+	protected IPlayer getActiveplayer() {
 		return activeplayer;
 	}
 
-	public void setActiveplayer(IPlayer activeplayer) {
+	protected void setActiveplayer(IPlayer activeplayer) {
 		this.activeplayer = activeplayer;
 	}
 
-	public IClientAction getLastAction() {
+	protected IClientAction getLastAction() {
 		return lastAction;
 	}
 
-	public void setLastAction(IClientAction lastAction) {
+	protected void setLastAction(IClientAction lastAction) {
 		this.lastAction = lastAction;
 	}
+
+	@Override
+	public String getBroadcastMessage() {
+		return this.broadcastMsg;
+	}
+	
 }

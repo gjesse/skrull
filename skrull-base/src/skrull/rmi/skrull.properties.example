@@ -7,3 +7,6 @@ image.dir=/home/jhodges/Workspaces/school/skrull/skrull-client/src/res/
 
 # frequency of activity monitor checks in ms (default is 500)
 activity.monitor.interval=1000
+
+# default game timout interval in ms
+inactivity.timeout=1000

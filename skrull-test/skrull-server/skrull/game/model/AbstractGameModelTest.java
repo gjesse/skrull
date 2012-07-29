@@ -10,6 +10,7 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.server.IClientUpdater;
 
@@ -47,10 +48,12 @@ public class AbstractGameModelTest {
 
 
 	@Test
-	public void testCheckActivity() {
+	public void testCheckActivity() throws Exception {
 
-		EasyMock.expect(updater.isPlayerConnected(player1)).andReturn(true);
-		EasyMock.expect(updater.isPlayerConnected(player2)).andReturn(true);
+		updater.checkPlayerConnected(player1);
+		EasyMock.expectLastCall();
+		updater.checkPlayerConnected(player2);
+		EasyMock.expectLastCall();
 
 			
 		EasyMock.replay(updater,player1, player2);
@@ -61,15 +64,23 @@ public class AbstractGameModelTest {
 	
 	}
 	
-	@Test(expected=RuntimeException.class)
-	public void testCheckActivityDisconnected() {
+	@Test
+	public void testCheckActivityDisconnected() throws SkrullRMIException {
+		final String msg = "abcdefg";
+		updater.checkPlayerConnected(player1);
+		EasyMock.expectLastCall();
+		updater.checkPlayerConnected(player2);
+		EasyMock.expectLastCall().andThrow(new SkrullRMIException(msg));
+		
+		
+		updater.modelChanged(game);
+		EasyMock.expectLastCall();
 
-		EasyMock.expect(updater.isPlayerConnected(player1)).andReturn(true);
-		EasyMock.expect(updater.isPlayerConnected(player2)).andReturn(false);
 
 			
 		EasyMock.replay(updater,player1, player2);
 		game.checkActivity();
+		assertEquals(msg, game.getBroadcastMessage());
 		EasyMock.verify(updater, player1, player2);
 	
 	}

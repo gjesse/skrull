@@ -7,14 +7,19 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.log4j.Logger;
+
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
+import skrull.util.logging.SkrullLogger;
 
 public class ServerController implements IServerController {
 	private List<IGameController> activeGameControllers = new CopyOnWriteArrayList<IGameController>();
 	private IGameFactory gameFactory;
 	private IGameController defaultGameController;
+	private static final Logger logger = SkrullLogger.getLogger(ServerController.class);
+
 
 	// maintains a sequence of id numbers for each game
 	private AtomicInteger gameIdSequence = new AtomicInteger( IGameFactory.DEFAULT_GAME_ID );
@@ -33,6 +38,7 @@ public class ServerController implements IServerController {
 	 */
 	@Override
 	public void processClientAction(IClientAction action) {
+		logger.debug("processing action: " + action);
 		switch (action.getActionType())
 		{
 			case CHAT:

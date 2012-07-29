@@ -1,8 +1,11 @@
 package skrull.game.controller;
 
+import org.apache.log4j.Logger;
+
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.view.IClientAction;
+import skrull.util.logging.SkrullLogger;
 
 /**
  * Common operations for all game controllers
@@ -13,6 +16,8 @@ public abstract class AbstractGameController implements IGameController {
 
 
 	private IGameModel gameModel;
+	private static final Logger logger = SkrullLogger.getLogger(AbstractGameController.class);
+
 
 	AbstractGameController(IGameModel model){
 		this.gameModel = model;
@@ -38,7 +43,7 @@ public abstract class AbstractGameController implements IGameController {
 
 	@Override
 	public void processGameAction(IClientAction action) {
-		
+		logger.debug("processing game action " + action.getActionType());
 		switch (action.getActionType())
 		{
 			case CHAT:

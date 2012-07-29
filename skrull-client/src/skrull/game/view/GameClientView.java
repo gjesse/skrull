@@ -63,7 +63,6 @@ public class GameClientView extends JFrame implements IGameClientView {
 	 */
 	@Override
 	public void modelChanged(IGameModel model) {
-		System.out.println("model changed.. " + model);
 		updateBoard(model);
 		this.gameId = model.getGameId();
 	}

@@ -70,7 +70,7 @@ public class SkrullClientUpdater implements IClientUpdater {
 				// can we call a method on the client w/out exception?
 				getListener(p.getPlayerId()).isConnected();
 			} catch (Exception e) {
-				logger.error("Player " + p.getPlayerId() + " is unreachable", e);
+				//logger.error("Player " + p.getPlayerId() + " is unreachable", e);
 				throw new SkrullRMIException("Player " + p.getPlayerId() + " is unreachable", e);
 			}
 		

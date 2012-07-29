@@ -1,3 +1,9 @@
+/**
+ * 
+ * @author kyle
+ *
+ */
+
 package skrull.game.controller;
 
 import skrull.game.model.IGameModel;

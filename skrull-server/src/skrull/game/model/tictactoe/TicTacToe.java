@@ -1,3 +1,8 @@
+/**
+ * 
+ * @author kyle
+ *
+ */
 package skrull.game.model.tictactoe;
 
 import skrull.game.factory.IGameFactory.GameType;
@@ -8,6 +13,11 @@ import skrull.rmi.server.IClientUpdater;
 
 
 public class TicTacToe extends AbstractGameModel{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8648567625229924677L;
 
 	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
 		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater);

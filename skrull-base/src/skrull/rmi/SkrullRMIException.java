@@ -14,4 +14,8 @@ public class SkrullRMIException extends SkrullException {
 	public SkrullRMIException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
+
+	public SkrullRMIException(Exception cause) {
+		super(cause);
+	}
 }

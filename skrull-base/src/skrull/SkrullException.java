@@ -10,6 +10,10 @@ public class SkrullException extends Exception {
 		super(msg, cause);
 	}
 
+	public SkrullException(Exception cause) {
+		super(cause);
+	}
+
 	private static final long serialVersionUID = -3336461660381017745L;
 
 }

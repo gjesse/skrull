@@ -11,15 +11,11 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
-import skrull.rmi.client.IClientListener;
-import skrull.rmi.server.SkrullClientUpdater;
 import skrull.util.logging.SkrullLogger;
 
 public class GameClientView extends JFrame implements IGameClientView {

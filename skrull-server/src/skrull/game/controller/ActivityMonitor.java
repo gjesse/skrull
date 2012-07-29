@@ -1,11 +1,13 @@
 package skrull.game.controller;
 
-import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
+import skrull.util.logging.SkrullLogger;
 
 public class ActivityMonitor implements IActivityMonitor {
 	
 	private static final long serialVersionUID = 3015280422260700785L;
 	final private IServerController serverController;
+	private static final Logger logger = SkrullLogger.getLogger(ActivityMonitor.class);
 
 	
 	public ActivityMonitor (IServerController serverController){
@@ -18,8 +20,7 @@ public class ActivityMonitor implements IActivityMonitor {
 	@Override
 	public void checkActivity() {
 		
-		// TODO: log this instead
-	//	System.out.println("activity monitor running");
+		logger.info("activity monitor running");
 		for (IGameController c : serverController.getControllers()){
 			c.checkActivity();
 		}
@@ -27,14 +28,13 @@ public class ActivityMonitor implements IActivityMonitor {
 	}
 
 	@Override
-	public void run() {
+	public void run(){
 		try {
 			checkActivity();
 		}
-		// catch anything and log it
 		catch (Throwable t){
-			// TODO: log this
-			t.printStackTrace();
+			// catch anything and log it
+			logger.error("Activity monitor encountered a problem:", t);
 		}
 	}
 }

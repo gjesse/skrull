@@ -13,13 +13,18 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import org.apache.log4j.Logger;
+
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.rmi.client.IClientListener;
+import skrull.rmi.server.SkrullClientUpdater;
+import skrull.util.logging.SkrullLogger;
 
 public class GameClientView extends JFrame implements IGameClientView {
 
+	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	private static final long serialVersionUID = 733356106858477245L;
 	private static final String IMAGE_DIR = System.getProperty("image.dir");
 	private ClientInputHandler cih;
@@ -347,9 +352,7 @@ public class GameClientView extends JFrame implements IGameClientView {
 			buttonIcon3 = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("error reading from " + IMAGE_DIR);
-			e.printStackTrace();
+			logger.error("error reading from " + IMAGE_DIR, e);
 		}
 		
 		JButton paperButton = new JButton(new ImageIcon(buttonIcon));

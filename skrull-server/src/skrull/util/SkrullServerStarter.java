@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 import skrull.game.controller.ActivityMonitor;
 import skrull.game.controller.IActivityMonitor;
 import skrull.game.controller.IServerController;
@@ -20,10 +22,12 @@ import skrull.rmi.server.IClientUpdater;
 import skrull.rmi.server.IServerListener;
 import skrull.rmi.server.ServerListener;
 import skrull.rmi.server.SkrullClientUpdater;
+import skrull.util.logging.SkrullLogger;
 
 public class SkrullServerStarter extends RmiStarter {
 
 
+	private static final Logger logger = SkrullLogger.getLogger(SkrullServerStarter.class);
 
 	public SkrullServerStarter() throws Exception {
 		super();
@@ -50,9 +54,11 @@ public class SkrullServerStarter extends RmiStarter {
 
             Registry registry = LocateRegistry.getRegistry();
             registry.rebind(IServerListener.SERVICE_NAME, engineStub);
+            logger.info("initializatoin completed");
+
         }
         catch(Exception e) {
-            e.printStackTrace();
+        	logger.fatal("error encountered initializing", e);
         }
 
 		

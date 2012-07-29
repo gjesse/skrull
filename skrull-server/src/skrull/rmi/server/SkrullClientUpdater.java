@@ -7,16 +7,23 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import skrull.SkrullGameException;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IClientListener;
+import skrull.util.SkrullServerStarter;
+import skrull.util.logging.SkrullLogger;
 
 public class SkrullClientUpdater implements IClientUpdater {
 
+
+	private static final long serialVersionUID = 1308396593090902859L;
 	Registry registry;
-	
+	private static final Logger logger = SkrullLogger.getLogger(SkrullClientUpdater.class);
+
 	public SkrullClientUpdater() throws RemoteException{
 		registry = LocateRegistry.getRegistry();		
 	}
@@ -32,6 +39,7 @@ public class SkrullClientUpdater implements IClientUpdater {
 
 	private void notifyListener(IGameModel model, IPlayer player) {
 		 try {
+			 // TODO: this should throw a skrullRMIException up the stack
 			//final UUID playerId = player.getPlayerId();
 			getListener(player.getPlayerId()).modelChanged(model);
 //			listener.modelChanged(model);
@@ -62,8 +70,7 @@ public class SkrullClientUpdater implements IClientUpdater {
 				// can we call a method on the client w/out exception?
 				getListener(p.getPlayerId()).isConnected();
 			} catch (Exception e) {
-				// TODO: log this!
-				e.printStackTrace();
+				logger.error("Player " + p.getPlayerId() + " is unreachable", e);
 				throw new SkrullRMIException("Player " + p.getPlayerId() + " is unreachable", e);
 			}
 		

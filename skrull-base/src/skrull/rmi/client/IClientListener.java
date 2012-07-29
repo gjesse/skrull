@@ -16,4 +16,12 @@ public interface IClientListener extends Remote {
 
 	public void modelChanged(IGameModel model) throws RemoteException;
 
+	/**
+	 * This is called as a no-op test from the server side. 
+	 * it should always return true, as it won't get called if
+	 * the connection isn't there
+	 * @return TRUE
+	 */
+	public boolean isConnected() throws RemoteException;
+
 }

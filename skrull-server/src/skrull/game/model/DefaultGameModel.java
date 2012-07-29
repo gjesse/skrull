@@ -22,9 +22,17 @@ public class DefaultGameModel extends AbstractGameModel {
 	}
 
 	@Override
-	public void processMove(IClientAction action) {
+	public void doProcessMove(IClientAction action) {
 		throw new UnsupportedOperationException("I'm not expecting a move here");
 		
+	}
+	
+	/**
+	 * default game should never timeout
+	 */
+	@Override
+	protected long getInactivityTimeout() {
+		return Long.MAX_VALUE;
 	}
 
 }

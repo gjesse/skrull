@@ -92,7 +92,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	 * to implement the actual move logic
 	 * @param action
 	 */
-	protected abstract void doProcessMove(IClientAction action);
+	public abstract void doProcessMove(IClientAction action);
 	
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#isGameOver()

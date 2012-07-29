@@ -50,10 +50,8 @@ public abstract class AbstractGameController implements IGameController {
 			break;
 			
 			case JOIN_GAME:
-				gameModel.joinGame(action);
-			break;
-	
 			case JOIN_SERVER:
+			case CREATE_GAME:
 				gameModel.joinGame(action);
 			break;
 			
@@ -62,9 +60,6 @@ public abstract class AbstractGameController implements IGameController {
 				gameModel.quit(action);
 			break;
 			
-			case CREATE_GAME:
-				gameModel.joinGame(action);
-			break;
 			default:
 				throw new RuntimeException("Action type " + action.getActionType() + " was unexpected here");
 		

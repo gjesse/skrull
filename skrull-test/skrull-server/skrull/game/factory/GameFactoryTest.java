@@ -11,9 +11,7 @@ import skrull.game.controller.IGameController;
 import skrull.game.controller.RockPaperScissorsController;
 import skrull.game.controller.TicTacToeController;
 import skrull.game.factory.IGameFactory.GameType;
-import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
-import skrull.game.model.tictactoe.TicTacToe;
 import skrull.rmi.server.IClientUpdater;
 
 public class GameFactoryTest {

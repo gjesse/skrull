@@ -1,6 +1,5 @@
 package skrull.game.controller;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +21,7 @@ public class ServerController implements IServerController {
 
 
 	// maintains a sequence of id numbers for each game
-	private AtomicInteger gameIdSequence = new AtomicInteger( IGameFactory.DEFAULT_GAME_ID );
-
-	private IActivityMonitor activityMontor;
-	
+	private AtomicInteger gameIdSequence = new AtomicInteger( IGameFactory.DEFAULT_GAME_ID );	
 
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;

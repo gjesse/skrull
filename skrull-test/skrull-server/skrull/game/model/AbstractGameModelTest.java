@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import skrull.rmi.SkrullRMIException;
-import skrull.rmi.client.IClientListener;
 import skrull.rmi.server.IClientUpdater;
 
 public class AbstractGameModelTest {

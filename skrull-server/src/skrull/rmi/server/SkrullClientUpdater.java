@@ -9,12 +9,10 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import skrull.SkrullGameException;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IClientListener;
-import skrull.util.SkrullServerStarter;
 import skrull.util.logging.SkrullLogger;
 
 public class SkrullClientUpdater implements IClientUpdater {

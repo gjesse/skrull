@@ -1,11 +1,14 @@
 package skrull.game.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 
 public class ServerController implements IServerController {
@@ -14,15 +17,16 @@ public class ServerController implements IServerController {
 	private IGameController defaultGameController;
 
 	// maintains a sequence of id numbers for each game
-	private AtomicInteger gameIdSequence = new AtomicInteger(0);
+	private AtomicInteger gameIdSequence = new AtomicInteger( IGameFactory.DEFAULT_GAME_ID );
 
-	// TODO: implement activity monitor
-	private ActivityMonitor activityMontor;
+	private IActivityMonitor activityMontor;
 	
 
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;
-		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, nextGameId());
+		int next =  nextGameId();
+		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, next);
+		activeGameControllers.add(defaultGameController);
 	}
 	/* (non-Javadoc)
 	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
@@ -34,21 +38,22 @@ public class ServerController implements IServerController {
 			case CHAT:
 			case MOVE:
 			case JOIN_GAME:
+			case JOIN_SERVER: // TODO: join server is not needed - we can just use JOIN_GAME for the default game in this case
 			{
-				final IGameController game = getActiveGameController(action);
+				final IGameController gameController = getActiveGameController(action);
 				// for now if the game isn't found this will throw  
 				// NullPointerException. 
-				game.processGameAction(action);
+				gameController.processGameAction(action);
 			}	
 			break;
 	
 			// first-time connection, come on!
-			case JOIN_SERVER:
+			//case JOIN_SERVER:
 				// what to do here?
 				// assign player into the default game, give them a player id
 				// 1. hook up the client listener for later notifications
-				defaultGameController.processGameAction(action);
-			break;
+				//defaultGameController.processGameAction(action);
+			//break;
 			
 
 			case QUIT:
@@ -69,6 +74,10 @@ public class ServerController implements IServerController {
 			// setting up a new game
 			case CREATE_GAME:
 			{
+				if (action.getGameType().equals(GameType.DEFAULT)){
+					throw new UnsupportedOperationException("Cannot create additional default games");
+				}
+				
 				// first we should remove the player from the default game...
 				defaultGameController.processGameAction(action);
 
@@ -99,15 +108,15 @@ public class ServerController implements IServerController {
 	 */
 	private IGameController getActiveGameController(IClientAction action) {
 		
-		for (IGameController game : activeGameControllers)
+		for (IGameController gameController : activeGameControllers)
 		{
-			if (game.getGameType().equals(action.getGameType())
-					&& game.getGameId() == action.getGameId()){
-				return game;
+			if (gameController.getGameType().equals(action.getGameType())
+					&& gameController.getGameId() == action.getGameId()){
+				return gameController;
 			}
 		}
 		
-		return defaultGameController;
+		return null;
 	}
 
 	protected void addGameController(IGameController controller){
@@ -119,7 +128,7 @@ public class ServerController implements IServerController {
 	 */
 	@Override
 	public Collection<IGameController> getControllers() {
-		throw new UnsupportedOperationException();
+		return Collections.unmodifiableList(activeGameControllers);
 	}
 
 

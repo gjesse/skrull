@@ -7,8 +7,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.UUID;
 
+import skrull.SkrullGameException;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
+import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IClientListener;
 
 public class SkrullClientUpdater implements IClientUpdater {
@@ -29,11 +31,10 @@ public class SkrullClientUpdater implements IClientUpdater {
 	}
 
 	private void notifyListener(IGameModel model, IPlayer player) {
-		 // TODO: might be good to put this in a map for later
 		 try {
-			UUID playerId = player.getPlayerId();
-			IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + playerId);
-			listener.modelChanged(model);
+			//final UUID playerId = player.getPlayerId();
+			getListener(player.getPlayerId()).modelChanged(model);
+//			listener.modelChanged(model);
 		} catch (AccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,5 +45,27 @@ public class SkrullClientUpdater implements IClientUpdater {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+	}
+
+	private IClientListener getListener(UUID playerId) throws AccessException, RemoteException, NotBoundException {
+		// TODO Cache this!
+		// TODO: figure out how to deal with failure
+
+		final IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + "." + playerId);
+		return listener;
+		
+	}
+
+	@Override
+	public void checkPlayerConnected(IPlayer p) throws SkrullRMIException {
+			try {
+				// can we call a method on the client w/out exception?
+				getListener(p.getPlayerId()).isConnected();
+			} catch (Exception e) {
+				// TODO: log this!
+				e.printStackTrace();
+				throw new SkrullRMIException("Player " + p.getPlayerId() + " is unreachable", e);
+			}
+		
 	}
 }

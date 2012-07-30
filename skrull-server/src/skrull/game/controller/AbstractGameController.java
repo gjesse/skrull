@@ -17,6 +17,8 @@ public abstract class AbstractGameController implements IGameController {
 	AbstractGameController(IGameModel model){
 		this.gameModel = model;
 	}
+	
+	// TODO: remove these next 2 if they are really not needed
 	@Override
 	public void RunGame() {
 		// TODO Auto-generated method stub
@@ -31,8 +33,7 @@ public abstract class AbstractGameController implements IGameController {
 
 	@Override
 	public void checkActivity() {
-		// TODO Auto-generated method stub
-
+		gameModel.checkActivity();
 	}
 
 	@Override

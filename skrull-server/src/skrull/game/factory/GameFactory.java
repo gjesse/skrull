@@ -1,14 +1,11 @@
 package skrull.game.factory;
 
-import skrull.game.controller.DefaultGameController;
-import skrull.game.controller.IGameController;
-import skrull.game.controller.IServerController;
 import skrull.game.controller.*;
 import skrull.game.model.DefaultGameModel;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
-import skrull.game.model.tictactoe.TicTacToe;
 import skrull.game.model.rockpaperscissors.RockPaperScissors;
+import skrull.game.model.tictactoe.TicTacToe;
 import skrull.rmi.server.IClientUpdater;
 
 public class GameFactory implements IGameFactory {

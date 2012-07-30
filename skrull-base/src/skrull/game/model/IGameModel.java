@@ -23,6 +23,11 @@ public interface IGameModel extends Serializable {
 
 	public abstract IPlayer getWinner();
 
+	/**
+	 * 2 types of checks should be performed here: 
+	 * 	1. make sure the active player hasn't exceeded some reasonable threshold (ie walked away from the computer)
+	 *  2. make sure we still have network connectivity to the client
+	 */
 	public abstract void checkActivity();
 
 	public abstract GameType getGameType();
@@ -34,5 +39,7 @@ public interface IGameModel extends Serializable {
 	public abstract Collection<IPlayer> getPlayers();
 	
 	public abstract String getChatContents();
+
+	public abstract String getBroadcastMessage();
 	
 }

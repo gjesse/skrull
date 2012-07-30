@@ -1,22 +1,27 @@
 package skrull.rmi.client;
 
 import skrull.game.model.IGameModel;
-import skrull.game.view.GameClientView;
+import skrull.game.view.IGameClientView;
 
 
 public class ClientListener implements IClientListener {
 
-	private GameClientView gameClientView;
+	private IGameClientView gameClientView;
 
-	public ClientListener(GameClientView view) {
+	public ClientListener(IGameClientView view) {
 		this.gameClientView = view;
 	}
 
 	@Override
 	public void modelChanged(IGameModel model) {
-		// TODO Auto-generated method stub 
-		System.out.println("modelChanged...");
+		// TODO this needs logging
+		System.out.println("modelChanged in Client...");
 		gameClientView.modelChanged(model);
+	}
+
+	@Override
+	public boolean isConnected() {
+		return true;
 	}
 
 

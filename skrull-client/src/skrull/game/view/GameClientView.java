@@ -155,7 +155,7 @@ public class GameClientView extends JFrame {
 				
 			}
 		/************************************************************************************************************/
-	public void buildClientMainView(){
+	private void buildClientMainView(){
 				
 				JFrame mainFrame = new JFrame("User: " + playerId.toString());
 				

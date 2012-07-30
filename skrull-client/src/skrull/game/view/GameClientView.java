@@ -30,7 +30,7 @@ public class GameClientView extends JFrame {
 	JButton startButton;
 	JButton joinButton;
 	JPanel cards;
-	
+	JList newGameList;
 	String sampleGameList[] = {"Tic-Tac-Toe", "Rock-Paper-Scissors","No Game"};
 	String sampleGamesToJoin[] = {"sampleGame1","sampleGame2","sampleGame3","sampleGame4",
 			"sampleGame5","sampleGame6","sampleGame7","sampleGame8","sampleGame9","sampleGame1",
@@ -171,15 +171,18 @@ public class GameClientView extends JFrame {
 				
 				startButton = new JButton("Start Game");
 				startButton.addActionListener(handler);
-				
+		
 				joinButton = new JButton("Join Game");
 				joinButton.addActionListener(handler);
 				
 				/*******************LEFT PROPERTIES************************/
-				left.setLayout(new GridLayout(3,0));
+				left.setLayout(new GridLayout(3,0));	
 				
-				JList newGameList = new JList(sampleGameList);
+				newGameList = new JList(IGameFactory.GameType.values());
+
+					
 				newGameList.setBorder(BorderFactory.createTitledBorder("Create A New Game"));
+				
 				
 				left.add(newGameList);
 				left.add(startButton);
@@ -212,6 +215,12 @@ public class GameClientView extends JFrame {
 				
 			}
 			
+	public Component getNewGameList(){
+		
+		
+		
+		return newGameList;
+	}
 	private Component buildChatClient(){
 				
 				//chat panel will have textArea, textField, SendButton, 
@@ -380,6 +389,7 @@ public class GameClientView extends JFrame {
        // Event handling is handled locally
 	   @Override
        public void actionPerformed(ActionEvent e) {
+		   
 		   cih.handleInput(e);
        }
 

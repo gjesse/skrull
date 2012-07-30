@@ -31,7 +31,7 @@ public class SkrullServerEndToEndTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
+
 		playerId = UUID.randomUUID();
 		clientListener = EasyMock.createMock(IClientListener.class);
 	
@@ -42,6 +42,9 @@ public class SkrullServerEndToEndTest {
 
         System.setProperty("java.security.policy", PolicyFileLocater.getLocationOfPolicyFile());
 
+		SkrullServerStarter starter = new SkrullServerStarter();
+
+        
         if(System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
@@ -55,7 +58,6 @@ public class SkrullServerEndToEndTest {
 	public void testEndToEndJoinServerBasic() throws Exception {
 
 
-		SkrullServerStarter starter = new SkrullServerStarter();
 
 		IServerUpdater serverUpdater = new ServerUpdater();
 		

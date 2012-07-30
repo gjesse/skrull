@@ -27,7 +27,7 @@ public class SkrullClientUpdater implements IClientUpdater {
 	}
 
 	@Override
-	public void modelChanged(IGameModel model) {
+	public void modelChanged(IGameModel model) throws SkrullRMIException {
 		for (IPlayer player: model.getPlayers()){
 			// here we need to get the rmi exposed interface for each player, and call it
 			notifyListener(model, player);
@@ -35,21 +35,11 @@ public class SkrullClientUpdater implements IClientUpdater {
 
 	}
 
-	private void notifyListener(IGameModel model, IPlayer player) {
+	private void notifyListener(IGameModel model, IPlayer player) throws SkrullRMIException{
 		 try {
-			 // TODO: this should throw a skrullRMIException up the stack
-			//final UUID playerId = player.getPlayerId();
 			getListener(player.getPlayerId()).modelChanged(model);
-//			listener.modelChanged(model);
-		} catch (AccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new SkrullRMIException(e);
 		}		
 	}
 

@@ -10,6 +10,7 @@ import skrull.SkrullException;
 import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
+import skrull.rmi.SkrullRMIException;
 import skrull.rmi.server.IClientUpdater;
 import skrull.util.logging.SkrullLogger;
 
@@ -149,7 +150,11 @@ public abstract class AbstractGameModel implements IGameModel {
 			
 			this.broadcastMsg = e.getMessage();
 			this.players.remove(playerBeingChecked);
-			clientUpdater.modelChanged(this);
+			try {
+				clientUpdater.modelChanged(this);
+			} catch (SkrullRMIException e1) {
+				logger.error("rmi issue encountered", e1);
+			}
 		}
 
 		
@@ -171,7 +176,13 @@ public abstract class AbstractGameModel implements IGameModel {
 	
 
 	public void updateListener() {
-		clientUpdater.modelChanged(this);
+		
+		try {
+			clientUpdater.modelChanged(this);
+		} catch (SkrullRMIException e) {
+			logger.error("Problem encountered notifying listener, re-checking activity", e);
+			checkActivity();
+		}
 	}
 
 	@Override

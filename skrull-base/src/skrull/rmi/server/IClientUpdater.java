@@ -12,8 +12,9 @@ public interface IClientUpdater extends Serializable {
 	/**
 	 * Pass an update to all interested clients
 	 * @param model
+	 * @throws SkrullRMIException 
 	 */
-	public void modelChanged(IGameModel model);
+	public void modelChanged(IGameModel model) throws SkrullRMIException;
 
 	/**
 	 * Verify that the player client is connected still

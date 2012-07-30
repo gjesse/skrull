@@ -18,7 +18,7 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.rmi.client.IClientListener;
 
-public class GameClientView extends JFrame {
+public class GameClientView extends JFrame implements IGameClientView{
 
 	private static final long serialVersionUID = 733356106858477245L;
 	private ClientInputHandler cih;
@@ -395,6 +395,12 @@ public class GameClientView extends JFrame {
 
 	
    }
+
+@Override
+public int getGameId() {
+	// TODO Auto-generated method stub
+	return 0;
+}
    
 
 

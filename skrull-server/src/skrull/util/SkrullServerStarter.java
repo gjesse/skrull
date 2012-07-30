@@ -52,7 +52,7 @@ public class SkrullServerStarter extends RmiStarter {
             IServerListener listener = new ServerListener(controller);
             Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
-            Registry registry = LocateRegistry.getRegistry();
+            Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind(IServerListener.SERVICE_NAME, engineStub);
             logger.info("initializatoin completed");
 

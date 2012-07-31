@@ -1,5 +1,8 @@
 package skrull.util.logging;
 
+import java.io.InputStream;
+
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -10,7 +13,13 @@ public class SkrullLogger {
 	static {
         // setup log4j config
         final String log4jFile = System.getProperty("log4j.config", "log4j.properties");
-        PropertyConfigurator.configure(SkrullLogger.class.getResourceAsStream(log4jFile));
+        InputStream is = SkrullLogger.class.getResourceAsStream(log4jFile);
+        if (is != null){
+        	PropertyConfigurator.configure(is);
+        	}else{
+        		BasicConfigurator.configure(); // default to a basic setup
+        	}
+        
 	}
 	
 	/**

@@ -15,7 +15,6 @@ public class ClientInputHandler {
 	private int gameId; // is this necessary?
 	public IServerUpdater serverUpdater;
 	private IGameClientView view;
-
 	public ClientInputHandler(ServerUpdater serverUpdater, UUID playerId ) {
 		this.serverUpdater = serverUpdater;
 		this.player = new Player(playerId);

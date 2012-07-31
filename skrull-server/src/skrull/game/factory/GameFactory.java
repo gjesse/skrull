@@ -44,6 +44,7 @@ public class GameFactory implements IGameFactory {
 	private IGameController setupDefaultGame(int gameId) {
 		IGameModel model = new DefaultGameModel(gameId, updater);
 		IGameController defaultController = new DefaultGameController(model);
+		System.out.println("return Default Gamecontroller...");
 		return defaultController;
 	}
 	
@@ -51,6 +52,7 @@ public class GameFactory implements IGameFactory {
 	private IGameController setupTicTacToeGame(IPlayer startingPlayer, int gameId) {
 		IGameModel model = new TicTacToe(startingPlayer, gameId, updater);
 		IGameController GameController = new TicTacToeController(model);
+		System.out.println("returning TTT GameController...");
 		return GameController;
 	}
 	
@@ -58,6 +60,7 @@ public class GameFactory implements IGameFactory {
 	private IGameController setupRockPaperScissorsGame(IPlayer startingPlayer, int gameId) {
 		IGameModel model = new RockPaperScissors(startingPlayer, gameId, updater);
 		IGameController GameController = new RockPaperScissorsController(model);
+		System.out.println("returning RPS GameController...");
 		return GameController;
 	}
 	

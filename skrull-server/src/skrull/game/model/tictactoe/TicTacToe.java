@@ -7,6 +7,8 @@ package skrull.game.model.tictactoe;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
+import skrull.game.model.IMove;
+import skrull.game.model.Move;
 import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
@@ -16,9 +18,16 @@ public class TicTacToe extends AbstractGameModel{
 
 
 	private static final long serialVersionUID = -8648567625229924677L;
-
+	private int currentPlayer;  // track who's turn, without using UUIDs
+	private IMove board[];		// TODO: move this to Abstract Game Model
+	private int moveCount;
+	
+	
 	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
 		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater);
+		currentPlayer = 0;
+		board = new IMove[9];
+		moveCount = 0;
 	}
 
 	@Override
@@ -30,8 +39,90 @@ public class TicTacToe extends AbstractGameModel{
 
 	@Override
 	public void doProcessMove(IClientAction action) {
-		// TODO Auto-generated method stub
+		int myMove = action.getMove().getMoveIndex();
 		
+		
+		// TODO figure out how to confirm action.getplayer == player who's turn it is.
+		
+		// match player making move to current player 
+		if (getActivePlayer().equals(action.getPlayer())){
+			
+			// verify move is legal
+			if (!isOccupied(myMove)){
+				
+				board[myMove] = action.getMove();   // (byte)(currentPlayer == 0 ? 'X' : 'O');
+				currentPlayer = (currentPlayer + 1) % 2;
+				moveCount++;
+				
+				System.out.println("location: ");
+				System.out.println(myMove);
+				System.out.println(" player: ");
+				System.out.println(currentPlayer);
+				System.out.println("/n");
+			
+				if(haveWinner()){
+					// TODO detemine winner in method
+					// TODO set isFinished flag
+				}
+				
+				// TODO change activePlayer 
+				
+				// TODO notify other player of move
+				updateListener();
+				
+			}
+		}
+		
+		
+	}
+	
+	private boolean haveWinner() {
+		
+		boolean winnerDetected = false;
+		
+		// winning combinations  rows, columns, diagonals
+		int[][] winnerCombinations = new int[][]{
+                {0,1,2},
+                {3,4,5},
+                {6,7,8},
+                {0,3,6},
+                {1,4,7},
+                {2,5,8},
+                {0,4,8},
+                {2,4,6}};
+
+		// loop thru arrays and test for null (blank move), then test to see if they have the same UUID
+		for (int[] w : winnerCombinations){
+               
+			// check for nulls
+			if (board[w[0]] == null || board[w[1]] == null || board[w[2]] == null)
+				continue;
+			
+            // no null reference chance, check for matches indicating a winner
+			if (board[w[0]].equals(board[w[1]]) && board[w[1]].equals(board[w[2]])){
+                winnerDetected = true;
+                break;
+			}                      
+		}
+		return winnerDetected;
+	}
+
+	
+	// KH - Adapted from Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
+	public boolean isOccupied(int m){
+		
+		if (board[m].equals(null))
+			return false;
+		
+		else
+			return true;
+	}
+	
+	// KH - From Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
+	// KH - Logic from
+	// TODO: make this real.
+	public boolean isGameOver(){
+		return moveCount==9;
 	}
 
 }

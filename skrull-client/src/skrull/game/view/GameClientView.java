@@ -12,17 +12,20 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import org.apache.log4j.Logger;
+import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.util.logging.SkrullLogger;
 
-public class GameClientView extends JFrame implements IGameClientView {
+public class GameClientView extends JFrame implements IGameClientView{
 
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	private static final long serialVersionUID = 733356106858477245L;
-	private static final String IMAGE_DIR = System.getProperty("image.dir");
+	 private static final String IMAGE_DIR = System.getProperty("image.dir");
 	private ClientInputHandler cih;
 	private UUID playerId;
 	private JTextField chatTextInputField;
@@ -33,8 +36,16 @@ public class GameClientView extends JFrame implements IGameClientView {
 	JButton startButton;
 	JButton joinButton;
 	JPanel cards;
+	JPanel right;
+	JList newGameList;
+	JList activeGamesToJoin;
+	JPanel gameBoardPanel;
+	JPanel userPanel;
+	JFrame mainFrame;
+	String createGame = IClientAction.ActionType.CREATE_GAME.toString();
+	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
+	String sendChat = IClientAction.ActionType.CHAT.toString();
 	
-	String sampleGameList[] = {"Tic-Tac-Toe", "Rock-Paper-Scissors","No Game"};
 	String sampleGamesToJoin[] = {"sampleGame1","sampleGame2","sampleGame3","sampleGame4",
 			"sampleGame5","sampleGame6","sampleGame7","sampleGame8","sampleGame9","sampleGame1",
 			"sampleGame2","sampleGame3","sampleGame4","sampleGame5","sampleGame6","sampleGame7",
@@ -46,28 +57,24 @@ public class GameClientView extends JFrame implements IGameClientView {
 	public GameClientView(ClientInputHandler cih, UUID playerId) {
 		this.cih = cih;
 		this.playerId = playerId;
-		
-		
-		//initBoard();
-	//	cards = new JPanel(new CardLayout());
-		//cards.add(buildClientMainView());
-	//	cards.add(buildClientGameView());
-		buildClientMainView();
-	//	buildClientGameView();
-		
-		
-	}
 
-	/* (non-Javadoc)
+		userPanel = new JPanel();
+		userPanel = (JPanel)buildUserPanel();
+		buildClientMainView(userPanel);	
+	}
+	/*
 	 * @see skrull.game.view.IGameClientView#modelChanged(skrull.game.model.IGameModel)
-	 */
-	@Override
+	 * */
+	 @Override
 	public void modelChanged(IGameModel model) {
 		updateBoard(model);
 		this.gameId = model.getGameId();
 	}
-
-	private void initBoard() {
+	 public void itemStateChanged(ItemEvent evt){
+		 CardLayout cl = (CardLayout)(cards.getLayout());
+		 cl.show(cards,(String)evt.getItem());
+	 }
+/*	private void initBoard() {
 		// TODO: this is pretty messy. most of this logic needs to be abstracted 
 			Handler handler = new Handler(); 
 			chatTextInputField = new JTextField();
@@ -82,7 +89,7 @@ public class GameClientView extends JFrame implements IGameClientView {
 	        
 	        p.add(chatWindow);
 	        
-	        JButton chatButton = new JButton("send chat");
+	        JButton chatButton = new JButton(sendChat);
 	        chatButton.setActionCommand(IClientAction.ActionType.CHAT.toString());
 	        chatButton.addActionListener(handler);
 	        p.add(chatButton);
@@ -119,32 +126,25 @@ public class GameClientView extends JFrame implements IGameClientView {
 	        pack();
 	        setVisible(true);
 
-	}
-	private void buildClientGameView() {
+	}*/
+	private JPanel buildClientGameView() {
 				Handler handler = new Handler();
-		//		exitButton = new JButton("Exit");
-		//		exitButton.addActionListener(handler);
-				
+
 				JFrame gameWindowFrame = new JFrame("Skrull");						//overall window frame title
-				
-	//			JPanel userPanel = new JPanel();									
-	//			userPanel.add(exitButton, null);
-				
-				
+
 		/*******************************************************************************************		
 				//hoping to set up UI in a way that we have the left side of the window as the game 
 				//and the right side as the housing for the chat client
 		*********************************************************************************************/		
-		//		JPanel myChattingPanel = new JPanel();
-		//		myChattingPanel.add(buildChatClient());
-				
-				
-				JPanel gameBoardPanel = new JPanel();
+
+				gameBoardPanel = new JPanel();
 				gameBoardPanel.setPreferredSize(new Dimension(600,0));
 				gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	//trying to create a border that will surround the game panel; not sure what the 3 does
 				gameBoardPanel.setBackground(Color.WHITE);
 				
-				gameBoardPanel.setLayout(new FlowLayout());
+				return gameBoardPanel;
+				//gameBoardPanel.setLayout(new FlowLayout());
+				//mainFrame.getContentPane().add(gameBoardPanel);
 				
 				//display either the sample rock paper scissor board or tic tac toe board
 				//within the game panel
@@ -152,123 +152,226 @@ public class GameClientView extends JFrame implements IGameClientView {
 				//gameBoardPanel.add(sampleTicTacToeBoard());
 				//gameBoardPanel.add(sampleRockPaperScissorBoard());
 				
-				gameWindowFrame.getContentPane().add(gameBoardPanel,BorderLayout.WEST);		
+		//		gameWindowFrame.getContentPane().add(gameBoardPanel,BorderLayout.WEST);		
 		//		gameWindowFrame.getContentPane().add(myChattingPanel, BorderLayout.EAST);	
 		//		gameWindowFrame.getContentPane().add(userPanel,BorderLayout.SOUTH);
 				
-				gameWindowFrame.setSize(800, 600);
-				gameWindowFrame.setResizable(false);
-				gameWindowFrame.setVisible(true);
+		//		gameWindowFrame.setSize(800, 600);
+		//		gameWindowFrame.setResizable(false);
+		//		gameWindowFrame.setVisible(true);
 				
 			}
 		/************************************************************************************************************/
-	private void buildClientMainView(){
-				
-				JFrame mainFrame = new JFrame("User: " + playerId.toString());
-				
-				Handler handler = new Handler();
-				
-				JPanel left = new JPanel();
-				JPanel middle = new JPanel();
-				JPanel right = new JPanel();
-				
-				left.setPreferredSize(new Dimension(300,0));
-				middle.setPreferredSize(new Dimension(300,0));
-				right.setPreferredSize(new Dimension(200,0));
-				
-				startButton = new JButton("CREATE_GAME");
-				startButton.addActionListener(handler);
-				
-				joinButton = new JButton("JOIN_GAME");
-				joinButton.addActionListener(handler);
-				
-				/*******************LEFT PROPERTIES************************/
-				left.setLayout(new GridLayout(3,0));
-				
-				JList newGameList = new JList(sampleGameList);
-				newGameList.setBorder(BorderFactory.createTitledBorder("Create A New Game"));
-				
-				left.add(newGameList);
-				left.add(startButton);
-				left.setBorder(BorderFactory.createEtchedBorder());
-				
-				/*******************MIDDLE PROPERTIES************************/
-				middle.setLayout(new GridLayout(3,0));
-				
-				JList activeGamesToJoin = new JList(sampleGamesToJoin);
-				
-				JScrollPane activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
-				middle.add(activeGameScroller);
-				middle.add(joinButton);
-				middle.setBorder(BorderFactory.createEtchedBorder());
-				
-				/*******************RIGHT PROPERTIES************************/	
-				right.add(buildChatClient());
-				right.setBorder(BorderFactory.createEtchedBorder());
-				
-				GridLayout mainGrid = new GridLayout(0,3);
-				mainFrame.setLayout(mainGrid);
-				mainFrame.getContentPane().add(left);
-				mainFrame.getContentPane().add(middle);
-				mainFrame.getContentPane().add(right);
-				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				mainFrame.setSize(800,600);
-				mainFrame.setVisible(true);
-				mainFrame.setResizable(false);
-				
-			}
-			
-	private Component buildChatClient(){
-				
-				//chat panel will have textArea, textField, SendButton, 
+	
+/*	private void createGUI(){
+
+		mainFrame = new JFrame();
+		GameClientView gcv = new GameClientView(cih, playerId);
+		gcv.buildClientMainView(mainFrame.getContentPane());
 		
-				Handler handler = new Handler();
+		mainFrame.setVisible(true);
+		
+	}*/
+	private void buildClientMainView(JPanel myPanel){
 				
-				chatTextInputField = new JTextField();
-				chatTextInputField.setText("Enter Message...");
-				chatTextInputField.setForeground(Color.gray);
-				chatTextInputField.addActionListener(handler);
-				
-				chatWindow = new JTextArea(5,20);
-		        chatWindow.setText("Welcome to Skrull Gaming...");
-				chatWindow.setEditable(false);
-				
-				sendButton = new JButton("send chat");
-				
-				JPanel chatPanel = new JPanel(new GridBagLayout());					
-				GridBagConstraints constraints = new GridBagConstraints();
-				
+/*		
+		JPanel firstUserView = new JPanel();//card 1
+		JPanel gameView = new JPanel();//card2
+		JPanel tttView = new JPanel();
+		JPanel rpsView = new JPanel();
+		//at this point the first card(panel) should
+		//be set up similar to when calling the buildClientMainView
+		//so it should have 3 columns with the approriate lists
+		//and the chat client on the right side
+		
+		firstUserView.add(buildUserPanel());
+		firstUserView.add(buildChatClient());
+		gameView.add(buildClientGameView());
+		gameView.add(buildChatClient());
+		
+		cards = new JPanel(new CardLayout());
+		cards.add(firstUserView);
+		cards.add(gameView);
+		pane.add(cards);*/
+	//	mainFrame.getContentPane();
+		
+		//userPanel = new JPanel();
+		//userPanel = (JPanel)buildUserPanel();
+		userPanel = myPanel;
+		
+		mainFrame = new JFrame("User: " + playerId.toString());
 
-		        sendButton.setActionCommand(IClientAction.ActionType.CHAT.toString());
-		        
-		        sendButton.addActionListener(handler);
-		        
-		        JScrollPane scroll = new JScrollPane(chatWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
-		        
-		        
-		        constraints.fill = GridBagConstraints.BOTH;
-		        constraints.gridx = 1;
-		        constraints.gridy = 0;
-		        constraints.ipady = 100;
-		        chatPanel.add(scroll, constraints);
-		        
-		        constraints.ipady = 10;
-		        constraints.gridx = 1;
-		        constraints.gridy = 1;
-		        chatTextInputField.setBorder(BorderFactory.createLoweredBevelBorder());
-		        
-		        chatPanel.add(chatTextInputField,constraints);
-		        
-		        constraints.gridx = 1;
-		        constraints.gridy = 2;
-		        constraints.ipady = 0;
-		        chatPanel.add(sendButton, constraints);
-		        
-				return chatPanel;
-			}
+		right = new JPanel();
+		
+		right.setPreferredSize(new Dimension(200,0));
+	
+		/*******************RIGHT PROPERTIES************************/	
+		right.add(buildChatClient());
+		right.setBorder(BorderFactory.createEtchedBorder());
+		
+		//finally able to add the left and middle to their own panel
+		//however the chat client has grown in size
+		
+		GridLayout mainGrid = new GridLayout(0,2);
+		mainFrame.setLayout(mainGrid);
+		
+		right.setBackground(Color.black);
+		
+		mainFrame.getContentPane().add(userPanel);
+		
+		mainFrame.getContentPane().add(right);
+		
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setSize(800,600);
+		mainFrame.setVisible(true);
+		mainFrame.setResizable(false);
+				
+	}
+	private JPanel buildUserPanel(){
+		
+		Handler handler = new Handler();
+		
+		userPanel = new JPanel();
+		JPanel left = new JPanel();
+		JPanel middle = new JPanel();
+		
+		left.setSize(new Dimension(300,0));
+		middle.setSize(new Dimension(300,0));
+		userPanel.setSize(new Dimension(600,0));
+		userPanel.setLayout(new GridLayout(0,2));
+		
+		startButton = new JButton(createGame);
+		startButton.addActionListener(handler);
 
-	private Component sampleTicTacToeBoard(){
+		joinButton = new JButton(joinGame);
+		joinButton.addActionListener(handler);
+		
+		/*******************LEFT PROPERTIES************************/
+		left.setLayout(new GridLayout(3,0));	
+		
+		newGameList = new JList(IGameFactory.GameType.values());
+			
+		newGameList.setBorder(BorderFactory.createTitledBorder("Create A New Game"));
+		
+		left.add(newGameList);
+		left.add(startButton);
+		left.setBorder(BorderFactory.createEtchedBorder());
+		
+		/*******************MIDDLE PROPERTIES************************/
+		middle.setLayout(new GridLayout(3,0));
+		activeGamesToJoin = new JList(sampleGamesToJoin);
+		
+		JScrollPane activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
+		middle.add(activeGameScroller);
+		middle.add(joinButton);
+		middle.setBorder(BorderFactory.createEtchedBorder());
+		
+		userPanel.add(left);
+		userPanel.add(middle);
+		return userPanel;
+	}
+	
+/*	class StartListener implements ActionListener{
+		public void actionPerformed(ActionEvent event){
+			
+			GameType gameSelection = (GameType)newGameList.getSelectedValue();
+			System.out.println("printing out the game selection rather than numbered index: "+ gameSelection);
+			
+		}
+	}
+	class JoinListener implements ActionListener{
+		public void actionPerformed(ActionEvent joinEvent){
+			
+		   
+		    * TODO
+		    * need to get the actual games available to join rather than using the sample 
+		    * list of games.
+		    * 
+			
+		   //GameType joinGameSelection = (GameType)activeGamesToJoin.getSelectedValue();
+		  
+		   String joinGameSelection = (String)activeGamesToJoin.getSelectedValue();
+		   System.out.println("printing out the join game selection rather than numbered index: "+ joinGameSelection);
+		   
+		}
+	}*/
+	
+	
+/*	May need to use this for the list with some alterations
+ * class MyListSelectionListener implements ListSelectionListener {
+		
+	    // This method is called each time the user changes the set of selected items
+	    public void valueChanged(ListSelectionEvent evt) {
+	        // When the user release the mouse button and completes the selection,
+	        // getValueIsAdjusting() becomes false
+	        if (!evt.getValueIsAdjusting()) {
+	            JList list = (JList)evt.getSource();
+
+	            // Get all selected items
+	            Object[] selected = list.getSelectedValues();
+
+	            // Iterate all selected items
+	            for (int i=0; i<selected.length; i++) {
+	                Object sel = selected[i];
+	            }
+	        }
+	    }
+	}		*/
+	private JPanel buildChatClient(){
+				
+		//chat panel will have textArea, textField, SendButton, 
+
+		Handler handler = new Handler();
+		
+		chatTextInputField = new JTextField();
+		chatTextInputField.setText("Enter Message...");
+		chatTextInputField.setForeground(Color.gray);
+		chatTextInputField.addActionListener(handler);
+		
+		chatWindow = new JTextArea(5,20);
+        chatWindow.setText("Welcome to Skrull Gaming...");
+		chatWindow.setEditable(false);
+		
+		sendButton = new JButton("send chat");
+		
+		JPanel chatPanel = new JPanel(new GridBagLayout());					
+		GridBagConstraints constraints = new GridBagConstraints();
+		
+
+        sendButton.setActionCommand(IClientAction.ActionType.CHAT.toString());
+        sendButton.addActionListener(handler);
+        
+        JScrollPane scroll = new JScrollPane(chatWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+        
+        
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+        constraints.ipady = 100;
+        chatPanel.add(scroll, constraints);
+        
+        constraints.ipady = 10;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        chatTextInputField.setBorder(BorderFactory.createLoweredBevelBorder());
+        
+        chatPanel.add(chatTextInputField,constraints);
+        
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        constraints.ipady = 0;
+        chatPanel.add(sendButton, constraints);
+        
+		return chatPanel;
+	}
+
+	private JPanel sampleTicTacToeBoard(){
+		
+		gameBoardPanel = new JPanel();
+		gameBoardPanel.setPreferredSize(new Dimension(600,0));
+		gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	//trying to create a border that will surround the game panel; not sure what the 3 does
+		gameBoardPanel.setBackground(Color.WHITE);
 		
 		JPanel gameBoard = new JPanel();
 		gameBoard.setLayout(new GridBagLayout());
@@ -325,11 +428,12 @@ public class GameClientView extends JFrame implements IGameClientView {
 		constrainers.gridy = 2;
 		gameBoard.add(b9,constrainers);
 		
-		return gameBoard;
+		gameBoardPanel.add(gameBoard);
+		return gameBoardPanel;
 		
 	}
 	
-	private Component sampleRockPaperScissorBoard(){
+	private JPanel sampleRockPaperScissorBoard(){
 		
 		JPanel rpsBoard = new JPanel();
 		rpsBoard.setLayout(new GridBagLayout());
@@ -372,16 +476,11 @@ public class GameClientView extends JFrame implements IGameClientView {
 		rpsBoard.add(scissorButton,c);
 		return rpsBoard;
 	}
-	
 	private void updateBoard(IGameModel model) {
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
 		chatWindow.setText(model.getChatContents());
 	}
 	
-	/* (non-Javadoc)
-	 * @see skrull.game.view.IGameClientView#getChatText()
-	 */
-	@Override
 	public String getChatText(){
 		return chatTextInputField.getText();
 	}
@@ -391,17 +490,45 @@ public class GameClientView extends JFrame implements IGameClientView {
        // Event handling is handled locally
 	   @Override
        public void actionPerformed(ActionEvent e) {
+		   
+		   String command = e.getActionCommand();
+		   
+		   //going to need to also pass the game type to the clientInputHandler
+		   //so that once the create game is clicked the case will also see what kind of
+		   //game to create
+		  
+		 //for testing purposes
+		   if(command == createGame){
+			   GameType gameSelection = (GameType)newGameList.getSelectedValue();
+			   if(gameSelection == IGameFactory.GameType.TIC_TAC_TOE){
+				   buildClientMainView(sampleTicTacToeBoard());
+			   }
+			   else if(gameSelection == IGameFactory.GameType.ROCK_PAPER_SCISSORS){
+				   buildClientMainView(sampleRockPaperScissorBoard());
+			   }
+			   else
+				   JOptionPane.showInputDialog("DEFAULT");
+			   
+			   System.out.println("printing out the game selection rather than numbered index: "+ gameSelection);
+			   
+		   }
+		   else if(command == joinGame){
+			   String joinGameSelection = (String)activeGamesToJoin.getSelectedValue();
+			   System.out.println("printing out the join game selection rather than numbered index: "+ joinGameSelection); 
+			   //buildClientMainView();
+		   }
+		   
 		   cih.handleInput(e);
        }
-
+	   
 	
    }
 
-	@Override
-	public int getGameId() {
-		return gameId;
-	}
-	   
+@Override
+public int getGameId() {
+	return gameId;
+}
+   
 
 
 	

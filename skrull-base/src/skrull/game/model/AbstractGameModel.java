@@ -1,5 +1,6 @@
 package skrull.game.model;
 
+import java.awt.Desktop.Action;
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -23,12 +24,16 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	private static final long serialVersionUID = -5970164504419304864L;
 	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
-	private IBoard board;
 	private IPlayer activeplayer;
 	private IPlayer winner;
+	
+	private IBoard board;
+	private int maxMoves;
 	private boolean finished;
+	
 	private long lastMoveTime;
 	private IClientAction lastAction;
+	
 	//private IGameController gameController;
 	private IClientUpdater clientUpdater;
 	int gameId;
@@ -49,9 +54,6 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.gameId = gameId;
 		this.clientUpdater = updater;
 	}
-
-		
-	
 
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#chatUpdate(skrull.game.view.ClientAction)
@@ -108,6 +110,11 @@ public abstract class AbstractGameModel implements IGameModel {
 	@Override
 	public IPlayer getWinner() {
 		return winner;
+	}
+	
+	@Override
+	public IPlayer getActivePlayer() {
+		return activeplayer;
 	}
 
 	@Override
@@ -228,6 +235,15 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.lastAction = lastAction;
 	}
 
+	// kh - this should be protected?
+	public void setMaxMoves(int moves){
+		this.maxMoves = moves;
+	}
+	
+	protected int getMaxMoves(){
+		return maxMoves;
+	}
+	
 	@Override
 	public String getBroadcastMessage() {
 		return this.broadcastMsg;

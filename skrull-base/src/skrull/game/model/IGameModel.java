@@ -22,6 +22,10 @@ public interface IGameModel extends Serializable {
 	public abstract boolean isGameOver();
 
 	public abstract IPlayer getWinner();
+	
+	public abstract IPlayer getActivePlayer();
+	
+	public abstract void setMaxMoves(int moves);
 
 	/**
 	 * 2 types of checks should be performed here: 

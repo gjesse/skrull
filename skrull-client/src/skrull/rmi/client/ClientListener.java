@@ -15,7 +15,7 @@ public class ClientListener implements IClientListener {
 	@Override
 	public void modelChanged(IGameModel model) {
 		// TODO this needs logging
-		System.out.println("modelChanged in Client...");
+		System.out.println("modelChanged in Client Listener...");
 		gameClientView.modelChanged(model);
 	}
 

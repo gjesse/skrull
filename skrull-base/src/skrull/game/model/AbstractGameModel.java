@@ -40,6 +40,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	private GameType gameType;
 	private StringBuffer chatBuffer = new StringBuffer(1024);
 	private String broadcastMsg;
+	private Collection<IGameModel> activeGames;
 
 	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);
 	
@@ -236,7 +237,8 @@ public abstract class AbstractGameModel implements IGameModel {
 	}
 
 	// kh - this should be protected?
-	public void setMaxMoves(int moves){
+	// jh - yes, definitely
+	protected void setMaxMoves(int moves){
 		this.maxMoves = moves;
 	}
 	
@@ -247,6 +249,16 @@ public abstract class AbstractGameModel implements IGameModel {
 	@Override
 	public String getBroadcastMessage() {
 		return this.broadcastMsg;
+	}
+	
+	@Override
+	public void setActiveGames(Collection<IGameModel> activeGames) {
+		this.activeGames = activeGames;
+	}
+
+	@Override
+	public Collection<IGameModel> getActiveGames() {
+		return activeGames;
 	}
 	
 }

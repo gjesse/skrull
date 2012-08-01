@@ -1,6 +1,7 @@
 package skrull.game.factory;
 
 import skrull.game.controller.IGameController;
+import skrull.game.controller.IServerController;
 import skrull.game.model.IPlayer;
 
 public interface IGameFactory {
@@ -18,7 +19,5 @@ public interface IGameFactory {
 	 *  Should handle every type of GameType
 	 */
 	public IGameController setupGame(GameType type, IPlayer startingPlayer, int gameId);
-
-	public String[] listAvailableGames();
 
 }

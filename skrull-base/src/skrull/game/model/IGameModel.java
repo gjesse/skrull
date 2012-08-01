@@ -24,8 +24,7 @@ public interface IGameModel extends Serializable {
 	public abstract IPlayer getWinner();
 	
 	public abstract IPlayer getActivePlayer();
-	
-	public abstract void setMaxMoves(int moves);
+
 
 	/**
 	 * 2 types of checks should be performed here: 
@@ -45,5 +44,9 @@ public interface IGameModel extends Serializable {
 	public abstract String getChatContents();
 
 	public abstract String getBroadcastMessage();
+
+	public abstract void setActiveGames(Collection<IGameModel> activeGames);
+	
+	public abstract Collection<IGameModel> getActiveGames();
 	
 }

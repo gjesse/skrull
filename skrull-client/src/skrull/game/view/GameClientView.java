@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -479,6 +481,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private void updateBoard(IGameModel model) {
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
 		chatWindow.setText(model.getChatContents());
+		Collection<IGameModel> games = model.getActiveGames();
+		Collection<String> activeGames = new HashSet<String>();
+		for (IGameModel game: games){
+			activeGames.add(game.getGameId() + ":" + game.getGameType());
+		}
+		// this needs to redraw the join list for the default game but it's not now
+		activeGamesToJoin = new JList(activeGames.toArray());
 	}
 	
 	public String getChatText(){

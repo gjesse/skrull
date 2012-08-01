@@ -15,6 +15,7 @@ public class GameFactory implements IGameFactory {
 	public GameFactory(IClientUpdater updater) {
 		this.updater = updater;
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
@@ -64,17 +65,6 @@ public class GameFactory implements IGameFactory {
 		return GameController;
 	}
 	
-
-	/* (non-Javadoc)
-	 * @see skrull.game.factory.IGameFactory#listGames()
-	 */
-	@Deprecated /* this probably isn't needed now that game types are an enum */
-	@Override
-	public String[] listAvailableGames() {
-	
-		throw new UnsupportedOperationException();
-	}
-
 	public IClientUpdater getUpdater() {
 		return updater;
 	}

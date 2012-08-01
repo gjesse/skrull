@@ -1,5 +1,7 @@
 package skrull.game.model;
 
+import java.util.Collection;
+
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
@@ -24,7 +26,6 @@ public class DefaultGameModel extends AbstractGameModel {
 	@Override
 	public void doProcessMove(IClientAction action) {
 		throw new UnsupportedOperationException("I'm not expecting a move here");
-		
 	}
 	
 	/**
@@ -34,5 +35,6 @@ public class DefaultGameModel extends AbstractGameModel {
 	protected long getInactivityTimeout() {
 		return Long.MAX_VALUE;
 	}
+
 
 }

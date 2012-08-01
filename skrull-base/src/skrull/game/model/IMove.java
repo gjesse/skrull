@@ -6,8 +6,6 @@ public interface IMove extends Serializable{
 
 	int getMoveIndex();
 
-	int getMoveCount();
-
 	IPlayer getPlayer();
 
 }

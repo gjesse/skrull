@@ -25,7 +25,6 @@ public interface IGameModel extends Serializable {
 	
 	public abstract IPlayer getActivePlayer();
 
-
 	/**
 	 * 2 types of checks should be performed here: 
 	 * 	1. make sure the active player hasn't exceeded some reasonable threshold (ie walked away from the computer)

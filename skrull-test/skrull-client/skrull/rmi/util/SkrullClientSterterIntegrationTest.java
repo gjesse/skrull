@@ -35,7 +35,6 @@ public class SkrullClientSterterIntegrationTest {
 	public static void setUpBeforeClass() throws Exception {
 	}
 
-	private IGameClientView view;
 	private MockServerListener listener;
 
 	@Before

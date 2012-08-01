@@ -7,16 +7,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import org.apache.log4j.Logger;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;

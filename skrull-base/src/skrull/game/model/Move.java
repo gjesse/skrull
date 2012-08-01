@@ -1,9 +1,7 @@
 package skrull.game.model;
 
 public abstract class Move implements IMove {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3692646851275065925L;
 	private int moveIndex;
 	private int moveCount;

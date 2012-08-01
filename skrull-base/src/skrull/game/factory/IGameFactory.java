@@ -1,7 +1,6 @@
 package skrull.game.factory;
 
 import skrull.game.controller.IGameController;
-import skrull.game.controller.IServerController;
 import skrull.game.model.IPlayer;
 
 public interface IGameFactory {

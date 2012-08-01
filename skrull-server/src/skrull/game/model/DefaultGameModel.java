@@ -1,7 +1,5 @@
 package skrull.game.model;
 
-import java.util.Collection;
-
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;

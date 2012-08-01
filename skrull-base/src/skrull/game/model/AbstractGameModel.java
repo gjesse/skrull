@@ -1,6 +1,5 @@
 package skrull.game.model;
 
-import java.awt.Desktop.Action;
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;

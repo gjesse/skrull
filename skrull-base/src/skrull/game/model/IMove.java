@@ -1,6 +1,8 @@
 package skrull.game.model;
 
-public interface IMove {
+import java.io.Serializable;
+
+public interface IMove extends Serializable{
 
 	int getMoveIndex();
 

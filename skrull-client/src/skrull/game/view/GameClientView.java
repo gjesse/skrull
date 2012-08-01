@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.soap.Text;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
@@ -40,7 +41,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 	JList activeGamesToJoin;
 	JPanel gameBoardPanel;
 	JPanel userPanel;
+	JPanel winnerPanel;
 	JFrame mainFrame;
+	private int count = 0;
+	private String marker = "";
 	String createGame = IClientAction.ActionType.CREATE_GAME.toString();
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
 	String sendChat = IClientAction.ActionType.CHAT.toString();
@@ -78,9 +82,38 @@ public class GameClientView extends JFrame implements IGameClientView{
 				
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("User: " + playerId.toString());
+		mainFrame = new JFrame("User: " + playerId.toString()){
+			
+		};
 
-		right = new JPanel();
+		right = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D g2d = (Graphics2D)g;
+				
+			    if ( !isOpaque() )
+			    {
+			        super.paintComponent(g);
+			        return;
+			    }
+			 
+			    int w = getWidth( );
+			    int h = getHeight( );
+			    Color color1 = getBackground( );
+			    Color color2 = color1.darker( );
+			    
+			    // Paint a gradient from top to bottom
+			    GradientPaint gp = new GradientPaint(
+			        0, 0, color1,
+			        0, h, color2 );
+
+			    g2d.setPaint( gp );
+			    g2d.fillRect( 0, 0, w, h );
+			    
+			    setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );  
+			}
+		};
 		
 		right.setPreferredSize(new Dimension(200,0));
 	
@@ -108,9 +141,90 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		Handler handler = new Handler();
 		
-		userPanel = new JPanel();
-		JPanel left = new JPanel();
-		JPanel middle = new JPanel();
+		userPanel = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D g2d = (Graphics2D)g;
+				
+			    if ( !isOpaque() )
+			    {
+			        super.paintComponent(g);
+			        return;
+			    }
+			 
+			    int w = getWidth( );
+			    int h = getHeight( );
+			    Color color1 = getBackground( );
+			    Color color2 = color1.darker( );
+			    
+			    // Paint a gradient from top to bottom
+			    GradientPaint gp = new GradientPaint(
+			        0, 0, color1,
+			        0, h, color2 );
+
+			    g2d.setPaint( gp );
+			    g2d.fillRect( 0, 0, w, h );
+			    
+			    setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );  
+			}
+		};
+		JPanel left = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D g2d = (Graphics2D)g;
+				
+			    if ( !isOpaque() )
+			    {
+			        super.paintComponent(g);
+			        return;
+			    }
+			 
+			    int w = getWidth( );
+			    int h = getHeight( );
+			    Color color1 = getBackground( );
+			    Color color2 = color1.darker( );
+			    
+			    // Paint a gradient from top to bottom
+			    GradientPaint gp = new GradientPaint(
+			        0, 0, color1,
+			        0, h, color2 );
+
+			    g2d.setPaint( gp );
+			    g2d.fillRect( 0, 0, w, h );
+			    
+			    setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );  
+			}
+		};
+		JPanel middle = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D g2d = (Graphics2D)g;
+				
+			    if ( !isOpaque() )
+			    {
+			        super.paintComponent(g);
+			        return;
+			    }
+			 
+			    int w = getWidth( );
+			    int h = getHeight( );
+			    Color color1 = getBackground( );
+			    Color color2 = color1.darker( );
+			    
+			    // Paint a gradient from top to bottom
+			    GradientPaint gp = new GradientPaint(
+			        0, 0, color1,
+			        0, h, color2 );
+
+			    g2d.setPaint( gp );
+			    g2d.fillRect( 0, 0, w, h );
+			    
+			    setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );  
+			}
+		};
 		
 		left.setSize(new Dimension(300,0));
 		middle.setSize(new Dimension(300,0));
@@ -124,24 +238,54 @@ public class GameClientView extends JFrame implements IGameClientView{
 		joinButton.addActionListener(handler);
 		
 		/*******************LEFT PROPERTIES************************/
-		left.setLayout(new GridLayout(3,0));	
+		
+		left.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx =0;
+		gbc.gridy = 0;
+		gbc.ipadx = 30;
+		gbc.ipady = 75;
+		gbc.insets = new Insets(0,10,10,10);
+		//left.setAlignmentX(FlowLayout.CENTER);
+		
+		
 		
 		newGameList = new JList(IGameFactory.GameType.values());
 			
 		newGameList.setBorder(BorderFactory.createTitledBorder("Create A New Game"));
 		
-		left.add(newGameList);
-		left.add(startButton);
+		left.add(newGameList,gbc);
+		gbc.gridy = 1;
+		gbc.ipadx = 10;
+		gbc.ipady = 30;
+		gbc.insets = new Insets(3,3,3,3);
+		left.add(startButton,gbc);
 		left.setBorder(BorderFactory.createEtchedBorder());
 		
 		/*******************MIDDLE PROPERTIES************************/
-		middle.setLayout(new GridLayout(3,0));
-		activeGamesToJoin = new JList(sampleGamesToJoin);
 		
+		//middle.setLayout(new GridLayout(2,0));
+		middle.setLayout(new GridBagLayout());
+		//GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx =0;
+		gbc.gridy = 0;
+		gbc.ipadx = 75;
+		gbc.ipady = -17;
+		gbc.insets = new Insets(0,0,10,0);
+		activeGamesToJoin = new JList(sampleGamesToJoin);
+
 		JScrollPane activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+
 		activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
-		middle.add(activeGameScroller);
-		middle.add(joinButton);
+		middle.add(activeGameScroller,gbc);
+		
+		gbc.gridy = 1;
+		gbc.ipadx = 10;
+		gbc.ipady = 30;
+		gbc.insets = new Insets(6,3,3,3);
+		
+		middle.add(joinButton,gbc);
 		middle.setBorder(BorderFactory.createEtchedBorder());
 		
 		userPanel.add(left);
@@ -163,7 +307,37 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		sendButton = new JButton("send chat");
 		
-		JPanel chatPanel = new JPanel(new GridBagLayout());					
+		JPanel chatPanel = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D g2d = (Graphics2D)g;
+				
+			    if ( !isOpaque() )
+			    {
+			        super.paintComponent(g);
+			        return;
+			    }
+			 
+			    int w = getWidth( );
+			    int h = getHeight( );
+			    Color color1 = getBackground( );
+			    Color color2 = color1.darker( );
+			    
+			    // Paint a gradient from top to bottom
+			    GradientPaint gp = new GradientPaint(
+			        0, 0, color1,
+			        0, h, color2 );
+
+			    g2d.setPaint( gp );
+			    g2d.fillRect( 0, 0, w, h );
+			    
+			    setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );  
+			}
+		}
+		;
+		chatPanel.setBorder(BorderFactory.createEmptyBorder());
+		chatPanel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		
 
@@ -172,13 +346,13 @@ public class GameClientView extends JFrame implements IGameClientView{
         
         JScrollPane scroll = new JScrollPane(chatWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
         
-        
+        constraints.insets = new Insets(160,0,0,0);
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.ipady = 100;
         chatPanel.add(scroll, constraints);
-        
+        constraints.insets = new Insets(0,0,0,0);
         constraints.ipady = 10;
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -240,9 +414,15 @@ public class GameClientView extends JFrame implements IGameClientView{
 		public void actionPerformed(ActionEvent buttonEvent) {
 			// TODO need to determine turn and change the button text to 
 			//show whether and where X or O has been placed 
-			
+			count++;
+			if(count %2 ==0){
+				marker = "X";
+			}
+			else{
+				marker = "O";
+			}
 			JButton buttonPressed = (JButton)buttonEvent.getSource();
-			buttonPressed.setText("X");
+			buttonPressed.setText(marker);
 			buttonPressed.setEnabled(false);
 		}
 		
@@ -256,6 +436,85 @@ public class GameClientView extends JFrame implements IGameClientView{
 		}
 	
 	}
+	public JPanel winnerPanel(){
+		winnerPanel = new JPanel(){
+			protected void paintComponent(Graphics g){
+				Graphics2D g2d = (Graphics2D)g;
+				
+			    if ( !isOpaque() )
+			    {
+			        super.paintComponent(g);
+			        return;
+			    }
+			 
+			    int w = getWidth( );
+			    int h = getHeight( );
+			    Color color1 = getBackground( );
+			    Color color2 = color1.darker( );
+			    
+			    // Paint a gradient from top to bottom
+			    GradientPaint gp = new GradientPaint(
+			        0, 0, color1,
+			        0, h, color2 );
+
+			    g2d.setPaint( gp );
+			    g2d.fillRect( 0, 0, w, h );
+			    
+			    setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );  
+			}
+		
+			
+		};
+		JButton winnerButton = new JButton("WINNER!!!");
+		
+		winnerButton.setForeground(Color.cyan);
+		winnerButton.setBackground(Color.black);
+		winnerButton.setBorder(BorderFactory.createEmptyBorder());
+		winnerPanel.setLayout(new GridBagLayout());
+		GridBagConstraints winnerConstraints = new GridBagConstraints();
+		winnerConstraints.ipadx = 400;
+		winnerConstraints.ipady = 50;
+		winnerConstraints.gridx = 1;
+		winnerConstraints.gridy = 1;
+		winnerConstraints.fill = GridBagConstraints.BOTH;
+		
+		
+		winnerPanel.add(winnerButton,winnerConstraints);
+		
+		winnerPanel.setPreferredSize(new Dimension(600,0));
+		//winnerPanel.setBackground(Color.white);
+		
+		return winnerPanel;
+	}
+/*	protected void paintComponent( Graphics g ) 
+	{
+		Graphics2D g2d = (Graphics2D)g;
+		
+	    if ( !isOpaque( ) )
+	    {
+	        super.paintComponent( g );
+	        return;
+	    }
+	 
+	    //... paint custom background here ...
+	    int w = getWidth( );
+	    int h = getHeight( );
+	     
+	    // Paint a gradient from top to bottom
+	    GradientPaint gp = new GradientPaint(
+	        0, 0, color1,
+	        0, h, color2 );
+
+	    g2d.setPaint( gp );
+	    g2d.fillRect( 0, 0, w, h );
+	    
+	    setOpaque( false );
+	    super.paintComponent( g );
+	    setOpaque( true );
+	}*/
+	
 	private JPanel sampleRockPaperScissorBoard(){
 		
 		JPanel rpsBoard = new JPanel();
@@ -305,7 +564,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
 		chatWindow.setText(model.getChatContents());
 	}
-	
+
 	public String getChatText(){
 		return chatTextInputField.getText();
 	}

@@ -4,8 +4,6 @@ public interface IMove {
 
 	int getMoveIndex();
 
-	int getMoveCount();
-
 	IPlayer getPlayer();
 
 }

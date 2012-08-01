@@ -25,10 +25,9 @@ public abstract class AbstractGameModel implements IGameModel {
 	private static final long serialVersionUID = -5970164504419304864L;
 	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
 	private IPlayer activeplayer;
-	private IPlayer winner;
+	protected IPlayer winner;
 	
 	private IBoard board;
-	private int maxMoves;
 	private boolean finished;
 	
 	private long lastMoveTime;
@@ -85,7 +84,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		
 		// then do some common move housekeeping
 		this.lastMoveTime = System.currentTimeMillis();
-		this.activeplayer = action.getPlayer();
+		this.activeplayer = action.getPlayer();   // TDO kh - may need to remove this
 		this.lastAction = action;
 	}
 	
@@ -235,15 +234,6 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.lastAction = lastAction;
 	}
 
-	// kh - this should be protected?
-	public void setMaxMoves(int moves){
-		this.maxMoves = moves;
-	}
-	
-	protected int getMaxMoves(){
-		return maxMoves;
-	}
-	
 	@Override
 	public String getBroadcastMessage() {
 		return this.broadcastMsg;

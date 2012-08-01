@@ -5,6 +5,8 @@
  */
 package skrull.game.model.tictactoe;
 
+import java.util.Iterator;
+
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IMove;
@@ -18,21 +20,30 @@ public class TicTacToe extends AbstractGameModel{
 
 
 	private static final long serialVersionUID = -8648567625229924677L;
+	
+	private int moveCount;		// starting move
+	private int maxMoves;		// max moves, used to determine tie
+	
 	private int currentPlayer;  // track who's turn, without using UUIDs
 	private IMove board[];		// TODO: move this to Abstract Game Model
-	private int moveCount;
+	private IPlayer myPlayers[];
+
 	
 	
 	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
 		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater);
 		currentPlayer = 0;
-		board = new IMove[9];
 		moveCount = 0;
+		maxMoves = 9;
+		board = new IMove[9];
+		myPlayers[0] = startingPlayer;
 	}
 
 	@Override
 	public void joinGame(IClientAction action) {
 		super.addPlayer(action.getPlayer());
+		myPlayers[1] = action.getPlayer();
+		setActiveplayer(myPlayers[0]);
 		super.updateListener();
 		
 	}
@@ -45,7 +56,7 @@ public class TicTacToe extends AbstractGameModel{
 		// TODO figure out how to confirm action.getplayer == player who's turn it is.
 		
 		// match player making move to current player 
-		if (getActivePlayer().equals(action.getPlayer())){
+		if (myPlayers[currentPlayer].equals(action.getPlayer())){
 			
 			// verify move is legal
 			if (!isOccupied(myMove)){
@@ -59,22 +70,40 @@ public class TicTacToe extends AbstractGameModel{
 				System.out.println(" player: ");
 				System.out.println(currentPlayer);
 				System.out.println("/n");
-			
+				
+				
+				// WINNER Check
 				if(haveWinner()){
-					// TODO detemine winner in method
 					// TODO set isFinished flag
 				}
 				
-				// TODO change activePlayer 
+				// DRAW Check
+				if(!haveWinner() && isGameOver()){
+					// TODO make active player impossible.
+					// TODO set draw flag
+				}
+								
+				// TODO change activePlayer
+				setActiveplayer(myPlayers[currentPlayer]);
 				
-				// TODO notify other player of move
-				updateListener();
+				// TODO announce what the move was.
 				
 			}
+			// Invalid move by correct player.
+			// TODO send to chat window.
+			else System.out.println("Invalid Move...");
+		
 		}
+		// Not valid player
+		// TODO send to chat window instead
+		else System.out.println("Please wait your turn"); 
 		
-		
+		// TODO notify other player of move
+		updateListener();
 	}
+	
+	
+	
 	
 	private boolean haveWinner() {
 		
@@ -101,6 +130,7 @@ public class TicTacToe extends AbstractGameModel{
             // no null reference chance, check for matches indicating a winner
 			if (board[w[0]].equals(board[w[1]]) && board[w[1]].equals(board[w[2]])){
                 winnerDetected = true;
+                // TODO get UUID into Winner = board[w[0]];
                 break;
 			}                      
 		}
@@ -122,7 +152,6 @@ public class TicTacToe extends AbstractGameModel{
 	// KH - Logic from
 	// TODO: make this real.
 	public boolean isGameOver(){
-		return moveCount==9;
+		return (moveCount == maxMoves);
 	}
-
 }

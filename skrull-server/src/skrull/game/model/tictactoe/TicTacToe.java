@@ -34,7 +34,8 @@ public class TicTacToe extends AbstractGameModel{
 		currentPlayer = 0;
 		moveCount = 0;
 		maxMoves = 9;
-		board = new IMove[9];
+		board = new IMove[maxMoves];
+		myPlayers = new IPlayer[2];
 		myPlayers[0] = startingPlayer;
 	}
 

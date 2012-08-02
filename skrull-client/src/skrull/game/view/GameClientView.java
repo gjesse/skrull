@@ -620,6 +620,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 public int getGameId() {
 	return gameId;
 }
+@Override
+public GameType getNewGameTypeText() {
+	return (GameType)newGameList.getSelectedValue();
+}
    
 
 

@@ -51,6 +51,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {
 		this.gameType = type;
 		this.gameId = gameId;
+		this.lastMoveTime = System.currentTimeMillis();
 		this.clientUpdater = updater;
 	}
 
@@ -118,7 +119,6 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	@Override
 	public Collection<IPlayer> getPlayers(){
-		// return Collections.unmodifiableCollection(players);
 		return players;
 	}
 

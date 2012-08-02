@@ -80,9 +80,6 @@ public class ServerController implements IServerController {
 				if (action.getGameType().equals(GameType.DEFAULT)){
 					throw new UnsupportedOperationException("Cannot create additional default games");
 				}
-				
-				// first we should remove the player from the default game...
-				defaultGameController.processGameAction(action);
 
 				// then setup a new game and assign this player
 				final IGameController gameController = gameFactory.setupGame(action.getGameType(),action.getPlayer(), nextGameId());

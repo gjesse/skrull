@@ -1,5 +1,7 @@
 package skrull.game.model;
 
+import java.util.Collection;
+
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
@@ -31,7 +33,13 @@ public class DefaultGameModel extends AbstractGameModel {
 	 */
 	@Override
 	protected long getInactivityTimeout() {
-		return Long.MAX_VALUE;
+		return 1000 * 60 * 60 * 24;
+	}
+	
+	@Override
+	public void quit(IClientAction action) {
+		Collection<IPlayer> p = getPlayers();
+		p.remove(action.getPlayer());
 	}
 
 

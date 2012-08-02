@@ -42,9 +42,11 @@ public class ClientInputHandler {
 				break;
 				
 			case CREATE_GAME:
-				// TODO: need to determine the game type from the view. this will break once we have actual games going
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));			
+				GameType gameType = view.getNewGameTypeText();
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
+
 				break;
 				
 			case JOIN_GAME:

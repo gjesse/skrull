@@ -1,5 +1,6 @@
 package skrull.game.view;
 
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 
 /**
@@ -13,5 +14,7 @@ public interface IGameClientView {
 	public abstract String getChatText();
 
 	public abstract int getGameId();
+
+	public abstract GameType getNewGameTypeText();
 
 }

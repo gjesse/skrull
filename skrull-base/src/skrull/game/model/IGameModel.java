@@ -3,6 +3,7 @@ package skrull.game.model;
 import java.io.Serializable;
 import java.util.Collection;
 
+import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 
@@ -14,8 +15,9 @@ public interface IGameModel extends Serializable {
 	 * Validation must be done here by the game before
 	 * adding the new player to the game
 	 * @param aAction
+	 * @throws SkrullGameException 
 	 */
-	public abstract void joinGame(IClientAction aAction);
+	public abstract void joinGame(IClientAction aAction) throws SkrullGameException;
 
 	public abstract void processMove(IClientAction aAction);
 

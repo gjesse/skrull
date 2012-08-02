@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 
+import skrull.SkrullException;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
@@ -26,7 +27,7 @@ public class ServerController implements IServerController {
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;
 		int next =  nextGameId();
-		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, next);
+		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, next);
 		defaultGameController.setServerController(this);
 		activeGameControllers.add(defaultGameController);
 	}
@@ -34,7 +35,7 @@ public class ServerController implements IServerController {
 	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public void processClientAction(IClientAction action) {
+	public void processClientAction(IClientAction action) throws SkrullException {
 		logger.debug("processing action: " + action);
 		switch (action.getActionType())
 		{
@@ -83,7 +84,7 @@ public class ServerController implements IServerController {
 				}
 
 				// then setup a new game and assign this player
-				final IGameController gameController = gameFactory.setupGame(action.getGameType(),action.getPlayer(), nextGameId());
+				final IGameController gameController = gameFactory.setupGame(action.getGameType(), nextGameId());
 				gameController.setServerController(this);
 				activeGameControllers.add(gameController);
 				

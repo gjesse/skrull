@@ -7,6 +7,7 @@ package skrull.game.model.tictactoe;
 
 import java.util.Iterator;
 
+import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IMove;
@@ -29,21 +30,23 @@ public class TicTacToe extends AbstractGameModel{
 
 	
 	
-	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
-		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater);
+	public TicTacToe(int gameId, IClientUpdater updater) {
+		super(gameId, GameType.TIC_TAC_TOE, updater);
 		currentPlayer = 0;
 		moveCount = 0;
 		maxMoves = 9;
 		board = new IMove[maxMoves];
 		myPlayers = new IPlayer[2];
-		myPlayers[0] = startingPlayer;
 	}
 
 	@Override
-	public void joinGame(IClientAction action) {
+	public void joinGame(IClientAction action) throws SkrullGameException {
+		if (getPlayers().size() >= 2){
+			throw new SkrullGameException("game full");
+		}
 		super.addPlayer(action.getPlayer());
-		myPlayers[1] = action.getPlayer();
-		setActiveplayer(myPlayers[0]);
+
+		setActiveplayer(action.getPlayer());
 		super.updateListener();
 		
 	}

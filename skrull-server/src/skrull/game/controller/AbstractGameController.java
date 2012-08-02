@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import skrull.SkrullException;
+import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.view.IClientAction;
@@ -53,7 +55,7 @@ public abstract class AbstractGameController implements IGameController {
 	}
 
 	@Override
-	public void processGameAction(IClientAction action) {
+	public void processGameAction(IClientAction action) throws SkrullException {
 		logger.debug("processing game action " + action.getActionType());
 		
 		gameModel.setActiveGames(getActiveGames());

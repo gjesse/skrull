@@ -42,11 +42,6 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);
 	
-	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
-		this(gameId, type, updater);
-		this.players.add(startingPlayer);
-
-	}
 	
 	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {
 		this.gameType = type;
@@ -73,7 +68,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	 * @see skrull.game.model.IGameModel#joinGame(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public abstract void joinGame(IClientAction action);
+	public abstract void joinGame(IClientAction action) throws SkrullGameException;
 
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#processMove(skrull.game.view.ClientAction)

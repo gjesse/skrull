@@ -2,6 +2,7 @@ package skrull.game.controller;
 
 import java.util.Collection;
 
+import skrull.SkrullException;
 import skrull.game.view.IClientAction;
 
 public interface IServerController {
@@ -12,8 +13,9 @@ public interface IServerController {
 	 * Possible results correspond to @IClientAction.ActionType
 	 *   
 	 * @param action
+	 * @throws SkrullException 
 	 */
-	public abstract void processClientAction(IClientAction action);
+	public abstract void processClientAction(IClientAction action) throws SkrullException;
 
 	/**
 	 * a thread-safe array of all active gameControllers

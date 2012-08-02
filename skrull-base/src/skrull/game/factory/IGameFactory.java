@@ -13,10 +13,10 @@ public interface IGameFactory {
 
 	/**
 	 * Should return a single GameController,
-	 *  with attendant gameModel and all leaf objects instantiated (except for additional players)
+	 *  with attendant gameModel and all leaf objects instantiated (except players)
 	 *  
 	 *  Should handle every type of GameType
 	 */
-	public IGameController setupGame(GameType type, IPlayer startingPlayer, int gameId);
+	public IGameController setupGame(GameType type, int gameId);
 
 }

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
+import skrull.game.model.Move;
 import skrull.game.view.IClientAction.ActionType;
 import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IServerUpdater;
@@ -56,7 +57,12 @@ public class ClientInputHandler {
 			case MOVE:
 				// TODO: need to determine the game type from the view. this will break once we have actual games going
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));			
+				//
+				Move viewMove = new Move();
+				actionEvent.getActionCommand();
+				viewMove.setMoveIndex(Integer.valueOf(actionEvent.getActionCommand()));
+				viewMove.setPlayer(player);
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), viewMove));			//use viewMove
 				break;
 			
 			case QUIT:

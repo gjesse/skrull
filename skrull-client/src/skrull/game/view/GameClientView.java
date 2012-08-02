@@ -17,6 +17,8 @@ import org.apache.log4j.Logger;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IMove;
+import skrull.game.model.Move;
 import skrull.util.logging.SkrullLogger;
 
 public class GameClientView extends JFrame implements IGameClientView{
@@ -47,14 +49,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	String createGame = IClientAction.ActionType.CREATE_GAME.toString();
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
 	String sendChat = IClientAction.ActionType.CHAT.toString();
-	String pickMe = "Choose Me!";
-	String sampleGamesToJoin[] = {"sampleGame1","sampleGame2","sampleGame3","sampleGame4",
-			"sampleGame5","sampleGame6","sampleGame7","sampleGame8","sampleGame9","sampleGame1",
-			"sampleGame2","sampleGame3","sampleGame4","sampleGame5","sampleGame6","sampleGame7",
-			"sampleGame8","sampleGame9","sampleGame8","sampleGame7","sampleGame6","sampleGame5",
-			"sampleGame4","sampleGame3","sampleGame2","sampleGame1","sampleGame2","sampleGame3",
-			"sampleGame4","sampleGame5","sampleGame6"};
-	
+	String pickMe = "Choose Me!";	
 
 	public GameClientView(ClientInputHandler cih, UUID playerId) {
 		this.cih = cih;
@@ -69,20 +64,16 @@ public class GameClientView extends JFrame implements IGameClientView{
 	 * */
 	 @Override
 	public void modelChanged(IGameModel model) {
+		System.out.println("MODEL CHANGED!");
 		updateBoard(model);
 		this.gameId = model.getGameId();
 	}
-	 public void itemStateChanged(ItemEvent evt){
-		 CardLayout cl = (CardLayout)(cards.getLayout());
-		 cl.show(cards,(String)evt.getItem());
-	 }
+
 	private void buildClientMainView(JPanel myPanel){
 				
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("User: " + playerId.toString()){
-			
-		};
+		mainFrame = new JFrame("User: " + playerId.toString());
 
 		right = new JPanel(){
 			protected void paintComponent(Graphics g){
@@ -118,10 +109,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		/*******************RIGHT PROPERTIES************************/	
 		right.add(buildChatClient());
 		right.setBorder(BorderFactory.createEtchedBorder());
-		
-		//finally able to add the left and middle to their own panel
-		//however the chat client has grown in size
-		
+
 		GridLayout mainGrid = new GridLayout(0,2);
 		mainFrame.setLayout(mainGrid);
 
@@ -244,9 +232,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		gbc.ipadx = 30;
 		gbc.ipady = 75;
 		gbc.insets = new Insets(0,10,10,10);
-		//left.setAlignmentX(FlowLayout.CENTER);
-		
-		
 		
 		newGameList = new JList(IGameFactory.GameType.values());
 			
@@ -262,19 +247,17 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		/*******************MIDDLE PROPERTIES************************/
 		
-		//middle.setLayout(new GridLayout(2,0));
 		middle.setLayout(new GridBagLayout());
-		//GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx =0;
 		gbc.gridy = 0;
 		gbc.ipadx = 75;
-		gbc.ipady = -17;
+		//gbc.ipady = -17;
 		gbc.insets = new Insets(0,0,10,0);
-		activeGamesToJoin = new JList(sampleGamesToJoin);
-
+			
+		
+		
 		JScrollPane activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-
 		activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
 		middle.add(activeGameScroller,gbc);
 		
@@ -372,7 +355,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		gameBoardPanel = new JPanel();
 		gameBoardPanel.setPreferredSize(new Dimension(600,0));
-		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
 		gameBoardPanel.setBackground(Color.WHITE);
 		
 		TicTacToeHandler gameHandler = new TicTacToeHandler();
@@ -391,7 +373,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		for(int i = 0; i < 9; i++){
 			ticTacToeButtons[i] = new JButton(pickMe);
-			
+			ticTacToeButtons[i].setActionCommand(String.valueOf(i));
 			ticTacToeButtons[i].addActionListener(gameHandler);
 			if(constrainers.gridx == 3){
 				constrainers.gridx = 0;
@@ -412,16 +394,20 @@ public class GameClientView extends JFrame implements IGameClientView{
 		public void actionPerformed(ActionEvent buttonEvent) {
 			// TODO need to determine turn and change the button text to 
 			//show whether and where X or O has been placed 
-			count++;
-			if(count %2 ==0){
-				marker = "X";
-			}
-			else{
-				marker = "O";
-			}
+			
+			
 			JButton buttonPressed = (JButton)buttonEvent.getSource();
-			buttonPressed.setText(marker);
+			
+
+			//System.out.println("button number: "+ buttonEvent);
+			//JOptionPane.showMessageDialog(null,buttonEvent.getActionCommand());
+			
+			//instead of marker will eventually say getToken and set that as the label
+			//buttonPressed.setText(marker);
+			
 			buttonPressed.setEnabled(false);
+			
+			cih.handleInput(buttonEvent);
 		}
 		
 	}
@@ -482,37 +468,9 @@ public class GameClientView extends JFrame implements IGameClientView{
 		winnerPanel.add(winnerButton,winnerConstraints);
 		
 		winnerPanel.setPreferredSize(new Dimension(600,0));
-		//winnerPanel.setBackground(Color.white);
 		
 		return winnerPanel;
 	}
-/*	protected void paintComponent( Graphics g ) 
-	{
-		Graphics2D g2d = (Graphics2D)g;
-		
-	    if ( !isOpaque( ) )
-	    {
-	        super.paintComponent( g );
-	        return;
-	    }
-	 
-	    //... paint custom background here ...
-	    int w = getWidth( );
-	    int h = getHeight( );
-	     
-	    // Paint a gradient from top to bottom
-	    GradientPaint gp = new GradientPaint(
-	        0, 0, color1,
-	        0, h, color2 );
-
-	    g2d.setPaint( gp );
-	    g2d.fillRect( 0, 0, w, h );
-	    
-	    setOpaque( false );
-	    super.paintComponent( g );
-	    setOpaque( true );
-	}*/
-	
 	private JPanel sampleRockPaperScissorBoard(){
 		
 		JPanel rpsBoard = new JPanel();
@@ -538,10 +496,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		JButton rockButton = new JButton(new ImageIcon(buttonIcon2));
 		JButton scissorButton = new JButton(new ImageIcon(buttonIcon3));
 
-/*		paperButton.setBorder(BorderFactory.createEmptyBorder());
-		rockButton.setBorder(BorderFactory.createEmptyBorder());
-		scissorButton.setBorder(BorderFactory.createEmptyBorder());
-		*/
 		paperButton.setBackground(Color.WHITE);
 		rockButton.setBackground(Color.WHITE);
 		scissorButton.setBackground(Color.WHITE);
@@ -558,6 +512,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		return rpsBoard;
 	}
 	private void updateBoard(IGameModel model) {
+		System.out.println("UPDATING BOARD");
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
 		chatWindow.setText(model.getChatContents());
 		Collection<IGameModel> games = model.getActiveGames();
@@ -565,8 +520,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 		for (IGameModel game: games){
 			activeGames.add(game.getGameId() + ":" + game.getGameType());
 		}
+		
 		// this needs to redraw the join list for the default game but it's not now
 		activeGamesToJoin = new JList(activeGames.toArray());
+		System.out.println("activeGamesToJoin: "+activeGamesToJoin);
 	}
 
 	public String getChatText(){
@@ -591,10 +548,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 			   GameType gameSelection = (GameType)newGameList.getSelectedValue();
 			   
 			   if(gameSelection == IGameFactory.GameType.TIC_TAC_TOE){
+				   mainFrame.setVisible(false);
 				   buildClientMainView(sampleTicTacToeBoard());
 			   }
 			   else if(gameSelection == IGameFactory.GameType.ROCK_PAPER_SCISSORS){
+				   mainFrame.setVisible(false);
 				   buildClientMainView(sampleRockPaperScissorBoard());
+				   
 			   }
 			   else if(gameSelection == null)
 				   JOptionPane.showMessageDialog(null,"No selection was made");

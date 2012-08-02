@@ -6,7 +6,7 @@ policy.file=allow_all.policy
 image.dir=/home/jhodges/Workspaces/school/skrull/skrull-client/src/res/
 
 # frequency of activity monitor checks in ms (default is 500)
-activity.monitor.interval=1000
+activity.monitor.interval=10000
 
 # default game timout interval in ms
 inactivity.timeout=1000

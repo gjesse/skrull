@@ -54,12 +54,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 			"sampleGame8","sampleGame9","sampleGame8","sampleGame7","sampleGame6","sampleGame5",
 			"sampleGame4","sampleGame3","sampleGame2","sampleGame1","sampleGame2","sampleGame3",
 			"sampleGame4","sampleGame5","sampleGame6"};
+	private GameType gameType;
 	
 
 	public GameClientView(ClientInputHandler cih, UUID playerId) {
 		this.cih = cih;
 		this.playerId = playerId;
-
+		this.gameType = GameType.DEFAULT; // start in default game
 		userPanel = new JPanel();
 		userPanel = (JPanel)buildUserPanel();
 		buildClientMainView(userPanel);	
@@ -589,7 +590,8 @@ public class GameClientView extends JFrame implements IGameClientView{
 		   if(command == createGame){
 			   //getting selection from the list box the user is using
 			   GameType gameSelection = (GameType)newGameList.getSelectedValue();
-			   
+			   // save the game type for the handler
+			   setGameType(gameSelection);
 			   if(gameSelection == IGameFactory.GameType.TIC_TAC_TOE){
 				   buildClientMainView(sampleTicTacToeBoard());
 			   }
@@ -620,9 +622,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 public int getGameId() {
 	return gameId;
 }
+private void setGameType(GameType gameSelection) {
+	this.gameType = gameSelection;
+	
+}
 @Override
-public GameType getSelectedGameType() {
-	return (GameType)newGameList.getSelectedValue();
+public GameType getGameType() {
+	return gameType;
 }
    
 

@@ -35,36 +35,32 @@ public class ClientInputHandler {
 			switch(type){
 			
 			case CHAT:
-				// TODO: need to determine the game type from the view. this will break once we have actual games going
 				// TODO: a builder or factory seems to be in order for the ClientActions
-					serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));
+					serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
 			
 				break;
 				
 			case CREATE_GAME:
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				GameType gameType = view.getSelectedGameType();
+				GameType gameType = view.getGameType();
 				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));			
 				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
 
 				break;
 				
 			case JOIN_GAME:
-				// TODO: need to determine the game type from the view. this will break once we have actual games going
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
 				break;
 				
 			case MOVE:
-				// TODO: need to determine the game type from the view. this will break once we have actual games going
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
 				break;
 			
 			case QUIT:
-				// TODO: need to determine the game type from the view. this will break once we have actual games going
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
 				break;
 				
 			default:

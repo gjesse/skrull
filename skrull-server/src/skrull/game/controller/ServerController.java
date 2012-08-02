@@ -77,6 +77,7 @@ public class ServerController implements IServerController {
 			// setting up a new game
 			case CREATE_GAME:
 			{
+				logger.debug("create game of type " + action.getGameType());
 				if (action.getGameType().equals(GameType.DEFAULT)){
 					throw new UnsupportedOperationException("Cannot create additional default games");
 				}

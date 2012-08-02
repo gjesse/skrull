@@ -15,6 +15,6 @@ public interface IGameClientView {
 
 	public abstract int getGameId();
 
-	public abstract GameType getNewGameTypeText();
+	public abstract GameType getSelectedGameType();
 
 }

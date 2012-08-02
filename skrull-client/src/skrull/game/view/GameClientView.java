@@ -621,7 +621,7 @@ public int getGameId() {
 	return gameId;
 }
 @Override
-public GameType getNewGameTypeText() {
+public GameType getSelectedGameType() {
 	return (GameType)newGameList.getSelectedValue();
 }
    

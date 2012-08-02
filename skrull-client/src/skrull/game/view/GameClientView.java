@@ -81,9 +81,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 				
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("User: " + playerId.toString()){
-			
-		};
+		mainFrame = new JFrame("User: " + playerId.toString()){};
 
 		mainFrame.addWindowListener(new WindowListener() {
 			
@@ -641,10 +639,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 			   // save the game type for the handler
 			   setGameType(gameSelection);
 			   if(gameSelection == IGameFactory.GameType.TIC_TAC_TOE){
+				   mainFrame.setVisible(false);
 				   buildClientMainView(sampleTicTacToeBoard());
 			   }
 			   else if(gameSelection == IGameFactory.GameType.ROCK_PAPER_SCISSORS){
+				   mainFrame.setVisible(false);
 				   buildClientMainView(sampleRockPaperScissorBoard());
+				   
 			   }
 			   else if(gameSelection == null)
 				   JOptionPane.showMessageDialog(null,"No selection was made");

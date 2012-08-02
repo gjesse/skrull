@@ -52,7 +52,7 @@ public class SkrullClientStarter extends RmiStarter {
             IClientAction action = cih.getStartupAction();
             serverUpdater.ProcessClientAction(action);
             
-            logger.info("initializatoin completed");
+            logger.info("initialization completed");
             
             
 		}catch(Exception e){

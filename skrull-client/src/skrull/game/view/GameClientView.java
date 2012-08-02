@@ -85,6 +85,53 @@ public class GameClientView extends JFrame implements IGameClientView{
 			
 		};
 
+		mainFrame.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				logger.debug("close event received");
+				cih.handleWindowEvent(e);
+				System.exit(0);
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		right = new JPanel(){
 			protected void paintComponent(Graphics g){
 				Graphics2D g2d = (Graphics2D)g;
@@ -130,7 +177,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		mainFrame.getContentPane().add(right);
 		
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.setSize(800,600);
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);

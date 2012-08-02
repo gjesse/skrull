@@ -1,6 +1,7 @@
 package skrull.game.view;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
@@ -80,5 +81,13 @@ public class ClientInputHandler {
 
 	public void setView(IGameClientView view) {
 		this.view = view;
+	}
+
+	public void handleWindowEvent(WindowEvent e) {
+		try {
+			serverUpdater.ProcessClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));
+		} catch (SkrullRMIException e1) {
+			logger.fatal("cant' contact server", e1);
+		}			
 	}
 }

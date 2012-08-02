@@ -52,7 +52,7 @@ public class SkrullServerStarter extends RmiStarter {
 
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind(IServerListener.SERVICE_NAME, engineStub);
-            logger.info("initializatoin completed");
+            logger.info("initialization completed");
 
         }
         catch(Exception e) {

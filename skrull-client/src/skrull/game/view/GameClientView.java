@@ -565,6 +565,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		Collection<String> activeGames = new HashSet<String>();
 		for (IGameModel game: games){
 			activeGames.add(game.getGameId() + ":" + game.getGameType());
+			logger.debug("active game: " + game);
 		}
 		// this needs to redraw the join list for the default game but it's not now
 		activeGamesToJoin = new JList(activeGames.toArray());

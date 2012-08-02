@@ -5,6 +5,7 @@ import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 
 public final class ClientAction implements IClientAction {
+
 	/**
 	 * 
 	 */
@@ -49,5 +50,9 @@ public final class ClientAction implements IClientAction {
 	public IMove getMove() {
 		return move;
 	}
-
+	@Override
+	public String toString() {
+		return "ClientAction [gameId=" + gameId + ", player=" + player
+				+ ", actionType=" + actionType + ", gameType=" + gameType + "]";
+	}
 }

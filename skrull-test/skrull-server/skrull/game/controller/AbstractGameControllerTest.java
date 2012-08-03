@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import skrull.SkrullException;
-import skrull.SkrullGameException;
 import skrull.game.model.IGameModel;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;

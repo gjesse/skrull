@@ -5,6 +5,8 @@ import org.easymock.IMocksControl;
 import org.junit.Before;
 import org.junit.Test;
 
+import skrull.SkrullException;
+import skrull.SkrullGameException;
 import skrull.game.model.IGameModel;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
@@ -37,7 +39,7 @@ public class AbstractGameControllerTest {
 	}
 
 	@Test
-	public void testProcessGameActionChat() {
+	public void testProcessGameActionChat() throws SkrullException {
 		ActionType a = ActionType.CHAT;
 		
 		EasyMock.expect(action.getActionType()).andReturn(a);
@@ -49,7 +51,7 @@ public class AbstractGameControllerTest {
 	}
 
 	@Test
-	public void testProcessGameActionMove() {
+	public void testProcessGameActionMove() throws SkrullException {
 		ActionType a = ActionType.MOVE;
 		
 		EasyMock.expect(action.getActionType()).andReturn(a);
@@ -61,7 +63,7 @@ public class AbstractGameControllerTest {
 	}
 
 	@Test
-	public void testProcessGameActionJoinGame() {
+	public void testProcessGameActionJoinGame() throws SkrullException {
 		ActionType a = ActionType.JOIN_GAME;
 		
 		EasyMock.expect(action.getActionType()).andReturn(a);
@@ -73,7 +75,7 @@ public class AbstractGameControllerTest {
 	}
 	
 	@Test
-	public void testProcessGameActionJoinServer() {
+	public void testProcessGameActionJoinServer() throws SkrullException {
 		ActionType a = ActionType.JOIN_SERVER;
 		
 		EasyMock.expect(action.getActionType()).andReturn(a);
@@ -85,7 +87,7 @@ public class AbstractGameControllerTest {
 	}
 	
 	@Test
-	public void testProcessGameActionCreateGame() {
+	public void testProcessGameActionCreateGame() throws SkrullException {
 		ActionType a = ActionType.CREATE_GAME;
 		
 		EasyMock.expect(action.getActionType()).andReturn(a);
@@ -97,7 +99,7 @@ public class AbstractGameControllerTest {
 	}
 	
 	@Test
-	public void testProcessGameActionQuit() {
+	public void testProcessGameActionQuit() throws SkrullException {
 		ActionType a = ActionType.QUIT;
 		
 		EasyMock.expect(action.getActionType()).andReturn(a);

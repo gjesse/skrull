@@ -23,10 +23,16 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	private static final long serialVersionUID = -5970164504419304864L;
 	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
-	private IPlayer activeplayer;
-	protected IPlayer winner;
 	
-	private IBoard board;
+	private IPlayer activeplayer;	// The player attempting to update the board
+	private int currentPlayer;  	// The player allowed to update the board (an array indexer)
+	protected IPlayer winner;		//	
+	
+	private int moveCount;			// move
+	private int maxMoves;			// max moves, used with moveCount to determine draws
+
+	
+	protected IBoard board;
 	private boolean finished;
 	
 	private long lastMoveTime;
@@ -42,10 +48,11 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);
 	
-	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater) {
+	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater, int maxMoves) {
 		this(gameId, type, updater);
 		this.players.add(startingPlayer);
-
+		this.maxMoves = maxMoves;
+		this.board = new Board(9);
 	}
 	
 	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {
@@ -180,7 +187,6 @@ public abstract class AbstractGameModel implements IGameModel {
 		return Long.parseLong(System.getProperty("inactivity.timeout", String.valueOf( 5 * 60 * 1000 )));
 	}
 	
-
 	public void updateListener() {
 		
 		try {
@@ -217,7 +223,6 @@ public abstract class AbstractGameModel implements IGameModel {
 	protected void setBoard(IBoard board) {
 		this.board = board;
 	}
-
 	protected IPlayer getActiveplayer() {
 		return activeplayer;
 	}
@@ -247,6 +252,41 @@ public abstract class AbstractGameModel implements IGameModel {
 	@Override
 	public Collection<IGameModel> getActiveGames() {
 		return activeGames;
+	}
+
+	@Override
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	@Override
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
+	@Override
+	public int getMoveCount() {
+		return moveCount;
+	}
+
+	@Override
+	public void setMoveCount(int moveCount) {
+		this.moveCount = moveCount;
+	}
+	
+	@Override
+	public void incMoveCount(){
+		this.moveCount++;
+	}
+
+	@Override
+	public int getMaxMoves() {
+		return maxMoves;
+	}
+
+	@Override
+	public void setMaxMoves(int maxMoves) {
+		this.maxMoves = maxMoves;
 	}
 	
 }

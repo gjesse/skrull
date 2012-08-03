@@ -1,7 +1,11 @@
 package skrull.game.model;
 
-public interface IBoard {
-	public abstract boolean setBoard(int loc, byte xo);
-	public abstract byte getBoardset();
+import java.io.Serializable;
+
+public interface IBoard extends Serializable{
+	
+	public abstract boolean setBoard(IMove m, int loc);
 	public abstract IMove[] getBoard();
+	public abstract IMove getBoardLoc(int m);
+	
 }

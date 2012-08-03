@@ -27,7 +27,7 @@ public class ServerController implements IServerController {
 	public ServerController(IGameFactory gameFactory){
 		this.gameFactory = gameFactory;
 		int next =  nextGameId();
-		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, next);
+		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, next);
 		defaultGameController.setServerController(this);
 		activeGameControllers.add(defaultGameController);
 	}
@@ -84,7 +84,7 @@ public class ServerController implements IServerController {
 				}
 
 				// then setup a new game and assign this player
-				final IGameController gameController = gameFactory.setupGame(action.getGameType(), nextGameId());
+				final IGameController gameController = gameFactory.setupGame(action.getGameType(), action.getPlayer(), nextGameId());
 				gameController.setServerController(this);
 				activeGameControllers.add(gameController);
 				

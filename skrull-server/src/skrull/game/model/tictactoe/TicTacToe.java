@@ -10,6 +10,7 @@ import java.util.Iterator;
 import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
+import skrull.game.model.IBoard;
 import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
@@ -20,58 +21,64 @@ public class TicTacToe extends AbstractGameModel{
 
 
 	private static final long serialVersionUID = -8648567625229924677L;
-	
-	private int moveCount;		// starting move
-	private int maxMoves;		// max moves, used to determine tie
-	
-	private int currentPlayer;  // track who's turn, without using UUIDs
-	private IMove board[];		// TODO: move this to Abstract Game Model
+
 	private IPlayer myPlayers[];
+	private boolean gameStop;
 
 	
 	
-	public TicTacToe(int gameId, IClientUpdater updater) {
-		super(gameId, GameType.TIC_TAC_TOE, updater);
-		currentPlayer = 0;
-		moveCount = 0;
-		maxMoves = 9;
-		board = new IMove[maxMoves];
+	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
+		// Instantiate Game
+		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater, 9);
+		
+		// Initialize Model Specific Parameters
+		gameStop = true;   // block moves until second player joins.
+		setMoveCount(0);
+		
 		myPlayers = new IPlayer[2];
+		myPlayers[0] = startingPlayer;
+		startingPlayer.setPlayerToken('X');
+
+		// Board(9);  TODO  ASK JESSE about correction way to do this.
 	}
 
 	@Override
-	public void joinGame(IClientAction action) throws SkrullGameException {
+
+public void joinGame(IClientAction action) throws SkrullGameException {
 		if (getPlayers().size() >= 2){
 			throw new SkrullGameException("game full");
 		}
+		
 		super.addPlayer(action.getPlayer());
-
 		setActiveplayer(action.getPlayer());
+		action.getPlayer().setPlayerToken('O');
+		gameStop = false;	// Allow starting player to start game
+
 		super.updateListener();
 		
 	}
 
 	@Override
 	public void doProcessMove(IClientAction action) {
-		int myMove = action.getMove().getMoveIndex();
 		
-		
+		int boardLoc = action.getMove().getMoveIndex();
+				
 		// TODO figure out how to confirm action.getplayer == player who's turn it is.
 		
 		// match player making move to current player 
-		if (myPlayers[currentPlayer].equals(action.getPlayer())){
+		if (myPlayers[getCurrentPlayer()].equals(action.getPlayer()) && !gameStop){
 			
 			// verify move is legal
-			if (!isOccupied(myMove)){
+			if (!isOccupied(boardLoc)){
 				
-				board[myMove] = action.getMove();   // (byte)(currentPlayer == 0 ? 'X' : 'O');
-				currentPlayer = (currentPlayer + 1) % 2;
-				moveCount++;
+				board.setBoard(action.getMove(), boardLoc);
+				setCurrentPlayer((getCurrentPlayer() + 1) % 2);
+				setMoveCount(getMoveCount() + 1);
 				
 				System.out.println("location: ");
-				System.out.println(myMove);
+				System.out.println(boardLoc);
 				System.out.println(" player: ");
-				System.out.println(currentPlayer);
+				System.out.println(getCurrentPlayer());
 				System.out.println("/n");
 				
 				
@@ -87,7 +94,7 @@ public class TicTacToe extends AbstractGameModel{
 				}
 								
 				// TODO change activePlayer
-				setActiveplayer(myPlayers[currentPlayer]);
+				setActiveplayer(myPlayers[getCurrentPlayer()]);
 				
 				// TODO announce what the move was.
 				
@@ -127,11 +134,11 @@ public class TicTacToe extends AbstractGameModel{
 		for (int[] w : winnerCombinations){
                
 			// check for nulls
-			if (board[w[0]] == null || board[w[1]] == null || board[w[2]] == null)
+			if (board.getBoardLoc(w[0]) == null || board.getBoardLoc(w[1]) == null || board.getBoardLoc(w[2]) == null)
 				continue;
 			
             // no null reference chance, check for matches indicating a winner
-			if (board[w[0]].equals(board[w[1]]) && board[w[1]].equals(board[w[2]])){
+			if (board.getBoardLoc(w[0]).equals(board.getBoardLoc(w[1])) && board.getBoardLoc(w[1]).equals(board.getBoardLoc(w[2]))){
                 winnerDetected = true;
                 // TODO get UUID into Winner = board[w[0]];
                 break;
@@ -144,9 +151,8 @@ public class TicTacToe extends AbstractGameModel{
 	// KH - Adapted from Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
 	public boolean isOccupied(int m){
 		
-		if (board[m].equals(null))
+		if (board.getBoardLoc(m).equals(null))
 			return false;
-		
 		else
 			return true;
 	}
@@ -155,6 +161,6 @@ public class TicTacToe extends AbstractGameModel{
 	// KH - Logic from
 	// TODO: make this real.
 	public boolean isGameOver(){
-		return (moveCount == maxMoves);
+		return (getMoveCount() == getMaxMoves());
 	}
 }

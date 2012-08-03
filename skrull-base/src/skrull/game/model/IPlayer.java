@@ -10,5 +10,9 @@ public interface IPlayer extends Serializable {
 	 * @return
 	 */
 	public UUID getPlayerId();
+	
+	public char getPlayerToken();
+
+	public void setPlayerToken(char c);
 
 }

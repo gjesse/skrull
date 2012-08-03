@@ -9,6 +9,7 @@ public class Player implements IPlayer {
 
 	private static final long serialVersionUID = 2041179704423897548L;
 	private UUID playerId;
+	private char playerToken;
 	
 	public Player(UUID playerId){
 		this.playerId = playerId;
@@ -17,6 +18,7 @@ public class Player implements IPlayer {
 	public UUID getPlayerId() {
 		return playerId;
 	}
+	
 	
 	
 	@Override
@@ -48,6 +50,15 @@ public class Player implements IPlayer {
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public char getPlayerToken() {
+		return playerToken;
+	}
+	
+	@Override	
+	public void setPlayerToken(char token){
+		this.playerToken = token;
 	}
 
 }

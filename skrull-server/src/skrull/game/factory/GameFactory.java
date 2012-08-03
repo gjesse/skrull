@@ -21,7 +21,7 @@ public class GameFactory implements IGameFactory {
 	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
 	 */
 	@Override
-	public IGameController setupGame(GameType type, int gameId) {
+	public IGameController setupGame(GameType type, IPlayer startingPlayer,  int gameId) {
 		
 		switch(type)
 		{
@@ -29,10 +29,10 @@ public class GameFactory implements IGameFactory {
 			return setupDefaultGame(gameId);
 		
 		case TIC_TAC_TOE:
-			return setupTicTacToeGame(gameId);
+			return setupTicTacToeGame(startingPlayer, gameId);
 			
 		case ROCK_PAPER_SCISSORS:
-			return setupRockPaperScissorsGame(gameId);
+			return setupRockPaperScissorsGame(startingPlayer, gameId);
 
 		default:
 			throw new UnsupportedOperationException("unexpected game type received");
@@ -50,16 +50,16 @@ public class GameFactory implements IGameFactory {
 	}
 	
 	// TIC_TAC_TOE
-	private IGameController setupTicTacToeGame(int gameId) {
-		IGameModel model = new TicTacToe(gameId, updater);
+	private IGameController setupTicTacToeGame(IPlayer startingPlayer, int gameId) {
+		IGameModel model = new TicTacToe(startingPlayer, gameId, updater);
 		IGameController GameController = new TicTacToeController(model);
 		System.out.println("returning TTT GameController...");
 		return GameController;
 	}
 	
 	// ROCK_PAPER_SCISSORS
-	private IGameController setupRockPaperScissorsGame(int gameId) {
-		IGameModel model = new RockPaperScissors(gameId, updater);
+	private IGameController setupRockPaperScissorsGame(IPlayer startingPlayer, int gameId) {
+		IGameModel model = new RockPaperScissors(startingPlayer, gameId, updater);
 		IGameController GameController = new RockPaperScissorsController(model);
 		System.out.println("returning RPS GameController...");
 		return GameController;

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.util.UUID;
 
+import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory;
@@ -38,14 +40,15 @@ public class ClientInputHandler {
 			
 			case CHAT:
 				// TODO: a builder or factory seems to be in order for the ClientActions
-					serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
-			
+				//JOptionPane.showMessageDialog(null,"INSIDE CLIENTINPUTHANDLER ABOUT TO CALL SERVER");
+					//serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));
 				break;
 				
 			case CREATE_GAME:
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				GameType gameType = view.getGameType();
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));			
+				//serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));			
 				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
 
 				break;

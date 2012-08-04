@@ -27,6 +27,8 @@ public class RockPaperScissorsPanel extends UserPanel {
 	ClientInputHandler cih;
 	public RockPaperScissorsPanel(ClientInputHandler cih){
 		
+		this.cih = cih;
+		sampleRockPaperScissorBoard();
 	}
 	
 private void sampleRockPaperScissorBoard(){

@@ -58,6 +58,8 @@ public class GameClientView extends JFrame implements IGameClientView{
 		this.playerId = playerId;
 		this.gameType = GameType.DEFAULT; // start in default game
 		
+		//gameId, player, type, view.getGameType(), view.getChatText(), null)
+		//ClientAction ca = new ClientAction(cih, playerId, gameType, getChatText(), null);
 		userPanel = new DefaultPanel(cih);
 		
 		buildClientMainView(userPanel);	
@@ -65,20 +67,32 @@ public class GameClientView extends JFrame implements IGameClientView{
 	/*
 	 * @see skrull.game.view.IGameClientView#modelChanged(skrull.game.model.IGameModel)
 	 * */
+	
 	 @Override
 	public void modelChanged(IGameModel model) {
+		 
 		updateBoard(model);
 		this.gameId = model.getGameId();
 	}
-	 public void itemStateChanged(ItemEvent evt){
-		 CardLayout cl = (CardLayout)(cards.getLayout());
-		 cl.show(cards,(String)evt.getItem());
-	 }
+	 
 	private void buildClientMainView(UserPanel myPanel){
-				
+		
+		//USER PANEL WILL EITHER BE THE DEFAULT PANEL, 
+		//TIC TAC TOE PANEL, ROCK PAPER SCISSORS PANEL,
+		//THE WINNER PANEL, OR THE LOSER PANEL
+		
+		
+		/*
+		 * TODO
+		 * NEED TO CHECK IF THE gameId EXISTS; IF IT DOESNT THEN WE 
+		 * CREATE A NEW_GAME PANEL
+		 * 
+		 * OTHERWISE NEED TO GET THE EXISTING PANEL?
+		 * */
+		
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("User: " + playerId.toString()){};
+		mainFrame = new JFrame("GameType: "+gameType+"---"+"User: " + playerId.toString()){};
 
 		mainFrame.addWindowListener(new WindowListener() {
 			
@@ -127,52 +141,25 @@ public class GameClientView extends JFrame implements IGameClientView{
 			}
 		});
 		
-		right = new JPanel(){
-			protected void paintComponent(Graphics g){
-				Graphics2D g2d = (Graphics2D)g;
-				
-			    if ( !isOpaque() )
-			    {
-			        super.paintComponent(g);
-			        return;
-			    }
-			 
-			    int w = getWidth( );
-			    int h = getHeight( );
-			    Color color1 = getBackground( );
-			    Color color2 = color1.darker( );
-			    
-			    // Paint a gradient from top to bottom
-			    GradientPaint gp = new GradientPaint(
-			        0, 0, color1,
-			        0, h, color2 );
-
-			    g2d.setPaint( gp );
-			    g2d.fillRect( 0, 0, w, h );
-			    
-			    setOpaque( false );
-			    super.paintComponent( g );
-			    setOpaque( true );  
-			}
-		};
+		
+		/*******************RIGHT PROPERTIES************************/	
+		
+		right = new JPanel();
 		
 		right.setPreferredSize(new Dimension(200,0));
 	
-		/*******************RIGHT PROPERTIES************************/	
-		
 		chatPanel = new ChatPanel(cih);
+		//ADDING THE CHAT PANEL TO THE RIGHT SIDE OF THE WINDOW
 		right.add( chatPanel );
 		
 		right.setBorder(BorderFactory.createEtchedBorder());
 		
-		//finally able to add the left and middle to their own panel
-		//however the chat client has grown in size
-		
+		//SETTING THE LAYOUT OF THE OVERALL FRAME
 		GridLayout mainGrid = new GridLayout(0,2);
+		
 		mainFrame.setLayout(mainGrid);
 
-		mainFrame.getContentPane().add(userPanel);
-		
+		mainFrame.getContentPane().add(userPanel);		
 		mainFrame.getContentPane().add(right);
 		
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -182,77 +169,27 @@ public class GameClientView extends JFrame implements IGameClientView{
 				
 	}
 
-
-
-
-	public JPanel winnerPanel(){
-		winnerPanel = new JPanel(){
-			protected void paintComponent(Graphics g){
-				Graphics2D g2d = (Graphics2D)g;
-				
-			    if ( !isOpaque() )
-			    {
-			        super.paintComponent(g);
-			        return;
-			    }
-			 
-			    int w = getWidth( );
-			    int h = getHeight( );
-			    Color color1 = getBackground( );
-			    Color color2 = color1.darker( );
-			    
-			    // Paint a gradient from top to bottom
-			    GradientPaint gp = new GradientPaint(
-			        0, 0, color1,
-			        0, h, color2 );
-
-			    g2d.setPaint( gp );
-			    g2d.fillRect( 0, 0, w, h );
-			    
-			    setOpaque( false );
-			    super.paintComponent( g );
-			    setOpaque( true );  
-			}
-		
-			
-		};
-		JButton winnerButton = new JButton("WINNER!!!");
-		
-		winnerButton.setForeground(Color.cyan);
-		winnerButton.setBackground(Color.black);
-		winnerButton.setBorder(BorderFactory.createEmptyBorder());
-		winnerPanel.setLayout(new GridBagLayout());
-		GridBagConstraints winnerConstraints = new GridBagConstraints();
-		winnerConstraints.ipadx = 400;
-		winnerConstraints.ipady = 50;
-		winnerConstraints.gridx = 1;
-		winnerConstraints.gridy = 1;
-		winnerConstraints.fill = GridBagConstraints.BOTH;
-		
-		
-		winnerPanel.add(winnerButton,winnerConstraints);
-		
-		winnerPanel.setPreferredSize(new Dimension(600,0));
-		//winnerPanel.setBackground(Color.white);
-		
-		return winnerPanel;
-	}
-
 	
 	private void updateBoard(IGameModel model) {
+		
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
+		
 		chatPanel.setText(model.getChatContents());
+		
 		Collection<IGameModel> games = model.getActiveGames();
 		Collection<String> activeGames = new HashSet<String>();
+		
 		for (IGameModel game: games){
 			activeGames.add(game.getGameId() + ":" + game.getGameType());
 			logger.debug("active game: " + game);
 		}
+		
 		// this needs to redraw the join list for the default game but it's not now
 		activeGamesToJoin = new JList(activeGames.toArray());
 	}
 
 	public String getChatText(){
+		//lJOptionPane.showMessageDialog(null,"INSIDE GAMECLIENTVIEW--about to get text from the GameClientView calling chatPanel.text()");
 		return chatPanel.getChatText();
 	}
 	
@@ -298,24 +235,21 @@ public class GameClientView extends JFrame implements IGameClientView{
 			   String joinGameSelection = (String)activeGamesToJoin.getSelectedValue();
 			   System.out.println("printing out the join game selection rather than numbered index: "+ joinGameSelection); 
 		   }*/
-		   
-		   cih.handleInput(e);
+		   JOptionPane.showMessageDialog(null,"In the handler for GameClientView");
+		   //cih.handleInput(e);
        }
 	   
 	
    }
 
-@Override
-public int getGameId() {
-	return gameId;
-}
-
-@Override
-public GameType getGameType() {
-	return userPanel.getGameType();
-}
-   
-
-
+	@Override
+	public int getGameId() {
+		return gameId;
+	}
 	
+	@Override
+	public GameType getGameType() {
+		return userPanel.getGameType();
+	}
+
 }

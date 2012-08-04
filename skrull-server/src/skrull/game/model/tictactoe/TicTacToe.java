@@ -37,8 +37,9 @@ public class TicTacToe extends AbstractGameModel{
 		myPlayers = new IPlayer[2];
 		myPlayers[0] = startingPlayer;
 		startingPlayer.setPlayerToken('X');
+		
+		super.updateListener();
 
-		// Board(9);  TODO  ASK JESSE about correction way to do this.
 	}
 
 	@Override
@@ -55,11 +56,10 @@ public class TicTacToe extends AbstractGameModel{
 	}
 
 	@Override
+	// KH - Game Logic adapted from Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
 	public void doProcessMove(IClientAction action) {
 		
 		int boardLoc = action.getMove().getMoveIndex();
-				
-		// TODO figure out how to confirm action.getplayer == player who's turn it is.
 		
 		// match player making move to current player 
 		if (myPlayers[getCurrentPlayer()].equals(action.getPlayer()) && !gameStop){
@@ -68,18 +68,13 @@ public class TicTacToe extends AbstractGameModel{
 			if (!isOccupied(boardLoc)){
 				
 				board.setBoard(action.getMove(), boardLoc);
-				setCurrentPlayer((getCurrentPlayer() + 1) % 2);
 				setMoveCount(getMoveCount() + 1);
-				
-				System.out.println("location: ");
-				System.out.println(boardLoc);
-				System.out.println(" player: ");
-				System.out.println(getCurrentPlayer());
-				System.out.println("/n");
-				
-				
+				if(getMoveCount() == getMaxMoves())
+					finished = true;
+			
 				// WINNER Check
 				if(haveWinner()){
+					winner = myPlayers[getCurrentPlayer()];
 					// TODO set isFinished flag
 				}
 				
@@ -90,10 +85,15 @@ public class TicTacToe extends AbstractGameModel{
 				}
 								
 				// TODO change activePlayer
+				setCurrentPlayer((getCurrentPlayer() + 1) % 2);
 				setActiveplayer(myPlayers[getCurrentPlayer()]);
 				
 				// TODO announce what the move was.
-				
+				System.out.println("location: ");
+				System.out.println(boardLoc);
+				System.out.println(" player: ");
+				System.out.println(getCurrentPlayer());
+				System.out.println("/n");
 			}
 			// Invalid move by correct player.
 			// TODO send to chat window.
@@ -142,21 +142,13 @@ public class TicTacToe extends AbstractGameModel{
 		}
 		return winnerDetected;
 	}
-
 	
-	// KH - Adapted from Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
+
 	public boolean isOccupied(int m){
 		
 		if (board.getBoardLoc(m).equals(null))
 			return false;
 		else
 			return true;
-	}
-	
-	// KH - From Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
-	// KH - Logic from
-	// TODO: make this real.
-	public boolean isGameOver(){
-		return (getMoveCount() == getMaxMoves());
 	}
 }

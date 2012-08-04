@@ -56,8 +56,6 @@ public interface IGameModel extends Serializable {
 
 	public void setMoveCount(int moveCount);
 
-	public void incMoveCount();
-
 	public int getMaxMoves();
 
 	public void setMaxMoves(int maxMoves);

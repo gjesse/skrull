@@ -76,7 +76,7 @@ class RockPaperScissorHandler implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent buttonEvent) {
 		// TODO Auto-generated method stub
-	
+		buttonEvent.getActionCommand();
 	}
 
 }

@@ -222,42 +222,7 @@ public class DefaultPanel extends UserPanel {
 			   // save the game type for the handler
 			   gameType = gameSelection;
 			   
-			   
-			   
-			//  if(command == createGame){
-				   //getting selection from the list box the user is using
-
-				   
-				   /*if(gameSelection == IGameFactory.GameType.TIC_TAC_TOE){
-					   mainFrame.setVisible(false);
-					   
-					   userPanel = new TicTacToePanel(cih);
-					   
-					   buildClientMainView( userPanel );
-				   }
-				   else if(gameSelection == IGameFactory.GameType.ROCK_PAPER_SCISSORS){
-					   
-					   mainFrame.setVisible(false);
-					   
-					   userPanel = new RockPaperScissorsPanel(cih);
-					   
-					   buildClientMainView( userPanel );
-					   
-				   }
-				   else if(gameSelection == null)
-					   JOptionPane.showMessageDialog(null,"No selection was made");
-				   
-				   else
-					   JOptionPane.showMessageDialog(null,"DEFAULT");
-				   
-				   System.out.println("printing out the game selection rather than numbered index: "+ gameSelection);
-				   
-			   }
-			   else if(command == joinGame){
-				   String joinGameSelection = (String)activeGamesToJoin.getSelectedValue();
-				   System.out.println("printing out the join game selection rather than numbered index: "+ joinGameSelection); 
-			   }*/
-			cih.handleInput(e);
+			   cih.handleInput(e);
 		}
 
 	}

@@ -57,8 +57,9 @@ public class ClientInputHandler {
 			case CREATE_GAME:
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				GameType gameType = view.getGameType();
-				serverUpdater.ProcessClientAction(new ClientAction(0, player, ActionType.QUIT, gameType.DEFAULT, view.getChatText(), null));			
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));	
+				serverUpdater.ProcessClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
+				
 
 				break;
 				

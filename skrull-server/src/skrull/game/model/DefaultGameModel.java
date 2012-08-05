@@ -40,6 +40,7 @@ public class DefaultGameModel extends AbstractGameModel {
 	public void quit(IClientAction action) {
 		Collection<IPlayer> p = getPlayers();
 		p.remove(action.getPlayer());
+		super.updateListener();
 	}
 
 

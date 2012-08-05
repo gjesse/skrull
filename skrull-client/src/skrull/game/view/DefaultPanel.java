@@ -12,15 +12,18 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 
 import org.apache.log4j.Logger;
 
@@ -171,6 +174,7 @@ public class DefaultPanel extends UserPanel {
 		gbc.insets = new Insets(0,0,0,0);
 	
 		//using a scrollPane for the list of active games
+		activeGamesToJoin = new JList(new DefaultListModel());
 		JScrollPane activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		activeGameScroller.setPreferredSize(new Dimension(100,155));
 		activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
@@ -254,15 +258,21 @@ public class DefaultPanel extends UserPanel {
 		// TODO Auto-generated method stub
 
 		Collection<IGameModel> games = model.getActiveGames();
-		Collection<String> activeGames = new HashSet<String>();
-	
+		//Collection<String> activeGames = new ArrayList<String>();
+		DefaultListModel m = new DefaultListModel();
+		//activeGamesToJoin = new JList(m);
+
 		for (IGameModel game: games){
-			activeGames.add(game.getGameId() + ":" + game.getGameType());
+			//activeGames.add(game.getGameId() + ":" + game.getGameType());
+			m.addElement(game.getGameId() + ":" + game.getGameType());
+
 			logger.debug("active game: " + game);
 		}
+		activeGamesToJoin.setModel(m);
+		activeGamesToJoin.repaint();
 		// this needs to redraw the join list for the default game but it's not now
-		activeGamesToJoin = new JList(activeGames.toArray());	
-		System.out.println("repaint");
+		
+		//System.out.println("repaint");
 		this.repaint();
 		
 	}

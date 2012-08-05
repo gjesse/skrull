@@ -118,7 +118,13 @@ public class DefaultPanel extends UserPanel {
 		gbc.ipady = 75;
 		gbc.insets = new Insets(0,10,10,10);
 		
-		newGameList = new JList(IGameFactory.GameType.values());
+		DefaultListModel m = new DefaultListModel();
+		for (GameType t: IGameFactory.GameType.values()){
+			if (t.isDefault()) 
+				continue;
+			m.addElement(t);
+		}
+		newGameList = new JList(m);
 			
 		newGameList.setBorder(BorderFactory.createTitledBorder("Create A New Game"));
 		
@@ -275,9 +281,19 @@ public class DefaultPanel extends UserPanel {
 
 		for (IGameModel game: games){
 			//activeGames.add(game.getGameId() + ":" + game.getGameType());
+			// TODO; this should go to a method on the model
+			// like game.isJoinable();
+			if (game.getGameType().isDefault())
+				continue;
+			if (game.isGameOver())
+				continue;
+			//if (game.isInProgress()){
+			//	continue;
+			//}
 			m.addElement(game.getGameId() + ":" + game.getGameType());
 
 			logger.debug("active game: " + game);
+			
 		}
 		activeGamesToJoin.setModel(m);
 		
@@ -287,12 +303,7 @@ public class DefaultPanel extends UserPanel {
 			    	//activeGameScroller.repaint(); // Not sure if this one is needed
 			    }
 			  });
-		//activeGamesToJoin.revalidate();
-		//activeGamesToJoin.repaint();
-		
-		// this needs to redraw the join list for the default game but it's not now
-		
-		//System.out.println("repaint");
+
 		this.repaint();
 		
 	}

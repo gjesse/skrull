@@ -1,5 +1,7 @@
 package skrull.game.factory;
 
+import javax.swing.ListModel;
+
 import skrull.game.controller.IGameController;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
@@ -7,7 +9,18 @@ import skrull.game.model.IPlayer;
 public interface IGameFactory {
 
 	public enum GameType {
-		DEFAULT,TIC_TAC_TOE,ROCK_PAPER_SCISSORS;
+		DEFAULT(true),TIC_TAC_TOE(false),ROCK_PAPER_SCISSORS(false);
+		
+		private boolean isDefault;
+
+		GameType(boolean isDefault){
+			this.isDefault = isDefault;
+		}
+
+		public boolean isDefault() {
+			return isDefault;
+		}
+
 	}
 
 	public static final int DEFAULT_GAME_ID = 0;

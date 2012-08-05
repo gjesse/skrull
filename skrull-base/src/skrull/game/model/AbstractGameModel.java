@@ -33,7 +33,7 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	
 	protected IBoard board;
-	private boolean finished;
+	protected boolean finished;
 	
 	private long lastMoveTime;
 	private IClientAction lastAction;
@@ -272,11 +272,6 @@ public abstract class AbstractGameModel implements IGameModel {
 	@Override
 	public void setMoveCount(int moveCount) {
 		this.moveCount = moveCount;
-	}
-	
-	@Override
-	public void incMoveCount(){
-		this.moveCount++;
 	}
 
 	@Override

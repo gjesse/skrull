@@ -35,6 +35,8 @@ import skrull.util.logging.SkrullLogger;
 
 public class DefaultPanel extends UserPanel {
 	
+
+
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	//GameType gameType;
 	JButton startButton;
@@ -55,6 +57,7 @@ public class DefaultPanel extends UserPanel {
 	
 		//handler needed for the buttons
 		Handler handler = new Handler();
+
 
 		this.setSize(new Dimension(600,0));
 		this.setLayout(new GridLayout(0,2));
@@ -202,6 +205,10 @@ public class DefaultPanel extends UserPanel {
 		return gameType;
 	}
 	
+	@Override
+	public String getJoinGameString() {
+		return (String)activeGamesToJoin.getSelectedValue();
+	};
 	public class Handler implements ActionListener {
 		
 		@Override
@@ -255,6 +262,8 @@ public class DefaultPanel extends UserPanel {
 
 	}
 
+
+	
 	@Override
 	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub

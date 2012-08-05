@@ -54,6 +54,9 @@ public abstract class UserPanel extends JPanel {
 	}
 	public abstract GameType getGameType();
 	public abstract void modelChanged(IGameModel model);
+	public String getJoinGameString() {
+		return "";
+	}
 	
 	
 }

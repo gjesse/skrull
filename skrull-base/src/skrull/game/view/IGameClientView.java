@@ -17,4 +17,5 @@ public interface IGameClientView {
 
 	public abstract GameType getGameType();
 
+	public abstract String getJoinGameString();
 }

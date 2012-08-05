@@ -301,4 +301,9 @@ public class GameClientView extends JFrame implements IGameClientView{
 		return userPanel.getGameType();
 	}
 
+	@Override
+	public String getJoinGameString() {
+		return userPanel.getJoinGameString();
+	}
+
 }

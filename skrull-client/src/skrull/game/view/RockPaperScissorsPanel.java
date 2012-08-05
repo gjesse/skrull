@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
 import skrull.util.logging.SkrullLogger;
 
 public class RockPaperScissorsPanel extends UserPanel {
@@ -83,6 +84,13 @@ class RockPaperScissorHandler implements ActionListener{
 @Override
 public GameType getGameType() {
 	// TODO Auto-generated method stub
-	return GameType.ROCK_PAPER_SCISSORS;
+	//return GameType.ROCK_PAPER_SCISSORS;
+	return gameType = GameType.ROCK_PAPER_SCISSORS;
+}
+
+@Override
+public void modelChanged(IGameModel model) {
+	// TODO Auto-generated method stub
+	
 }
 }

@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
 
 public class WinnerPanel extends UserPanel {
 
@@ -51,6 +52,12 @@ public class WinnerPanel extends UserPanel {
 		
 		this.setPreferredSize(new Dimension(600,0));
 		//winnerPanel.setBackground(Color.white);	
+		
+	}
+
+	@Override
+	public void modelChanged(IGameModel model) {
+		// TODO Auto-generated method stub
 		
 	}
 

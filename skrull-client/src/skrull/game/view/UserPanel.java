@@ -18,9 +18,11 @@ import javax.swing.JScrollPane;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
 import skrull.game.view.GameClientView.Handler;
 
 public abstract class UserPanel extends JPanel {
+	GameType gameType;
 	public UserPanel(){
 		
 	}
@@ -51,8 +53,7 @@ public abstract class UserPanel extends JPanel {
 	    setOpaque( true );  
 	}
 	public abstract GameType getGameType();
-		// TODO Auto-generated method stub
-		
+	public abstract void modelChanged(IGameModel model);
 	
 	
 }

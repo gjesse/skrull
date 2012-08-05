@@ -58,11 +58,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 		this.playerId = playerId;
 		this.gameType = GameType.DEFAULT; // start in default game
 		
-		//gameId, player, type, view.getGameType(), view.getChatText(), null)
-		//ClientAction ca = new ClientAction(cih, playerId, gameType, getChatText(), null);
+
 		userPanel = new DefaultPanel(cih);
-		
 		buildClientMainView(userPanel);	
+		
 	}
 	/*
 	 * @see skrull.game.view.IGameClientView#modelChanged(skrull.game.model.IGameModel)
@@ -71,10 +70,78 @@ public class GameClientView extends JFrame implements IGameClientView{
 	 @Override
 	public void modelChanged(IGameModel model) {
 		 
-		updateBoard(model);
-		this.gameId = model.getGameId();
+		 if(userPanel.getGameType() != gameType){
+			 //TODO do something
+			 //create a new game
+			 
+		 }
+
+		 //can say model.gameType
+		 
+		 //gameType == TTT
+		 //update userPanel
+		 
+		 //gameType == RPS
+		 //then update userPanel
+		//
+		
+		 
+		 //if game id from game is not equal to model.getGameId
+		 //then want to create the new view 
+		 
+		 if(gameId != model.getGameId() ){
+			 this.gameId = model.getGameId();
+			 updateView(model);
+		 }
+		 
+		 updateBoard(model);
+		
+
 	}
-	 
+	private void updateView(IGameModel model){
+		
+		//if we are still on the main screen with the default panel
+		if( model.getGameType() == GameType.DEFAULT ){
+			
+
+		}
+		else if(model.getGameType() == GameType.TIC_TAC_TOE){
+			System.out.println("INSIDE THE TTT PART OF UPDATE BOARD");
+			System.out.println("game Type  ="+ gameType + " model.getGameType = "+model.getGameType() );
+	
+			mainFrame.removeAll();
+			mainFrame.setVisible(false);
+
+			userPanel = new TicTacToePanel(cih);
+			userPanel.repaint();
+			mainFrame.repaint();
+			buildClientMainView(userPanel);
+
+		}
+		else if(model.getGameType() == GameType.ROCK_PAPER_SCISSORS){
+			//JOptionPane.showMessageDialog(null,"about to make a new RPS Panel");
+			
+			userPanel = new RockPaperScissorsPanel(cih);
+			mainFrame.removeAll();
+			mainFrame.setVisible(false);
+
+			userPanel.repaint();
+			mainFrame.repaint();
+			buildClientMainView(userPanel);
+		}
+	}
+	private void updateBoard(IGameModel model) {
+			
+		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
+		
+		userPanel.modelChanged(model);
+		chatPanel.setText(model.getChatContents());
+		gameType = model.getGameType();
+
+		
+
+	}
+		
 	private void buildClientMainView(UserPanel myPanel){
 		
 		//USER PANEL WILL EITHER BE THE DEFAULT PANEL, 
@@ -92,7 +159,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("GameType: "+gameType+"---"+"User: " + playerId.toString()){};
+		mainFrame = new JFrame("gameId: "+gameId+" "+"GameType: "+gameType+"---"+"User: " + playerId.toString() ){};
 
 		mainFrame.addWindowListener(new WindowListener() {
 			
@@ -164,28 +231,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.setSize(800,600);
+		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
 				
-	}
-
-	
-	private void updateBoard(IGameModel model) {
-		
-		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
-		
-		chatPanel.setText(model.getChatContents());
-		
-		Collection<IGameModel> games = model.getActiveGames();
-		Collection<String> activeGames = new HashSet<String>();
-		
-		for (IGameModel game: games){
-			activeGames.add(game.getGameId() + ":" + game.getGameType());
-			logger.debug("active game: " + game);
-		}
-		
-		// this needs to redraw the join list for the default game but it's not now
-		activeGamesToJoin = new JList(activeGames.toArray());
 	}
 
 	public String getChatText(){

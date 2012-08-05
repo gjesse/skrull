@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
 import skrull.game.view.GameClientView.Handler;
 
 
@@ -28,6 +29,7 @@ public class TicTacToePanel extends UserPanel {
 	private JButton[] ticTacToeButtons = new JButton[9];
 	
 	public TicTacToePanel(ClientInputHandler cih){
+		
 		this.cih = cih;
 		sampleTicTacToeBoard();
 	}
@@ -35,7 +37,7 @@ public class TicTacToePanel extends UserPanel {
 		
 		
 		
-
+//TODO HARD CODE THE SIZE OF THE BUTTONS
 		this.setPreferredSize(new Dimension(600,0));
 		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
 		this.setBackground(Color.WHITE);
@@ -86,6 +88,13 @@ public class TicTacToePanel extends UserPanel {
 	@Override
 	public GameType getGameType() {
 		// TODO Auto-generated method stub
-		return GameType.TIC_TAC_TOE;
+		//return GameType.TIC_TAC_TOE;
+		return gameType = GameType.TIC_TAC_TOE;
+	}
+	@Override
+	public void modelChanged(IGameModel model) {
+		// TODO update the board with tokens
+		//loop through the board and update what is written on buttons
+		
 	}
 }

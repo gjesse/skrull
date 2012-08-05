@@ -25,11 +25,13 @@ import skrull.game.view.GameClientView.Handler;
 public class ChatPanel extends JPanel {
 	
 	JButton sendButton;
+	JTextArea messageCenter;
 	private JTextField chatTextInputField;
 	String sendChat = IClientAction.ActionType.CHAT.toString();
 	JTextArea chatWindow;
 	ClientInputHandler cih;
-	
+	private final static String newline = "\n";
+	JScrollPane messageScrollPane;
 	public ChatPanel(ClientInputHandler cih){	
 		this.cih = cih;
 		buildChatClient();
@@ -68,10 +70,16 @@ public class ChatPanel extends JPanel {
 		//adding the chatWindow to a scroll pane so that user messages can be scrollable
         JScrollPane scroll = new JScrollPane(chatWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
         
-        constraints.insets = new Insets(160,0,0,0);
-        constraints.fill = GridBagConstraints.BOTH;
+        //building the message center
         constraints.gridx = 1;
         constraints.gridy = 0;
+        constraints.insets = new Insets(20,0,0,0);
+        this.add( buildMessageCenter(),constraints );
+        
+        constraints.insets = new Insets(50,0,0,0);
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridx = 1;
+        constraints.gridy = 1;
         constraints.ipady = 100;
         this.add(scroll, constraints);
         
@@ -79,17 +87,33 @@ public class ChatPanel extends JPanel {
         constraints.insets = new Insets(0,0,0,0);
         constraints.ipady = 10;
         constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         chatTextInputField.setBorder(BorderFactory.createLoweredBevelBorder());
         this.add(chatTextInputField,constraints);
         
         //adding the button
         constraints.gridx = 1;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         constraints.ipady = 0;
         this.add(sendButton, constraints);
         
 		return this;
+	}
+	public JScrollPane buildMessageCenter(){
+		
+		messageCenter = new JTextArea(5,30);
+		messageCenter.setText("Message Center"+newline);
+		messageCenter.setEditable(false);
+		messageCenter.setForeground(Color.gray);
+		messageScrollPane = new JScrollPane( messageCenter,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+		
+		return messageScrollPane;
+		
+	}
+	public void addMessage(String message){
+		
+		messageCenter.append(message + newline);
+		
 	}
 	public String getChatText(){
 		//JOptionPane.showMessageDialog(null,"INSIDE CHAT PANEL GETCHATTEXT()--about to get text from ChatTextInputField");

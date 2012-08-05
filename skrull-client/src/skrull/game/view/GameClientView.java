@@ -29,7 +29,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 
 	private int gameId = IGameFactory.DEFAULT_GAME_ID;
 
-	private JButton ticTacToeButtons[] = new JButton[9];
 	JButton exitButton;
 
 	JButton startButton;
@@ -42,8 +41,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 	UserPanel userPanel;
 	JPanel winnerPanel;
 	JFrame mainFrame;
-	private int count = 0;
-	private String marker = "";
 	String createGame = IClientAction.ActionType.CREATE_GAME.toString();
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
 	String sendChat = IClientAction.ActionType.CHAT.toString();
@@ -76,16 +73,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 			 
 		 }
 
-		 //can say model.gameType
-		 
-		 //gameType == TTT
-		 //update userPanel
-		 
-		 //gameType == RPS
-		 //then update userPanel
-		//
-		
-		 
+ 
 		 //if game id from game is not equal to model.getGameId
 		 //then want to create the new view 
 		 
@@ -136,12 +124,23 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		userPanel.modelChanged(model);
 		chatPanel.setText(model.getChatContents());
+		setBroadcastMessage( model.getBroadcastMessage() );
 		gameType = model.getGameType();
 
 		
 
 	}
-		
+	@Override	
+	public void setBroadcastMessage(String broadcastMessage) {
+		//TODO check if blank or null string
+		//if its blank or null do nothing otherwise print out
+		if(broadcastMessage == null){
+			System.out.println("nothing");
+		}
+		else
+			chatPanel.addMessage(broadcastMessage);
+	}
+
 	private void buildClientMainView(UserPanel myPanel){
 		
 		//USER PANEL WILL EITHER BE THE DEFAULT PANEL, 
@@ -159,7 +158,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("gameId: "+gameId+" "+"GameType: "+gameType+"---"+"User: " + playerId.toString() ){};
+		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + playerId.toString() ){};
 
 		mainFrame.addWindowListener(new WindowListener() {
 			
@@ -248,42 +247,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	   @Override
        public void actionPerformed(ActionEvent e) {
 		   
-/*		   String command = e.getActionCommand();
-		   
-		   //going to need to also pass the game type to the clientInputHandler
-		   //so that once the create game is clicked the case will also see what kind of
-		   //game to create
-		  
-		 //for testing purposes
-		   if(command == createGame){
-			   //getting selection from the list box the user is using
-			   GameType gameSelection = (GameType)newGameList.getSelectedValue();
-			   // save the game type for the handler
-			   setGameType(gameSelection);
-			   if(gameSelection == IGameFactory.GameType.TIC_TAC_TOE){
-				   mainFrame.setVisible(false);
-				   userPanel = new TicTacToePanel(cih);
-				   buildClientMainView( userPanel );
-			   }
-			   else if(gameSelection == IGameFactory.GameType.ROCK_PAPER_SCISSORS){
-				   mainFrame.setVisible(false);
-				   userPanel = new RockPaperScissorsPanel(cih);
-				   buildClientMainView( userPanel );
-				   
-			   }
-			   else if(gameSelection == null)
-				   JOptionPane.showMessageDialog(null,"No selection was made");
-			   
-			   else
-				   JOptionPane.showMessageDialog(null,"DEFAULT");
-			   
-			   System.out.println("printing out the game selection rather than numbered index: "+ gameSelection);
-			   
-		   }
-		   else if(command == joinGame){
-			   String joinGameSelection = (String)activeGamesToJoin.getSelectedValue();
-			   System.out.println("printing out the join game selection rather than numbered index: "+ joinGameSelection); 
-		   }*/
+
 		   JOptionPane.showMessageDialog(null,"In the handler for GameClientView");
 		   //cih.handleInput(e);
        }

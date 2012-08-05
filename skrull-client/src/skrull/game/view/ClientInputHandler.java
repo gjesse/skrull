@@ -96,6 +96,7 @@ public class ClientInputHandler {
 		} catch (SkrullRMIException ex) {
 			// TODO: communicate something interesting back to the client
 			// if we couldn't contact the server
+			view.setBroadcastMessage( ex.getMessage() );
 			logger.fatal("Can't contact server", ex);
 		}
 	}

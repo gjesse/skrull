@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
@@ -43,6 +44,7 @@ public class DefaultPanel extends UserPanel {
 	ClientInputHandler cih;
 	String createGame = IClientAction.ActionType.CREATE_GAME.toString();
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
+	private JScrollPane activeGameScroller;
 	
 	public DefaultPanel(ClientInputHandler cih){
 		this.cih = cih;
@@ -175,7 +177,7 @@ public class DefaultPanel extends UserPanel {
 	
 		//using a scrollPane for the list of active games
 		activeGamesToJoin = new JList(new DefaultListModel());
-		JScrollPane activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		activeGameScroller.setPreferredSize(new Dimension(100,155));
 		activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
 		middlePanel.add(activeGameScroller,gbc);
@@ -269,7 +271,16 @@ public class DefaultPanel extends UserPanel {
 			logger.debug("active game: " + game);
 		}
 		activeGamesToJoin.setModel(m);
-		activeGamesToJoin.repaint();
+		
+		  SwingUtilities.invokeLater(new Runnable() {
+			    public void run() {
+			    	activeGamesToJoin.revalidate(); // triggers a repaint of all the items in the JList.
+			    	//activeGameScroller.repaint(); // Not sure if this one is needed
+			    }
+			  });
+		//activeGamesToJoin.revalidate();
+		//activeGamesToJoin.repaint();
+		
 		// this needs to redraw the join list for the default game but it's not now
 		
 		//System.out.println("repaint");

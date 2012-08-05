@@ -44,7 +44,7 @@ public class ServerControllerTest {
 		IPlayer mockPlayer = EasyMock.createNiceMock(IPlayer.class);
 		EasyMock.expect(action.getActionType()).andReturn(ActionType.CREATE_GAME).atLeastOnce();
 		EasyMock.expect(action.getPlayer()).andReturn(mockPlayer);
-		EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT);
+		EasyMock.expect(action.getGameType()).andReturn(GameType.DEFAULT).atLeastOnce();
 
 		
 		EasyMock.replay(action, gameFactory, defaultGameController);

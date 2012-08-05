@@ -61,5 +61,7 @@ public interface IGameModel extends Serializable {
 	public int getMaxMoves();
 
 	public void setMaxMoves(int maxMoves);
+
+	public abstract void createGame(IClientAction action);
 	
 }

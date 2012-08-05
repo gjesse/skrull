@@ -71,8 +71,10 @@ public abstract class AbstractGameController implements IGameController {
 			
 			case JOIN_GAME:
 			case JOIN_SERVER:
-			case CREATE_GAME:
 				gameModel.joinGame(action);
+			break;
+			case CREATE_GAME:
+				gameModel.createGame(action);
 			break;
 			
 

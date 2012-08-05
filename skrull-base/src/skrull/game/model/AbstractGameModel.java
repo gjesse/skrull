@@ -208,6 +208,20 @@ public abstract class AbstractGameModel implements IGameModel {
 	}
 
 	@Override
+	public void createGame(IClientAction action) {
+		// this should have been setup already
+		// as in this player should already be in the game
+		// but since we are using a set it shouldn't matter
+		players.add(action.getPlayer());
+		
+		try {
+			clientUpdater.modelChanged(this);
+		} catch (SkrullRMIException e1) {
+			logger.error("rmi issue encountered", e1);
+		}
+	}
+	
+	@Override
 	public void quit(IClientAction action) {
 		// TODO Auto-generated method stub
 	}

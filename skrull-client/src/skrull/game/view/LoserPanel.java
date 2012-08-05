@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
 
 public class LoserPanel extends UserPanel {
 
@@ -48,6 +49,12 @@ public class LoserPanel extends UserPanel {
 	public GameType getGameType() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void modelChanged(IGameModel model) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

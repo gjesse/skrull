@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.GameClientView.Handler;
 
 public class ChatPanel extends JPanel {
@@ -110,6 +111,9 @@ public class ChatPanel extends JPanel {
 		// TODO Auto-generated method stub
 		chatWindow.setText(chatContents);
 		
+	}
+	public GameType getGameType() {
+		return GameType.DEFAULT;
 	}
 
 }

@@ -40,16 +40,25 @@ public class ClientInputHandler {
 			
 			case CHAT:
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				//JOptionPane.showMessageDialog(null,"INSIDE CLIENTINPUTHANDLER ABOUT TO CALL SERVER");
+				
 					//serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, GameType.DEFAULT, view.getChatText(), null));
+				//TODO 
+				//neeed to get the game type
+				System.out.println("about to send chat to server!");
+				System.out.println(gameId);
+				System.out.println(player);
+				System.out.println(type);
+				System.out.println(view.getGameType());
+				System.out.println(view.getChatText());
+				
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
 				break;
 				
 			case CREATE_GAME:
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				GameType gameType = view.getGameType();
-				//serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));			
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(0, player, ActionType.QUIT, gameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
 
 				break;
 				

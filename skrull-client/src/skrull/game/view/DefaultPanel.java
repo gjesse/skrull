@@ -12,6 +12,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.HashSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,12 +22,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.apache.log4j.Logger;
+
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
+import skrull.util.logging.SkrullLogger;
 
 public class DefaultPanel extends UserPanel {
 	
-	GameType gameType;
+	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
+	//GameType gameType;
 	JButton startButton;
 	JButton joinButton;
 	JList newGameList;
@@ -48,9 +55,11 @@ public class DefaultPanel extends UserPanel {
 		this.setLayout(new GridLayout(0,2));
 		
 		startButton = new JButton(createGame);
+		startButton.setActionCommand(createGame);
 		startButton.addActionListener(handler);
 		
 		joinButton = new JButton(joinGame);
+		joinButton.setActionCommand(joinGame);
 		joinButton.addActionListener(handler);
 	
 		this.add( buildLeftPanel() );
@@ -180,6 +189,10 @@ public class DefaultPanel extends UserPanel {
 	
 	@Override
 	public GameType getGameType() {
+		//TODO get user selection of game type from the Jlist
+		if(gameType == null){
+			gameType = GameType.DEFAULT;
+		}
 		return gameType;
 	}
 	
@@ -234,5 +247,23 @@ public class DefaultPanel extends UserPanel {
 			cih.handleInput(e);
 		}
 
+	}
+
+	@Override
+	public void modelChanged(IGameModel model) {
+		// TODO Auto-generated method stub
+
+		Collection<IGameModel> games = model.getActiveGames();
+		Collection<String> activeGames = new HashSet<String>();
+	
+		for (IGameModel game: games){
+			activeGames.add(game.getGameId() + ":" + game.getGameType());
+			logger.debug("active game: " + game);
+		}
+		// this needs to redraw the join list for the default game but it's not now
+		activeGamesToJoin = new JList(activeGames.toArray());	
+		System.out.println("repaint");
+		this.repaint();
+		
 	}
 }

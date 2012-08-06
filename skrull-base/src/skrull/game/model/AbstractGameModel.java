@@ -155,7 +155,7 @@ public abstract class AbstractGameModel implements IGameModel {
 					
 			}
 			
-			if ((lastMoveTime + getInactivityTimeout()) < now){
+			if ((lastMoveTime + getInactivityTimeout()) < now && activeplayer != null){
 				playerBeingChecked = activeplayer;
 				throw new SkrullGameException("Player " + playerBeingChecked.getPlayerId() + " timed out. game over");
 			}
@@ -220,7 +220,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		// as in this player should already be in the game
 		// but since we are using a set it shouldn't matter
 		players.add(action.getPlayer());
-		
+		setBroadcastMessage("Waiting for more players...");
 		try {
 			clientUpdater.modelChanged(this);
 		} catch (SkrullRMIException e1) {

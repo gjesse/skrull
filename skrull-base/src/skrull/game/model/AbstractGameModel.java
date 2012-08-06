@@ -45,14 +45,16 @@ public abstract class AbstractGameModel implements IGameModel {
 	private StringBuffer chatBuffer = new StringBuffer(1024);
 	private String broadcastMsg;
 	private Collection<IGameModel> activeGames;
+	private int playersRequired;
 
 	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);
 	
-	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater, int maxMoves) {
+	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater, int maxMoves, int playersRequired) {
 		this(gameId, type, updater);
 		this.players.add(startingPlayer);
 		this.maxMoves = maxMoves;
 		this.board = new Board(9);
+		this.playersRequired = playersRequired;
 	}
 	
 	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {
@@ -60,6 +62,11 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.gameId = gameId;
 		this.lastMoveTime = System.currentTimeMillis();
 		this.clientUpdater = updater;
+	}
+	
+	@Override
+	public boolean needsPlayers() {
+		return getPlayers().size() < getPlayersRequired();
 	}
 
 	/* (non-Javadoc)
@@ -297,5 +304,10 @@ public abstract class AbstractGameModel implements IGameModel {
 	public void setMaxMoves(int maxMoves) {
 		this.maxMoves = maxMoves;
 	}
-	
+
+	protected int getPlayersRequired() {
+		return playersRequired;
+	}
+
+
 }

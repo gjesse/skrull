@@ -64,4 +64,6 @@ public interface IGameModel extends Serializable {
 
 	public abstract void createGame(IClientAction action);
 	
+	public abstract boolean needsPlayers();
+	
 }

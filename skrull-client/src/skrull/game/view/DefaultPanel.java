@@ -252,6 +252,9 @@ public class DefaultPanel extends UserPanel {
 				continue;
 			if (game.isGameOver())
 				continue;
+			if (!game.needsPlayers())
+				continue;
+			
 			//if (game.isInProgress()){
 			//	continue;
 			//}

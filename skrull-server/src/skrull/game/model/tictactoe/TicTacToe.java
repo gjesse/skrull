@@ -5,13 +5,9 @@
  */
 package skrull.game.model.tictactoe;
 
-import java.util.Iterator;
-
 import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
-import skrull.game.model.IBoard;
-import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
@@ -29,12 +25,13 @@ public class TicTacToe extends AbstractGameModel{
 	
 	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
 		// Instantiate Game
-		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater, 9);
+		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater, 9, 2);
 		
 		// Initialize Model Specific Parameters
 		gameStop = true;   // block moves until second player joins.
 		setMoveCount(0);
 		
+		// TODO: we need to remove this and use the players collection maintained in the abstractGameModel
 		myPlayers = new IPlayer[2];
 		myPlayers[0] = startingPlayer;
 		startingPlayer.setPlayerToken('X');
@@ -46,7 +43,7 @@ public class TicTacToe extends AbstractGameModel{
 	@Override
 
 public void joinGame(IClientAction action) throws SkrullGameException {
-		if (getPlayers().size() >= 2){
+		if (!needsPlayers()){
 			throw new SkrullGameException("Game full");
 		}
 		
@@ -155,4 +152,6 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 		else
 			return true;
 	}
+
+
 }

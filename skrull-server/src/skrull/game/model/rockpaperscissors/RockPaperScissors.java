@@ -24,9 +24,10 @@ public class RockPaperScissors extends AbstractGameModel{
 	
 	
 	public RockPaperScissors(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
-		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater, 3);
+		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater, 3, 2);
 		gameStop = true;   // block moves until second player joins.
 		setMoveCount(0);
+		// TODO: handle this in the abstract superclass
 		myPlayers = new IPlayer[2];
 		myRPSmove = new int[2];
 		myPlayers[0] = startingPlayer;
@@ -36,7 +37,7 @@ public class RockPaperScissors extends AbstractGameModel{
 
 	@Override
 	public void joinGame(IClientAction action) throws SkrullGameException {
-		if (getPlayers().size() >= 2){
+		if (!needsPlayers()){
 			throw new SkrullGameException("game full");
 		}
 		super.addPlayer(action.getPlayer());

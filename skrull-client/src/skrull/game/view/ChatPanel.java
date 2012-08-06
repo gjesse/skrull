@@ -112,7 +112,7 @@ public class ChatPanel extends JPanel {
 	}
 	public void addMessage(String message){
 		
-		messageCenter.append(message + newline);
+		messageCenter.setText(message + newline);
 		
 	}
 	public String getChatText(){

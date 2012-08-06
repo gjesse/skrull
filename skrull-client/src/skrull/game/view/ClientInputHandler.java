@@ -118,9 +118,13 @@ public class ClientInputHandler {
 	}
 
 	public void handleWindowEvent(WindowEvent e) {
+		gameId = view.getGameId();
+
 		try {
 			serverUpdater.processClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));
+			System.exit(0);
 		} catch (RemoteException e1) {
+			
 			logger.fatal("cant' contact server", e1);
 			e1.printStackTrace();
 		} catch (SkrullException e1) {

@@ -20,7 +20,7 @@ public class ActivityMonitor implements IActivityMonitor {
 	@Override
 	public void checkActivity() {
 		
-		logger.debug("activity monitor running");
+		// logger.debug("activity monitor running");
 		for (IGameController c : serverController.getControllers()){
 			c.checkActivity();
 		}

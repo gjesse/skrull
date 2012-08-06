@@ -67,11 +67,14 @@ public class ServerController implements IServerController {
 				// 1. remove the player from any game (handled by game)
 				// 2. maybe remove the game if the player was the only member(handled by game)
 				// 3. notify other clients (handled by game)
+				// 4. notify default game clients
 				{
 					final IGameController gameController = getActiveGameController(action);
 					// for now if the game isn't found this will throw  
 					// NullPointerException. 
 					gameController.processGameAction(action);
+					defaultGameController.processGameAction(action);
+					
 				}	
 			break;
 			

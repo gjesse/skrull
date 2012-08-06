@@ -44,6 +44,8 @@ public class RockPaperScissors extends AbstractGameModel{
 		
 		myPlayers[1] = action.getPlayer();
 		action.getPlayer().setPlayerToken('2');
+		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
+
 		gameStop = false;
 		
 		super.updateListener();

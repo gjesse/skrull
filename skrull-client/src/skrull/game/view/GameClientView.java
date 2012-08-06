@@ -78,6 +78,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		 //then want to create the new view 
 		 
 		 if(gameId != model.getGameId() ){
+			 logger.debug("game id " + gameId + " not old game id, creating a new view");
 			 this.gameId = model.getGameId();
 			 updateView(model);
 		 }

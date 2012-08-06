@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import skrull.SkrullException;
 import skrull.SkrullGameException;
+import skrull.game.controller.IGameController;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.rmi.SkrullRMIException;
@@ -154,7 +155,7 @@ public abstract class AbstractGameModel implements IGameModel {
 					clientUpdater.checkPlayerConnected(playerBeingChecked);
 					
 			}
-			
+						
 			if ((lastMoveTime + getInactivityTimeout()) < now && activeplayer != null){
 				playerBeingChecked = activeplayer;
 				throw new SkrullGameException("Player " + playerBeingChecked.getPlayerId() + " timed out. game over");
@@ -228,9 +229,18 @@ public abstract class AbstractGameModel implements IGameModel {
 		}
 	}
 	
+	/**
+	 * Somebody quit, so the 
+	 * game is O-Ver
+	 */
 	@Override
 	public void quit(IClientAction action) {
-		// TODO Auto-generated method stub
+		this.finished = true;
+		setBroadcastMessage("Player " + action.getPlayer() + " quit. Game over");
+		players.remove(action.getPlayer());
+		updateListener();
+
+		
 	}
 	
 	protected void addPlayer(IPlayer player){

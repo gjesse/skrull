@@ -61,4 +61,8 @@ public class Player implements IPlayer {
 		this.playerToken = token;
 	}
 
+	@Override
+	public String toString(){
+		return this.playerId.toString();
+	}
 }

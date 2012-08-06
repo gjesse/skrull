@@ -19,6 +19,7 @@ public class DefaultGameModel extends AbstractGameModel {
 	public void joinGame(IClientAction action) {
 		// for the default game, no validation is needed. 
 		// anyone can join
+		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
 		super.addPlayer(action.getPlayer());
 		super.updateListener();
 	}

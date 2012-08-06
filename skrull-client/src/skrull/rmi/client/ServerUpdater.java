@@ -1,11 +1,12 @@
 package skrull.rmi.client;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import skrull.SkrullException;
 import skrull.game.view.IClientAction;
-import skrull.rmi.SkrullRMIException;
 import skrull.rmi.server.IServerListener;
 
 
@@ -19,14 +20,16 @@ public class ServerUpdater implements IServerUpdater {
 
 	}
 	@Override
-	public void ProcessClientAction(IClientAction action) throws SkrullRMIException{
-		
-				try {
-					IServerListener listener = (IServerListener)registry.lookup(IServerListener.SERVICE_NAME);
-					listener.ProcessClientAction(action);
-				} catch (Exception e) {
-					throw new SkrullRMIException(e);
-				}
+	public void processClientAction(IClientAction action) throws SkrullException, RemoteException{
+					IServerListener listener;
+					try {
+						listener = (IServerListener)registry.lookup(IServerListener.SERVICE_NAME);
+						listener.processClientAction(action);
+
+					} catch (NotBoundException e) {
+						throw new SkrullException(e);
+					}
+				
 			
 
 	}

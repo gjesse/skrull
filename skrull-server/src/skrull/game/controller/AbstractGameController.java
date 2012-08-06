@@ -83,7 +83,7 @@ public abstract class AbstractGameController implements IGameController {
 			break;
 			
 			default:
-				throw new RuntimeException("Action type " + action.getActionType() + " was unexpected here");
+				throw new SkrullException("Action type " + action.getActionType() + " was unexpected here");
 		
 		} // end switch
 		

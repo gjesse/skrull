@@ -83,7 +83,7 @@ public class SkrullServerEndToEndTest {
 		
 		EasyMock.replay(player, clientListener);
 		// this would be called by the client
-		serverUpdater.ProcessClientAction(action);
+		serverUpdater.processClientAction(action);
 		// i am not sure why this is failing - seems like a testing issue
 		// clearly the getPlayerId() method is being called, but EasyMock is reporting it's not
 		// for the time being, leaving player out of the verification

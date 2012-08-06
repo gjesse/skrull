@@ -47,7 +47,7 @@ public class TicTacToe extends AbstractGameModel{
 
 public void joinGame(IClientAction action) throws SkrullGameException {
 		if (getPlayers().size() >= 2){
-			throw new SkrullGameException("game full");
+			throw new SkrullGameException("Game full");
 		}
 		
 		super.addPlayer(action.getPlayer());

@@ -2,10 +2,16 @@ package skrull;
 
 public class SkrullException extends Exception {
 
+	private String msg;
+
 	public SkrullException(String msg) {
 		super(msg);
+		this.msg = msg;
 	}
 
+	public String getClientMessage(){
+		return msg;
+	}
 	public SkrullException(String msg, Throwable cause) {
 		super(msg, cause);
 	}

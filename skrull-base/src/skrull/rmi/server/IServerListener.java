@@ -3,6 +3,7 @@ package skrull.rmi.server;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import skrull.SkrullException;
 import skrull.game.view.IClientAction;
 
 
@@ -24,6 +25,6 @@ public interface IServerListener extends Remote{
 	 * passes the action to the server controller
 	 * @throws RemoteException
 	 */
-	public void ProcessClientAction(IClientAction action) throws RemoteException;
+	public void processClientAction(IClientAction action) throws RemoteException, SkrullException;
 	
 }

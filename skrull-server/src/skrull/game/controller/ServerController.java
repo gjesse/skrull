@@ -94,7 +94,7 @@ public class ServerController implements IServerController {
 			break;
 			
 			default:
-				throw new RuntimeException("Action type " + action.getActionType() + " is not handled - it must be handled!");
+				throw new SkrullException("Action type " + action.getActionType() + " is not handled - it must be handled!");
 		
 		} // end switch
 	

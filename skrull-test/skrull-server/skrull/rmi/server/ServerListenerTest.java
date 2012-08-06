@@ -29,7 +29,7 @@ public class ServerListenerTest {
 	    EasyMock.expectLastCall();
 	
 	    EasyMock.replay(mockController);
-		listener.ProcessClientAction(action);
+		listener.processClientAction(action);
 		EasyMock.verify(mockController);
 
 		

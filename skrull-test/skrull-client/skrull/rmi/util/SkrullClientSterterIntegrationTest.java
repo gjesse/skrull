@@ -77,7 +77,7 @@ public class SkrullClientSterterIntegrationTest {
 		private IClientAction action;
 
 		@Override
-		public void ProcessClientAction(IClientAction action)
+		public void processClientAction(IClientAction action)
 				throws RemoteException {
 			this.action = action;
 		}

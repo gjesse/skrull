@@ -27,13 +27,8 @@ public class ServerListener implements IServerListener {
 	private ServerListener(){};
 	
 	@Override
-	public void ProcessClientAction(IClientAction action) throws RemoteException {
-			try {
+	public void processClientAction(IClientAction action) throws RemoteException, SkrullException {
 				serverController.processClientAction(action);
-			} catch (SkrullException e) {
-				logger.error("processing issue", e);
-				throw new RemoteException(e.getMessage());
-			}
 	}
 
 }

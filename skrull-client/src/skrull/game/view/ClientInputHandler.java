@@ -2,12 +2,14 @@ package skrull.game.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.rmi.RemoteException;
 import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 
+import skrull.SkrullException;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
@@ -51,14 +53,14 @@ public class ClientInputHandler {
 				System.out.println(view.getGameType());
 				System.out.println(view.getChatText());
 				
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
+				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
 				break;
 				
 			case CREATE_GAME:
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				GameType gameType = view.getGameType();
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));	
-				serverUpdater.ProcessClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.processClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));	
+				serverUpdater.processClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
 				
 
 				break;
@@ -69,8 +71,8 @@ public class ClientInputHandler {
 				String selectedGame[] =  view.getJoinGameString().split(":");
 				int index = Integer.parseInt(selectedGame[0]);
 				GameType toJoinType = GameType.valueOf(selectedGame[1]);
-				serverUpdater.ProcessClientAction(new ClientAction(index, player, type, toJoinType, view.getChatText(), null));			
-				serverUpdater.ProcessClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
+				serverUpdater.processClientAction(new ClientAction(index, player, type, toJoinType, view.getChatText(), null));			
+				serverUpdater.processClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			
 
 				break;
 				
@@ -81,24 +83,30 @@ public class ClientInputHandler {
 				actionEvent.getActionCommand();
 				viewMove.setMoveIndex(Integer.valueOf(actionEvent.getActionCommand()));
 				viewMove.setPlayer(player);
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), viewMove));			//use viewMove
+				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), viewMove));			//use viewMove
 				break;
 			
 			case QUIT:
 				// TODO: a builder or factory seems to be in order for the ClientActions
-				serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
+				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
 				break;
 				
 			default:
 				throw new UnsupportedOperationException(actionEvent + actionEvent.getActionCommand());
 			}
 		
-		} catch (SkrullRMIException ex) {
-			// TODO: communicate something interesting back to the client
-			// if we couldn't contact the server
+		} catch (SkrullException ex) {
+			handleSkrullException(ex);
+
+		} catch (RemoteException ex){
 			view.setBroadcastMessage( ex.getMessage() );
 			logger.fatal("Can't contact server", ex);
 		}
+	}
+
+	private void handleSkrullException(SkrullException ex) {
+		view.setBroadcastMessage( ex.getClientMessage() );
+		logger.error("excepition received", ex);		
 	}
 
 	public IClientAction getStartupAction() {
@@ -111,9 +119,12 @@ public class ClientInputHandler {
 
 	public void handleWindowEvent(WindowEvent e) {
 		try {
-			serverUpdater.ProcessClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));
-		} catch (SkrullRMIException e1) {
+			serverUpdater.processClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));
+		} catch (RemoteException e1) {
 			logger.fatal("cant' contact server", e1);
+			e1.printStackTrace();
+		} catch (SkrullException e1) {
+			handleSkrullException(e1);
 		}			
 	}
 }

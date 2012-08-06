@@ -21,8 +21,8 @@ public class TicTacToe extends AbstractGameModel{
 
 	private static final long serialVersionUID = -8648567625229924677L;
 
-	private IPlayer myPlayers[];
 	private boolean gameStop;
+	private boolean gameFull;
 
 	
 	
@@ -32,10 +32,9 @@ public class TicTacToe extends AbstractGameModel{
 		
 		// Initialize Model Specific Parameters
 		gameStop = true;   // block moves until second player joins.
+		gameFull = false;
 		setMoveCount(0);
-		
-		myPlayers = new IPlayer[2];
-		myPlayers[0] = startingPlayer;
+		setActiveplayer(startingPlayer);
 		startingPlayer.setPlayerToken('X');
 		
 		super.updateListener();
@@ -45,12 +44,16 @@ public class TicTacToe extends AbstractGameModel{
 	@Override
 	public void joinGame(IClientAction action) {
 		
-		super.addPlayer(action.getPlayer());
-		
-		myPlayers[1] = action.getPlayer();
-		action.getPlayer().setPlayerToken('O');
-		gameStop = false;	// Allow starting player to start game
-		
+		// TODO modify to use needsPLayers instead of gameFull
+		if(!gameFull){
+			super.addPlayer(action.getPlayer());
+			action.getPlayer().setPlayerToken('O');
+			setLastAction(action);
+			gameFull = true;
+			gameStop = false;	// Allow starting player to start game
+		}
+		else System.out.println("Game is Full...");
+				
 		super.updateListener();
 		
 	}
@@ -60,9 +63,11 @@ public class TicTacToe extends AbstractGameModel{
 	public void doProcessMove(IClientAction action) {
 		
 		int boardLoc = action.getMove().getMoveIndex();
+
 		
 		// match player making move to current player 
-		if (myPlayers[getCurrentPlayer()].equals(action.getPlayer()) && !gameStop){
+		
+		if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
 			
 			// verify move is legal
 			if (!isOccupied(boardLoc)){
@@ -74,7 +79,7 @@ public class TicTacToe extends AbstractGameModel{
 			
 				// WINNER Check
 				if(haveWinner()){
-					winner = myPlayers[getCurrentPlayer()];
+					winner = getActiveplayer();
 					// TODO set isFinished flag
 				}
 				
@@ -85,8 +90,8 @@ public class TicTacToe extends AbstractGameModel{
 				}
 								
 				// TODO change activePlayer
-				setCurrentPlayer((getCurrentPlayer() + 1) % 2);
-				setActiveplayer(myPlayers[getCurrentPlayer()]);
+
+				setActiveplayer(getLastAction().getPlayer());
 				
 				// TODO announce what the move was.
 				System.out.println("location: ");
@@ -107,10 +112,7 @@ public class TicTacToe extends AbstractGameModel{
 		// TODO notify other player of move
 		updateListener();
 	}
-	
-	
-	
-	
+		
 	private boolean haveWinner() {
 		
 		boolean winnerDetected = false;
@@ -136,7 +138,6 @@ public class TicTacToe extends AbstractGameModel{
             // no null reference chance, check for matches indicating a winner
 			if (board.getBoardLoc(w[0]).equals(board.getBoardLoc(w[1])) && board.getBoardLoc(w[1]).equals(board.getBoardLoc(w[2]))){
                 winnerDetected = true;
-                // TODO get UUID into Winner = board[w[0]];
                 break;
 			}                      
 		}
@@ -146,7 +147,7 @@ public class TicTacToe extends AbstractGameModel{
 
 	public boolean isOccupied(int m){
 		
-		if (board.getBoardLoc(m).equals(null))
+		if (board.getBoardLoc(m) == null)
 			return false;
 		else
 			return true;

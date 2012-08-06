@@ -16,7 +16,9 @@ public class ServerUpdater implements IServerUpdater {
 	//private static final Logger logger = SkrullLogger.getLogger(ServerUpdater.class);
 
 	public ServerUpdater() throws RemoteException{
-		registry = LocateRegistry.getRegistry();		
+        final String host =System.getProperty("skrull.server.host", "localhost");
+        final String port = System.getProperty("skrull.server.port", "1099");
+		registry = LocateRegistry.getRegistry(host, Integer.valueOf(port));		
 
 	}
 	@Override

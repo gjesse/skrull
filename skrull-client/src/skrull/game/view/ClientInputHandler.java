@@ -44,14 +44,13 @@ public class ClientInputHandler {
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				
 					//serverUpdater.ProcessClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
-				//TODO 
 				//neeed to get the game type
-				System.out.println("about to send chat to server!");
+			/*	System.out.println("about to send chat to server!");
 				System.out.println(gameId);
 				System.out.println(player);
 				System.out.println(type);
 				System.out.println(view.getGameType());
-				System.out.println(view.getChatText());
+				System.out.println(view.getChatText());*/
 				
 				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));
 				break;
@@ -66,8 +65,7 @@ public class ClientInputHandler {
 				break;
 				
 			case JOIN_GAME:
-				
-				
+
 				String selectedGame[] =  view.getJoinGameString().split(":");
 				int index = Integer.parseInt(selectedGame[0]);
 				GameType toJoinType = GameType.valueOf(selectedGame[1]);

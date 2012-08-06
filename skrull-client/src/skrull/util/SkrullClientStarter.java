@@ -41,11 +41,8 @@ public class SkrullClientStarter extends RmiStarter {
 			cih.setView(view);
 
 			final IClientListener listener = new ClientListener(view);
-
-            final String host =System.getProperty("skrull.server.host", "localhost");
-            final String port = System.getProperty("skrull.server.port", "1099");
             
-            final Registry registry = LocateRegistry.getRegistry(host, Integer.valueOf(port));
+            final Registry registry = LocateRegistry.getRegistry();
 
             final Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 

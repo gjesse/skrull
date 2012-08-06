@@ -309,5 +309,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		return playersRequired;
 	}
 
-
+	protected void setBroadcastMessage(String msg){
+		this.broadcastMsg = msg;
+	}
 }

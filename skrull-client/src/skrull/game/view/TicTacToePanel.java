@@ -27,16 +27,14 @@ import skrull.game.view.GameClientView.Handler;
 public class TicTacToePanel extends UserPanel {
 	ClientInputHandler cih;
 	private JButton[] ticTacToeButtons = new JButton[9];
-	
+	String chooseMe = "Choose Me";
 	public TicTacToePanel(ClientInputHandler cih){
 		
 		this.cih = cih;
 		sampleTicTacToeBoard();
 	}
 	private void sampleTicTacToeBoard(){
-		
-		
-		
+
 //TODO HARD CODE THE SIZE OF THE BUTTONS
 		this.setPreferredSize(new Dimension(600,0));
 		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
@@ -57,7 +55,9 @@ public class TicTacToePanel extends UserPanel {
 		constrainers.insets = new Insets(75,2,2,2);
 		
 		for(int i = 0; i < 9; i++){
-			ticTacToeButtons[i] = new JButton("0");
+			ticTacToeButtons[i] = new JButton(i+"");
+			ticTacToeButtons[i].setSize(chooseMe.length(), chooseMe.length());
+			ticTacToeButtons[i].setActionCommand("MOVE");
 			
 			ticTacToeButtons[i].addActionListener(gameHandler);
 			if(constrainers.gridx == 3){
@@ -65,8 +65,7 @@ public class TicTacToePanel extends UserPanel {
 				constrainers.gridy++;
 			}
 			this.add(ticTacToeButtons[i],constrainers);
-			constrainers.gridx++;
-			 
+			constrainers.gridx++;	 
 		}
 		
 		
@@ -77,10 +76,11 @@ public class TicTacToePanel extends UserPanel {
 		public void actionPerformed(ActionEvent buttonEvent) {
 			// TODO need to determine turn and change the button text to 
 			
-			//buttonPressed = (JButton)buttonEvent.getSource();
-
-			//buttonPressed.setEnabled(false);
 			
+			JButton buttonPressed = (JButton)buttonEvent.getSource();
+			
+			//buttonPressed.setText(model...........getToken);
+			buttonPressed.setEnabled(false);		
 			cih.handleInput(buttonEvent);
 		}
 		

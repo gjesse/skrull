@@ -32,7 +32,7 @@ public class WinnerPanel extends UserPanel {
 	
 	private void winnerPanel(){
 
-		JButton winnerButton = new JButton("WINNER!!!");
+		JButton winnerButton = new JButton("WINNER is Player ");
 		
 		winnerButton.setForeground(Color.cyan);
 		winnerButton.setBackground(Color.black);

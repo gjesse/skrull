@@ -57,6 +57,10 @@ public abstract class UserPanel extends JPanel {
 	public String getJoinGameString() {
 		return "";
 	}
+	public int getButtonIndex() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }

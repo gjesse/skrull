@@ -117,6 +117,15 @@ public class GameClientView extends JFrame implements IGameClientView{
 			mainFrame.repaint();
 			buildClientMainView(userPanel);
 		}
+/*		else if(model.getWinner()){
+			//if there is a winner then
+			 * userPanel = new WinnerPanel(cih);
+			 * mainFrame.removeAll();
+			 * mainFrame.setVisible(false);
+			 * userPanel.repaint();
+			 * mainFrame.repaint();
+			 * buildClienMainView(userPanel);
+		}*/
 	}
 	private void updateBoard(IGameModel model) {
 			
@@ -268,6 +277,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 	@Override
 	public String getJoinGameString() {
 		return userPanel.getJoinGameString();
+	}
+	@Override
+	public int getButtonIndex(){
+		return userPanel.getButtonIndex();
 	}
 
 }

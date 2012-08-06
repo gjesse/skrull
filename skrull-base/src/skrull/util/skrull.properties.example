@@ -11,7 +11,8 @@ policy.file=allow_all.policy
 // image.dir=C:/Users/kyle.higgins/workspace/skrull/skrull-client/src/res/
 
 
-
+# skrull.server.host=localhost
+# skrull.server.port=1099
 
 
 # sample for skrull.properties.server

@@ -33,18 +33,21 @@ public class SkrullClientStarter extends RmiStarter {
 	@Override
 	public void doCustomRmiHandling() {
 		try {
-			UUID playerId = UUID.randomUUID();
+			final UUID playerId = UUID.randomUUID();
 			
-			ServerUpdater serverUpdater = new ServerUpdater();
-			ClientInputHandler cih = new ClientInputHandler(serverUpdater, playerId);
-			IGameClientView view = new GameClientView(cih, playerId);
+			final ServerUpdater serverUpdater = new ServerUpdater();
+			final ClientInputHandler cih = new ClientInputHandler(serverUpdater, playerId);
+			final IGameClientView view = new GameClientView(cih, playerId);
 			cih.setView(view);
 
-            IClientListener listener = new ClientListener(view);
+			final IClientListener listener = new ClientListener(view);
 
-            final Registry registry = LocateRegistry.getRegistry();
+            final String host =System.getProperty("skrull.server.host", "localhost");
+            final String port = System.getProperty("skrull.server.port", "1099");
+            
+            final Registry registry = LocateRegistry.getRegistry(host, Integer.valueOf(port));
 
-            Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
+            final Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
             registry.rebind(IClientListener.SERVICE_NAME + "." + playerId, engineStub);
             

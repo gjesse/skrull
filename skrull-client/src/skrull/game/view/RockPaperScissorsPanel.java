@@ -85,9 +85,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 		rockButton.setBorder(null);
 		paperButton.setBorder(null);
 		scissorButton.setBorder(null);
-		rockButton.setForeground(getBackground());
-		paperButton.setForeground(getBackground());
-		scissorButton.setForeground(getBackground());
+		//rockButton.setForeground(getBackground());
+		//paperButton.setForeground(getBackground());
+		//scissorButton.setForeground(getBackground());
 
 		rockButton.addActionListener(rpsHandler);
 		paperButton.addActionListener(rpsHandler);
@@ -140,6 +140,10 @@ public class RockPaperScissorsPanel extends UserPanel {
 			this.getComponent(idx);
 			selected = (JButton)this.getComponent(idx);
 			selected.setEnabled(false);
+			char mySelection =  model.getActivePlayer().getPlayerToken();
+			String charToString = String.valueOf(mySelection);
+			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
+			selected.setText(charToString );
 		
 		  SwingUtilities.invokeLater(new Runnable() {
 			    public void run() {

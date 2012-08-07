@@ -33,6 +33,7 @@ public class TicTacToePanel extends UserPanel {
 	String chooseMe = "Choose Me";
 	int indexOfButton;
 	JButton selected;
+	boolean eventFired = false;
 	
 	public TicTacToePanel(ClientInputHandler cih){
 		
@@ -83,7 +84,7 @@ public class TicTacToePanel extends UserPanel {
 			// TODO need to determine turn and change the button text to 
 			
 			
-
+			eventFired = true;
 			JButton buttonSelected = (JButton)buttonEvent.getSource();
 			setSelectedButton(buttonSelected.getText());
 			cih.handleInput(buttonEvent);
@@ -105,22 +106,32 @@ public class TicTacToePanel extends UserPanel {
 		//we want to update the board by making the 
 		//button uneditable
 		
-		if( model.getMoveCount() != 0 ){
+		if( eventFired == true ){
 			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
 			Move move = (Move)ca.getMove();
 			
 			//index of the button that changed
 			int idx = move.getMoveIndex();
+			
 			//disable and repaint the button here not handler
 			this.getComponent(idx);
 			selected = (JButton)this.getComponent(idx);
 			selected.setEnabled(false);
+			
+			//setting up the player tokens to display on the button after it
+			//has been pushed
+			char mySelection =  model.getActivePlayer().getPlayerToken();
+			String charToString = String.valueOf(mySelection);
+			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
+			selected.setText(charToString );
+			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 			    	selected.revalidate(); // triggers a repaint of all the items in the JList.
 				    	//activeGameScroller.repaint(); // Not sure if this one is needed
 			    }
 			});
+			eventFired = false;
 		}
 		this.repaint();
 		

@@ -91,21 +91,21 @@ public class ClientInputHandler {
 					viewMove.setMoveIndex(buttonIndex);
 					viewMove.setPlayer(player);
 					
-					String token = String.valueOf( player.getPlayerToken() );
+					//String token = String.valueOf( player.getPlayerToken() );
 					
-					System.out.println("TOKEN "+token);
-					System.out.println(player.getPlayerToken());
-					System.out.println("Button Text "+buttonIndex);
+					//System.out.println("TOKEN "+token);
+					//System.out.println(player.getPlayerToken());
+					//System.out.println("Button Text "+buttonIndex);
 					
 					System.out.println();
 
-					if(view.getGameType() == GameType.TIC_TAC_TOE){
-						buttonPressed.setText(token);
-					}
-					else{
+					//if(view.getGameType() == GameType.TIC_TAC_TOE){
+					//	buttonPressed.setText(token);
+					//}
+					//else{
 
-						buttonPressed.setText( token );
-					}
+					//	buttonPressed.setText( token );
+				//	}
 
 					/*System.out.println("BUTTON INDEX/MOVE INDEX "+viewMove.getMoveIndex());
 					System.out.println("PLAYER "+viewMove.getPlayer());

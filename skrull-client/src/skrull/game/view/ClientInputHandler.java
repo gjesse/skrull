@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 import java.util.UUID;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
@@ -34,7 +35,9 @@ public class ClientInputHandler {
 	}
 
 	public void handleInput(ActionEvent actionEvent) {
+		
 		gameId = view.getGameId();
+		
 		ActionType type = ActionType.valueOf(actionEvent.getActionCommand());
 		
 		try {
@@ -77,11 +80,44 @@ public class ClientInputHandler {
 			case MOVE:
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				//
-				Move viewMove = new Move();
-				actionEvent.getActionCommand();
-				viewMove.setMoveIndex(Integer.valueOf(actionEvent.getActionCommand()));
-				viewMove.setPlayer(player);
-				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), viewMove));			//use viewMove
+
+					
+					Move viewMove = new Move();				
+					actionEvent.getActionCommand();	//will set actionEvent To MOVE
+					
+					JButton buttonPressed = (JButton)actionEvent.getSource();
+					int buttonIndex = Integer.parseInt(buttonPressed.getText());
+					
+					viewMove.setMoveIndex(buttonIndex);
+					viewMove.setPlayer(player);
+					
+					String token = String.valueOf( player.getPlayerToken() );
+					
+					/*System.out.println("TOKEN "+token);
+					System.out.println(player.getPlayerToken());*/
+					
+					//find out who is active player and make their buttons uneditable
+					if(view.getGameType() == GameType.TIC_TAC_TOE){
+						buttonPressed.setText(token);
+					}
+					else{
+
+						buttonPressed.setText( token );
+					}
+
+					
+					/*System.out.println("BUTTON INDEX/MOVE INDEX "+viewMove.getMoveIndex());
+					System.out.println("PLAYER "+viewMove.getPlayer());
+					System.out.println(gameId);
+					System.out.println(player);
+					System.out.println(type);
+					System.out.println(view.getGameType());
+					System.out.println(view.getChatText());
+					
+					System.out.println(viewMove.getMoveIndex());
+					System.out.println(viewMove.getPlayer());*/
+					
+				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), viewMove));
 				break;
 			
 			case QUIT:

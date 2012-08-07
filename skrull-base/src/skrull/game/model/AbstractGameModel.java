@@ -54,6 +54,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		this(gameId, type, updater);
 		this.players.add(startingPlayer);
 		this.maxMoves = maxMoves;
+		// TODO: need a better way to specify board size
 		this.board = new Board(9);
 		this.playersRequired = playersRequired;
 	}

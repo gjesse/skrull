@@ -46,10 +46,10 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 		
 
 		super.addPlayer(action.getPlayer());
-		setActiveplayer(action.getPlayer());
+		// setActiveplayer(action.getPlayer());   // TODO  remove player joined but they are not active.  That belongs to game creator
 		action.getPlayer().setPlayerToken('O');
-		gameStop = false;	// Allow starting player to start game
-		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
+		gameStop = false;	// Allow starting  player to start game
+		setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " " +action.getPlayer().getPlayerId() + " joined");
 
 		super.updateListener();
 		

@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.Board;
 import skrull.game.model.IPlayer;
@@ -71,7 +72,7 @@ public class TicTacToeTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	@Test(expected = SkrullGameException.class)
 	public void testJoinGame() throws Exception {
 		actionJoin = new ClientAction(gameId, player3, ActionType.JOIN_GAME, GameType.TIC_TAC_TOE, "", null);
 		mygame.joinGame(actionJoin);

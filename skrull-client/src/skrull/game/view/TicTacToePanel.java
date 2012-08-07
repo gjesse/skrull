@@ -117,18 +117,7 @@ public class TicTacToePanel extends UserPanel {
 		//we want to update the board by making the 
 		//button uneditable
 		
-		if( eventFired == true ){
-			
-/*		 	 
-		 	    for(IMove move : model.getBoard().getBoard()){
-		 	 	 	
-		 	      if (move != null){
-		 	 	 	
-		 	        ticTacToeButtons[move.getMoveIndex()].setText(String.valueOf(move.getPlayer().getPlayerToken()));
-		 	 		
-		 	       ticTacToeButtons[move.getMoveIndex()].setEnabled(false);*/
-			
-
+/*		if( eventFired == true ){
 			
 			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
 			Move move = (Move)ca.getMove();
@@ -150,9 +139,8 @@ public class TicTacToePanel extends UserPanel {
 			selected.setText(charToString );
 			
 			eventFired = false;
-		}
-		this.repaint();
-		
+		}*/
+
 		
 	}
 	public void setSelectedButton(String s){

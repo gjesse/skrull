@@ -142,7 +142,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		//TODO check if blank or null string
 		//if its blank or null do nothing otherwise print out
 		if(broadcastMessage == null){
-			System.out.println("nothing");
+			System.out.println("nothing to broadcast");
 		}
 		else
 			if(gameType == GameType.ROCK_PAPER_SCISSORS)

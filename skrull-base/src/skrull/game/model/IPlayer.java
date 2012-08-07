@@ -11,8 +11,8 @@ public interface IPlayer extends Serializable {
 	 */
 	public UUID getPlayerId();
 	
-	public char getPlayerToken();
+	public String getPlayerToken();
 
-	public void setPlayerToken(char c);
+	public void setPlayerToken(String c);
 
 }

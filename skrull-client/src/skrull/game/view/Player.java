@@ -9,7 +9,7 @@ public class Player implements IPlayer {
 
 	private static final long serialVersionUID = 2041179704423897548L;
 	private UUID playerId;
-	private char playerToken;
+	private String playerToken;
 	
 	public Player(UUID playerId){
 		this.playerId = playerId;
@@ -52,12 +52,12 @@ public class Player implements IPlayer {
 		return true;
 	}
 	@Override
-	public char getPlayerToken() {
+	public String getPlayerToken() {
 		return playerToken;
 	}
 	
 	@Override	
-	public void setPlayerToken(char token){
+	public void setPlayerToken(String token){
 		this.playerToken = token;
 	}
 

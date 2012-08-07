@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 import skrull.util.logging.SkrullLogger;
 
 public class GameClientView extends JFrame implements IGameClientView{
@@ -46,6 +47,8 @@ public class GameClientView extends JFrame implements IGameClientView{
 	String sendChat = IClientAction.ActionType.CHAT.toString();
 	String pickMe = "Choose Me!";
 
+	IPlayer whoWon;
+	
 	private GameType gameType;
 	private ChatPanel chatPanel;
 	
@@ -69,6 +72,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		 
 		 if(userPanel.getGameType() != gameType){
 			 //TODO do something
+			 
 			 //create a new game
 			 
 		 }
@@ -90,11 +94,12 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private void updateView(IGameModel model){
 		
 		//if we are still on the main screen with the default panel
-		if( model.getGameType() == GameType.DEFAULT ){
+/*		if( model.getGameType() == GameType.DEFAULT ){
 			
 
 		}
-		else if(model.getGameType() == GameType.TIC_TAC_TOE){
+		else */
+		if(model.getGameType() == GameType.TIC_TAC_TOE){
 			System.out.println("INSIDE THE TTT PART OF UPDATE BOARD");
 			System.out.println("game Type  ="+ gameType + " model.getGameType = "+model.getGameType() );
 	
@@ -118,15 +123,16 @@ public class GameClientView extends JFrame implements IGameClientView{
 			mainFrame.repaint();
 			buildClientMainView(userPanel);
 		}
-/*		else if(model.getWinner()){
+		else if( model.isGameOver() ){
 			//if there is a winner then
-			 * userPanel = new WinnerPanel(cih);
-			 * mainFrame.removeAll();
-			 * mainFrame.setVisible(false);
-			 * userPanel.repaint();
-			 * mainFrame.repaint();
-			 * buildClienMainView(userPanel);
-		}*/
+			whoWon = model.getWinner();
+			userPanel = new WinnerPanel(cih);
+			mainFrame.removeAll();
+			mainFrame.setVisible(false);
+			userPanel.repaint();
+			mainFrame.repaint();
+			buildClientMainView(userPanel);
+		}
 	}
 	private void updateBoard(IGameModel model) {
 			
@@ -136,8 +142,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		chatPanel.setText(model.getChatContents());
 		setBroadcastMessage( model.getBroadcastMessage() );
 		gameType = model.getGameType();
-
-		
 
 	}
 	@Override	
@@ -149,6 +153,10 @@ public class GameClientView extends JFrame implements IGameClientView{
 		}
 		else
 			chatPanel.addMessage(broadcastMessage);
+	}
+
+	public IPlayer getWinner(){
+		return whoWon;
 	}
 
 	private void buildClientMainView(UserPanel myPanel){
@@ -279,5 +287,9 @@ public class GameClientView extends JFrame implements IGameClientView{
 	public String getJoinGameString() {
 		return userPanel.getJoinGameString();
 	}
+	public int getSelectedButton(){
+		return userPanel.getSelectedButton();
+	}
+
 
 }

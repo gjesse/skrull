@@ -93,10 +93,12 @@ public class ClientInputHandler {
 					
 					String token = String.valueOf( player.getPlayerToken() );
 					
-					/*System.out.println("TOKEN "+token);
-					System.out.println(player.getPlayerToken());*/
+					System.out.println("TOKEN "+token);
+					System.out.println(player.getPlayerToken());
+					System.out.println("Button Text "+buttonIndex);
 					
-					//find out who is active player and make their buttons uneditable
+					System.out.println();
+
 					if(view.getGameType() == GameType.TIC_TAC_TOE){
 						buttonPressed.setText(token);
 					}
@@ -105,7 +107,6 @@ public class ClientInputHandler {
 						buttonPressed.setText( token );
 					}
 
-					
 					/*System.out.println("BUTTON INDEX/MOVE INDEX "+viewMove.getMoveIndex());
 					System.out.println("PLAYER "+viewMove.getPlayer());
 					System.out.println(gameId);

@@ -20,5 +20,6 @@ public interface IGameClientView {
 	public abstract String getJoinGameString();
 
 	public abstract void setBroadcastMessage(String message);
+
 	
 }

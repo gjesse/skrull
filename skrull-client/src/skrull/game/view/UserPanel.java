@@ -61,6 +61,7 @@ public abstract class UserPanel extends JPanel {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	public abstract int getSelectedButton();
 	
 	
 }

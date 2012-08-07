@@ -56,5 +56,11 @@ public class LoserPanel extends UserPanel {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

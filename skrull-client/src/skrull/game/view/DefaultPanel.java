@@ -275,4 +275,10 @@ public class DefaultPanel extends UserPanel {
 		this.repaint();
 		
 	}
+
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -14,10 +14,13 @@ import javax.swing.JPanel;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 
 public class WinnerPanel extends UserPanel {
 
 	ClientInputHandler cih;
+
+	
 	public WinnerPanel(ClientInputHandler cih){
 		
 		this.cih = cih;
@@ -59,6 +62,12 @@ public class WinnerPanel extends UserPanel {
 	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

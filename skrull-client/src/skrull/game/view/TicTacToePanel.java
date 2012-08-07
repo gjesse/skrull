@@ -17,10 +17,13 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
+import skrull.game.model.Move;
 import skrull.game.view.GameClientView.Handler;
 
 
@@ -28,6 +31,9 @@ public class TicTacToePanel extends UserPanel {
 	ClientInputHandler cih;
 	private JButton[] ticTacToeButtons = new JButton[9];
 	String chooseMe = "Choose Me";
+	int indexOfButton;
+	JButton selected;
+	
 	public TicTacToePanel(ClientInputHandler cih){
 		
 		this.cih = cih;
@@ -77,10 +83,9 @@ public class TicTacToePanel extends UserPanel {
 			// TODO need to determine turn and change the button text to 
 			
 			
-			JButton buttonPressed = (JButton)buttonEvent.getSource();
-			
-			//buttonPressed.setText(model...........getToken);
-			buttonPressed.setEnabled(false);		
+
+			JButton buttonSelected = (JButton)buttonEvent.getSource();
+			setSelectedButton(buttonSelected.getText());
 			cih.handleInput(buttonEvent);
 		}
 		
@@ -96,5 +101,39 @@ public class TicTacToePanel extends UserPanel {
 		// TODO update the board with tokens
 		//loop through the board and update what is written on buttons
 		
+		//if there are previous moves that we can get
+		//we want to update the board by making the 
+		//button uneditable
+		
+		if( model.getMoveCount() != 0 ){
+			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
+			Move move = (Move)ca.getMove();
+			
+			//index of the button that changed
+			int idx = move.getMoveIndex();
+			//disable and repaint the button here not handler
+			this.getComponent(idx);
+			selected = (JButton)this.getComponent(idx);
+			selected.setEnabled(false);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+			    	selected.revalidate(); // triggers a repaint of all the items in the JList.
+				    	//activeGameScroller.repaint(); // Not sure if this one is needed
+			    }
+			});
+		}
+		this.repaint();
+		
+		
+	}
+	public void setSelectedButton(String s){
+		indexOfButton = Integer.parseInt(s);
+		System.out.println("setSelectedButton "+indexOfButton);
+	}
+
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return indexOfButton;
 	}
 }

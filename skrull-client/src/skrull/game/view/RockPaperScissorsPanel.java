@@ -13,13 +13,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
+import skrull.game.model.Move;
 import skrull.game.view.IClientAction.ActionType;
 import skrull.util.logging.SkrullLogger;
 
@@ -31,7 +34,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 	JButton rockButton;
 	JButton paperButton;
 	JButton scissorButton;
-	
+	JButton selected;
+	int indexOfButton;
+	private boolean eventFired = false;
 	public RockPaperScissorsPanel(ClientInputHandler cih){
 		
 		this.cih = cih;
@@ -106,11 +111,10 @@ public class RockPaperScissorsPanel extends UserPanel {
 		
 		@Override
 		public void actionPerformed(ActionEvent buttonEvent) {
-
-
-			JButton buttonPressed = (JButton)buttonEvent.getSource();
 			
-			buttonPressed.setEnabled(false);
+			eventFired = true;
+			JButton buttonSelected = (JButton)buttonEvent.getSource();
+			setSelectedButton(buttonSelected.getText());
 			cih.handleInput(buttonEvent);
 		}
 	
@@ -126,16 +130,36 @@ public class RockPaperScissorsPanel extends UserPanel {
 	@Override
 	public void modelChanged(IGameModel model) {
 		
+		if(eventFired == true){
+			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
+			Move move = (Move)ca.getMove();
+			
+			//index of the button that changed
+			int idx = move.getMoveIndex()-1;
+			//disable and repaint the button here not handler
+			this.getComponent(idx);
+			selected = (JButton)this.getComponent(idx);
+			selected.setEnabled(false);
+		
+		  SwingUtilities.invokeLater(new Runnable() {
+			    public void run() {
+			    	selected.revalidate(); // triggers a repaint of all the items in the JList.
+			    	//activeGameScroller.repaint(); // Not sure if this one is needed
+			    }
+			  });
+		  this.repaint();
+		  eventFired = false;
+		}
+	
+	}
+	public void setSelectedButton(String s){
+		indexOfButton = Integer.parseInt(s);
+		System.out.println("setSelectedButton "+indexOfButton);
+	}
 
-		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	rockButton.revalidate(); // triggers a repaint
-		    	paperButton.revalidate(); 
-		    	scissorButton.revalidate(); 
-
-		    }
-		  });
-
-		this.repaint();
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return indexOfButton;
 	}
 }

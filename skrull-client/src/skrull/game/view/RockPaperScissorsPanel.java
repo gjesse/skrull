@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction.ActionType;
 import skrull.util.logging.SkrullLogger;
 
@@ -32,8 +33,8 @@ public class RockPaperScissorsPanel extends UserPanel {
 	JButton paperButton;
 	JButton scissorButton;
 	
-	public RockPaperScissorsPanel(ClientInputHandler cih){
-		
+	public RockPaperScissorsPanel(ClientInputHandler cih, IPlayer player){
+		super(player);
 		this.cih = cih;
 		sampleRockPaperScissorBoard();
 	}

@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IMove;
+import skrull.game.model.IPlayer;
 import skrull.game.view.GameClientView.Handler;
 
 
@@ -28,8 +30,8 @@ public class TicTacToePanel extends UserPanel {
 	ClientInputHandler cih;
 	private JButton[] ticTacToeButtons = new JButton[9];
 	String chooseMe = "Choose Me";
-	public TicTacToePanel(ClientInputHandler cih){
-		
+	public TicTacToePanel(ClientInputHandler cih, IPlayer player){
+		super(player);
 		this.cih = cih;
 		sampleTicTacToeBoard();
 	}
@@ -77,10 +79,10 @@ public class TicTacToePanel extends UserPanel {
 			// TODO need to determine turn and change the button text to 
 			
 			
-			JButton buttonPressed = (JButton)buttonEvent.getSource();
+			//JButton buttonPressed = (JButton)buttonEvent.getSource();
 			
 			//buttonPressed.setText(model...........getToken);
-			buttonPressed.setEnabled(false);		
+			//buttonPressed.setEnabled(false);		
 			cih.handleInput(buttonEvent);
 		}
 		
@@ -93,8 +95,13 @@ public class TicTacToePanel extends UserPanel {
 	}
 	@Override
 	public void modelChanged(IGameModel model) {
-		// TODO update the board with tokens
-		//loop through the board and update what is written on buttons
+		
+		for(IMove move : model.getBoard().getBoard()){
+			if (move != null){
+				ticTacToeButtons[move.getMoveIndex()].setText(String.valueOf(move.getPlayer().getPlayerToken()));
+				ticTacToeButtons[move.getMoveIndex()].setEnabled(false);
+			}
+		}
 		
 	}
 }

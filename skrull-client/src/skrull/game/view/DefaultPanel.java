@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 import skrull.util.logging.SkrullLogger;
 
 public class DefaultPanel extends UserPanel {
@@ -48,7 +49,8 @@ public class DefaultPanel extends UserPanel {
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
 	private JScrollPane activeGameScroller;
 	
-	public DefaultPanel(ClientInputHandler cih){
+	public DefaultPanel(ClientInputHandler cih, IPlayer player){
+		super(player);
 		this.cih = cih;
 		buildUserPanel();
 	}

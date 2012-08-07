@@ -28,9 +28,9 @@ public class ClientInputHandler {
 	private IGameClientView view;
 	private static final Logger logger = SkrullLogger.getLogger(ClientInputHandler.class);
 
-	public ClientInputHandler(ServerUpdater serverUpdater, UUID playerId ) {
+	public ClientInputHandler(ServerUpdater serverUpdater, IPlayer player ) {
 		this.serverUpdater = serverUpdater;
-		this.player = new Player(playerId);
+		this.player = player;
 		this.gameId =  IGameFactory.DEFAULT_GAME_ID; // starting game id
 	}
 
@@ -91,19 +91,12 @@ public class ClientInputHandler {
 					viewMove.setMoveIndex(buttonIndex);
 					viewMove.setPlayer(player);
 					
-					String token = String.valueOf( player.getPlayerToken() );
-					
+			
 					/*System.out.println("TOKEN "+token);
 					System.out.println(player.getPlayerToken());*/
 					
 					//find out who is active player and make their buttons uneditable
-					if(view.getGameType() == GameType.TIC_TAC_TOE){
-						buttonPressed.setText(token);
-					}
-					else{
-
-						buttonPressed.setText( token );
-					}
+					// NOTE - we don't set anything until we get a message back from the model
 
 					
 					/*System.out.println("BUTTON INDEX/MOVE INDEX "+viewMove.getMoveIndex());

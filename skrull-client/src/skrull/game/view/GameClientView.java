@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 import skrull.util.logging.SkrullLogger;
 
 public class GameClientView extends JFrame implements IGameClientView{
@@ -25,7 +26,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private static final long serialVersionUID = 733356106858477245L;
 	 private static final String IMAGE_DIR = System.getProperty("image.dir");
 	private ClientInputHandler cih;
-	private UUID playerId;
 
 	private int gameId = IGameFactory.DEFAULT_GAME_ID;
 
@@ -48,15 +48,16 @@ public class GameClientView extends JFrame implements IGameClientView{
 
 	private GameType gameType;
 	private ChatPanel chatPanel;
+	private IPlayer player;
 	
 
-	public GameClientView(ClientInputHandler cih, UUID playerId) {
+	public GameClientView(ClientInputHandler cih, IPlayer player) {
 		this.cih = cih;
-		this.playerId = playerId;
+		this.player = player;
 		this.gameType = GameType.DEFAULT; // start in default game
 		
 
-		userPanel = new DefaultPanel(cih);
+		userPanel = new DefaultPanel(cih, player);
 		buildClientMainView(userPanel);	
 		
 	}
@@ -67,13 +68,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 	 @Override
 	public void modelChanged(IGameModel model) {
 		 
-		 if(userPanel.getGameType() != gameType){
-			 //TODO do something
-			 //create a new game
-			 
-		 }
-
- 
 		 //if game id from game is not equal to model.getGameId
 		 //then want to create the new view 
 		 
@@ -101,7 +95,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 			mainFrame.removeAll();
 			mainFrame.setVisible(false);
 
-			userPanel = new TicTacToePanel(cih);
+			userPanel = new TicTacToePanel(cih, player);
 			userPanel.repaint();
 			mainFrame.repaint();
 			buildClientMainView(userPanel);
@@ -110,7 +104,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		else if(model.getGameType() == GameType.ROCK_PAPER_SCISSORS){
 			//JOptionPane.showMessageDialog(null,"about to make a new RPS Panel");
 			
-			userPanel = new RockPaperScissorsPanel(cih);
+			userPanel = new RockPaperScissorsPanel(cih, player);
 			mainFrame.removeAll();
 			mainFrame.setVisible(false);
 
@@ -168,7 +162,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + playerId.toString() ){};
+		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player ){};
 
 		mainFrame.addWindowListener(new WindowListener() {
 			

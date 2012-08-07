@@ -8,10 +8,12 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
+import skrull.game.model.IPlayer;
 import skrull.game.view.ClientInputHandler;
 import skrull.game.view.GameClientView;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IGameClientView;
+import skrull.game.view.Player;
 import skrull.rmi.client.ClientListener;
 import skrull.rmi.client.IClientListener;
 import skrull.rmi.client.ServerUpdater;
@@ -33,11 +35,11 @@ public class SkrullClientStarter extends RmiStarter {
 	@Override
 	public void doCustomRmiHandling() {
 		try {
-			final UUID playerId = UUID.randomUUID();
 			
 			final ServerUpdater serverUpdater = new ServerUpdater();
-			final ClientInputHandler cih = new ClientInputHandler(serverUpdater, playerId);
-			final IGameClientView view = new GameClientView(cih, playerId);
+			final IPlayer player = new Player( UUID.randomUUID());
+			final ClientInputHandler cih = new ClientInputHandler(serverUpdater, player);
+			final IGameClientView view = new GameClientView(cih, player);
 			cih.setView(view);
 
 			final IClientListener listener = new ClientListener(view);
@@ -46,7 +48,7 @@ public class SkrullClientStarter extends RmiStarter {
 
             final Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);
 
-            registry.rebind(IClientListener.SERVICE_NAME + "." + playerId, engineStub);
+            registry.rebind(IClientListener.SERVICE_NAME + "." + player.getPlayerId(), engineStub);
             
             
             IClientAction action = cih.getStartupAction();

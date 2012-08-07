@@ -14,12 +14,13 @@ import javax.swing.JPanel;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 
 public class WinnerPanel extends UserPanel {
 
 	ClientInputHandler cih;
-	public WinnerPanel(ClientInputHandler cih){
-		
+	public WinnerPanel(ClientInputHandler cih, IPlayer player){
+		super(player);
 		this.cih = cih;
 		winnerPanel();
 	}

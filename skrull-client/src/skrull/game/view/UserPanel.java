@@ -19,12 +19,16 @@ import javax.swing.JScrollPane;
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 import skrull.game.view.GameClientView.Handler;
 
 public abstract class UserPanel extends JPanel {
+
+	private static final long serialVersionUID = -4818072651236836682L;
 	GameType gameType;
-	public UserPanel(){
-		
+	IPlayer player;
+	public UserPanel(IPlayer player){
+		this.player = player;
 	}
 	protected void paintComponent(Graphics g){
 		Graphics2D g2d = (Graphics2D)g;
@@ -57,10 +61,9 @@ public abstract class UserPanel extends JPanel {
 	public String getJoinGameString() {
 		return "";
 	}
-	public int getButtonIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+
+	
+	protected IPlayer getPlayer(){
+		return player;
 	}
-	
-	
 }

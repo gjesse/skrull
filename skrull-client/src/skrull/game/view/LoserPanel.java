@@ -11,11 +11,12 @@ import javax.swing.JPanel;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
 
 public class LoserPanel extends UserPanel {
 
-	public LoserPanel(){
-		
+	public LoserPanel(ClientInputHandler cih, IPlayer player){
+		super(player);
 		buildLoserPanel();
 	}
 	

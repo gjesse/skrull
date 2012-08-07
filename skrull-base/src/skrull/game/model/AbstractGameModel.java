@@ -248,7 +248,8 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.players.add(player);
 	}
 
-	protected IBoard getBoard() {
+	@Override
+	public IBoard getBoard() {
 		return board;
 	}
 

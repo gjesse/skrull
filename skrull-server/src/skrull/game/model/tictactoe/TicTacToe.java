@@ -18,7 +18,6 @@ public class TicTacToe extends AbstractGameModel{
 
 	private static final long serialVersionUID = -8648567625229924677L;
 
-	private IPlayer myPlayers[];
 	private boolean gameStop;
 
 	
@@ -30,10 +29,8 @@ public class TicTacToe extends AbstractGameModel{
 		// Initialize Model Specific Parameters
 		gameStop = true;   // block moves until second player joins.
 		setMoveCount(0);
-		
-		// TODO: we need to remove this and use the players collection maintained in the abstractGameModel
-		myPlayers = new IPlayer[2];
-		myPlayers[0] = startingPlayer;
+
+		setActiveplayer(startingPlayer);
 		startingPlayer.setPlayerToken('X');
 		
 		super.updateListener();
@@ -47,11 +44,13 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 			throw new SkrullGameException("Game full");
 		}
 		
+
 		super.addPlayer(action.getPlayer());
 		setActiveplayer(action.getPlayer());
 		action.getPlayer().setPlayerToken('O');
 		gameStop = false;	// Allow starting player to start game
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
+
 		super.updateListener();
 		
 	}
@@ -61,9 +60,11 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 	public void doProcessMove(IClientAction action) {
 		
 		int boardLoc = action.getMove().getMoveIndex();
+
 		
 		// match player making move to current player 
-		if (myPlayers[getCurrentPlayer()].equals(action.getPlayer()) && !gameStop){
+		
+		if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
 			
 			// verify move is legal
 			if (!isOccupied(boardLoc)){
@@ -75,7 +76,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 			
 				// WINNER Check
 				if(haveWinner()){
-					winner = myPlayers[getCurrentPlayer()];
+					winner = getActiveplayer();
 					// TODO set isFinished flag
 				}
 				
@@ -86,8 +87,8 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 				}
 								
 				// TODO change activePlayer
-				setCurrentPlayer((getCurrentPlayer() + 1) % 2);
-				setActiveplayer(myPlayers[getCurrentPlayer()]);
+
+				setActiveplayer(getLastAction().getPlayer());
 				
 				// TODO announce what the move was.
 				System.out.println("location: ");
@@ -108,10 +109,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 		// TODO notify other player of move
 		updateListener();
 	}
-	
-	
-	
-	
+		
 	private boolean haveWinner() {
 		
 		boolean winnerDetected = false;
@@ -137,7 +135,6 @@ public void joinGame(IClientAction action) throws SkrullGameException {
             // no null reference chance, check for matches indicating a winner
 			if (board.getBoardLoc(w[0]).equals(board.getBoardLoc(w[1])) && board.getBoardLoc(w[1]).equals(board.getBoardLoc(w[2]))){
                 winnerDetected = true;
-                // TODO get UUID into Winner = board[w[0]];
                 break;
 			}                      
 		}
@@ -147,7 +144,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 
 	public boolean isOccupied(int m){
 		
-		if (board.getBoardLoc(m).equals(null))
+		if (board.getBoardLoc(m) == null)
 			return false;
 		else
 			return true;

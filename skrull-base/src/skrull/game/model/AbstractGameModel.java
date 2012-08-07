@@ -222,6 +222,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		// as in this player should already be in the game
 		// but since we are using a set it shouldn't matter
 		players.add(action.getPlayer());
+		setLastAction(action);
 		setBroadcastMessage("Waiting for more players...");
 		try {
 			clientUpdater.modelChanged(this);

@@ -19,7 +19,7 @@ public interface IGameModel extends Serializable {
 	 */
 	public abstract void joinGame(IClientAction aAction) throws SkrullGameException;
 
-	public abstract void processMove(IClientAction aAction);
+	public abstract void processMove(IClientAction aAction) throws SkrullGameException;
 
 	public abstract boolean isGameOver();
 

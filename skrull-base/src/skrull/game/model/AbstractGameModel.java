@@ -95,14 +95,14 @@ public abstract class AbstractGameModel implements IGameModel {
 	 * @see skrull.game.model.IGameModel#processMove(skrull.game.view.ClientAction)
 	 */
 	@Override
-	public final void processMove(IClientAction action){
+	public final void processMove(IClientAction action) throws SkrullGameException{
 		// let the subclass do the actual move logic
 		doProcessMove(action);
 		
 		// then do some common move housekeeping
 		this.lastMoveTime = System.currentTimeMillis();
-		this.activeplayer = action.getPlayer();   // TDO kh - may need to remove this
-		this.lastAction = action;
+		// this.activeplayer = action.getPlayer();   // TDO kh - may need to remove this
+		// this.lastAction = action;
 	}
 	
 	/**
@@ -110,7 +110,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	 * to implement the actual move logic
 	 * @param action
 	 */
-	public abstract void doProcessMove(IClientAction action);
+	public abstract void doProcessMove(IClientAction action) throws SkrullGameException;
 	
 	/* (non-Javadoc)
 	 * @see skrull.game.model.IGameModel#isGameOver()

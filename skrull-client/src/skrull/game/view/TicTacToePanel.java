@@ -33,6 +33,10 @@ import skrull.game.view.GameClientView.Handler;
 
 
 public class TicTacToePanel extends UserPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8769270277983184938L;
 	ClientInputHandler cih;
 	private JButton[] ticTacToeButtons = new JButton[9];
 	String chooseMe = "Choose Me";
@@ -105,13 +109,23 @@ public class TicTacToePanel extends UserPanel {
 	}
 	@Override
 	public void modelChanged(IGameModel model) {
-		
-		for(IMove move : model.getBoard().getBoard()){
-			if (move != null){
-				ticTacToeButtons[move.getMoveIndex()].setText(String.valueOf(move.getPlayer().getPlayerToken()));
-				ticTacToeButtons[move.getMoveIndex()].setEnabled(false);
+		//getboardLoc
+		for( IPlayer player: model.getPlayers() ){
+			if(player.equals(this.player)){
+				this.player.setPlayerToken(player.getPlayerToken() );
+			}
+			System.out.println("token!!! "+player.getPlayerToken());
+			System.out.println("our player"+this.player.getPlayerToken());
+		}
+		for( IMove buttonMove : model.getBoard().getBoard() ){
+			if (buttonMove != null){
+				ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );
+				ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);
+				
 			}
 		}
+		
+		//System.out.println("player token "+ move.getPlayer().getPlayerToken());
 		
 		//if there are previous moves that we can get
 		//we want to update the board by making the 

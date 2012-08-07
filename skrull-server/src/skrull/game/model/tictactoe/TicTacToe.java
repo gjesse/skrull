@@ -46,9 +46,10 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 		
 
 		super.addPlayer(action.getPlayer());
-		setActiveplayer(action.getPlayer());
+		// setActiveplayer(action.getPlayer());
 		action.getPlayer().setPlayerToken("O");
 		gameStop = false;	// Allow starting player to start game
+		this.setLastAction(action);
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
 		super.updateListener();
 		
@@ -56,7 +57,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 
 	@Override
 	// KH - Game Logic adapted from Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
-	public void doProcessMove(IClientAction action) {
+	public void doProcessMove(IClientAction action) throws SkrullGameException {
 		
 		int boardLoc = action.getMove().getMoveIndex();
 
@@ -76,6 +77,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 				// WINNER Check
 				if(haveWinner()){
 					winner = getActiveplayer();
+					finished = true;
 					// TODO set isFinished flag
 				}
 				
@@ -88,6 +90,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 				// TODO change activePlayer
 
 				setActiveplayer(getLastAction().getPlayer());
+				this.setLastAction(action);
 				
 				// TODO announce what the move was.
 				System.out.println("location: ");
@@ -98,12 +101,12 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 			}
 			// Invalid move by correct player.
 			// TODO send to chat window.
-			else System.out.println("Invalid Move...");
+			else throw new SkrullGameException("Invalid Move...");
 		
 		}
 		// Not valid player
 		// TODO send to chat window instead
-		else System.out.println("Please wait your turn"); 
+		else throw new SkrullGameException("Please wait your turn."); 
 		
 		// TODO notify other player of move
 		updateListener();

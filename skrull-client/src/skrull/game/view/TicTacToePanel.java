@@ -17,12 +17,18 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IMove;
+
 import skrull.game.model.IPlayer;
+
+import skrull.game.model.Move;
+
 import skrull.game.view.GameClientView.Handler;
 
 
@@ -30,6 +36,10 @@ public class TicTacToePanel extends UserPanel {
 	ClientInputHandler cih;
 	private JButton[] ticTacToeButtons = new JButton[9];
 	String chooseMe = "Choose Me";
+	int indexOfButton;
+	JButton selected;
+	boolean eventFired = false;
+	
 	public TicTacToePanel(ClientInputHandler cih, IPlayer player){
 		super(player);
 		this.cih = cih;
@@ -78,11 +88,11 @@ public class TicTacToePanel extends UserPanel {
 		public void actionPerformed(ActionEvent buttonEvent) {
 			// TODO need to determine turn and change the button text to 
 			
+
+			eventFired = true;
+			JButton buttonSelected = (JButton)buttonEvent.getSource();
+			setSelectedButton(buttonSelected.getText());
 			
-			//JButton buttonPressed = (JButton)buttonEvent.getSource();
-			
-			//buttonPressed.setText(model...........getToken);
-			//buttonPressed.setEnabled(false);		
 			cih.handleInput(buttonEvent);
 		}
 		
@@ -103,5 +113,61 @@ public class TicTacToePanel extends UserPanel {
 			}
 		}
 		
+		//if there are previous moves that we can get
+		//we want to update the board by making the 
+		//button uneditable
+		
+		if( eventFired == true ){
+			
+/*		 	 
+		 	    for(IMove move : model.getBoard().getBoard()){
+		 	 	 	
+		 	      if (move != null){
+		 	 	 	
+		 	        ticTacToeButtons[move.getMoveIndex()].setText(String.valueOf(move.getPlayer().getPlayerToken()));
+		 	 		
+		 	       ticTacToeButtons[move.getMoveIndex()].setEnabled(false);*/
+			
+
+			
+			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
+			Move move = (Move)ca.getMove();
+			
+			//index of the button that changed
+			int idx = move.getMoveIndex();
+			
+			//disable and repaint the button here not handler
+			this.getComponent(idx);
+			selected = (JButton)this.getComponent(idx);
+			selected.setEnabled(false);
+			
+			//setting up the player tokens to display on the button after it
+			//has been pushed
+			String mySelection =  model.getActivePlayer().getPlayerToken();
+			
+			String charToString = String.valueOf(mySelection);
+			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
+			selected.setText(charToString );
+			
+			eventFired = false;
+		}
+		this.repaint();
+		
+		
+	}
+	public void setSelectedButton(String s){
+		indexOfButton = Integer.parseInt(s);
+		System.out.println("setSelectedButton "+indexOfButton);
+	}
+
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return indexOfButton;
+	}
+	@Override
+	public String getMessage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

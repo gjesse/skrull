@@ -66,4 +66,8 @@ public abstract class UserPanel extends JPanel {
 	protected IPlayer getPlayer(){
 		return player;
 	}
+
+	public abstract int getSelectedButton();
+	public abstract String getMessage();
+
 }

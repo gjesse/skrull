@@ -31,7 +31,7 @@ public class RockPaperScissors extends AbstractGameModel{
 		myPlayers = new IPlayer[2];
 		myRPSmove = new int[2];
 		myPlayers[0] = startingPlayer;
-		startingPlayer.setPlayerToken('1');
+		startingPlayer.setPlayerToken("1");
 		
 	}
 
@@ -43,7 +43,7 @@ public class RockPaperScissors extends AbstractGameModel{
 		super.addPlayer(action.getPlayer());
 		
 		myPlayers[1] = action.getPlayer();
-		action.getPlayer().setPlayerToken('2');
+		action.getPlayer().setPlayerToken("2");
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
 
 		gameStop = false;
@@ -109,6 +109,11 @@ public class RockPaperScissors extends AbstractGameModel{
 			return false;
 		else
 			return true;
+	}
+
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

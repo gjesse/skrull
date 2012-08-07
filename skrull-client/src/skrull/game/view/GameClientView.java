@@ -46,6 +46,8 @@ public class GameClientView extends JFrame implements IGameClientView{
 	String sendChat = IClientAction.ActionType.CHAT.toString();
 	String pickMe = "Choose Me!";
 
+	IPlayer whoWon;
+	
 	private GameType gameType;
 	private ChatPanel chatPanel;
 	private IPlayer player;
@@ -84,11 +86,12 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private void updateView(IGameModel model){
 		
 		//if we are still on the main screen with the default panel
-		if( model.getGameType() == GameType.DEFAULT ){
+/*		if( model.getGameType() == GameType.DEFAULT ){
 			
 
 		}
-		else if(model.getGameType() == GameType.TIC_TAC_TOE){
+		else */
+		if(model.getGameType() == GameType.TIC_TAC_TOE){
 			System.out.println("INSIDE THE TTT PART OF UPDATE BOARD");
 			System.out.println("game Type  ="+ gameType + " model.getGameType = "+model.getGameType() );
 	
@@ -112,15 +115,17 @@ public class GameClientView extends JFrame implements IGameClientView{
 			mainFrame.repaint();
 			buildClientMainView(userPanel);
 		}
-/*		else if(model.getWinner()){
-			//if there is a winner then
-			 * userPanel = new WinnerPanel(cih);
-			 * mainFrame.removeAll();
-			 * mainFrame.setVisible(false);
-			 * userPanel.repaint();
-			 * mainFrame.repaint();
-			 * buildClienMainView(userPanel);
-		}*/
+		else if( model.isGameOver() ){
+			//if there is a winner then display the winner panel
+			whoWon = model.getWinner();
+			
+			userPanel = new WinnerPanel(cih, player);
+			mainFrame.removeAll();
+			mainFrame.setVisible(false);
+			userPanel.repaint();
+			mainFrame.repaint();
+			buildClientMainView(userPanel);
+		}
 	}
 	private void updateBoard(IGameModel model) {
 			
@@ -131,8 +136,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		setBroadcastMessage( model.getBroadcastMessage() );
 		gameType = model.getGameType();
 
-		
-
 	}
 	@Override	
 	public void setBroadcastMessage(String broadcastMessage) {
@@ -142,7 +145,15 @@ public class GameClientView extends JFrame implements IGameClientView{
 			System.out.println("nothing");
 		}
 		else
+			if(gameType == GameType.ROCK_PAPER_SCISSORS)
+				userPanel.getMessage();
 			chatPanel.addMessage(broadcastMessage);
+	}
+	public String getMessage(){
+		return userPanel.getMessage();
+	}
+	public IPlayer getWinner(){
+		return whoWon;
 	}
 
 	private void buildClientMainView(UserPanel myPanel){
@@ -273,5 +284,9 @@ public class GameClientView extends JFrame implements IGameClientView{
 	public String getJoinGameString() {
 		return userPanel.getJoinGameString();
 	}
+	public int getSelectedButton(){
+		return userPanel.getSelectedButton();
+	}
+
 
 }

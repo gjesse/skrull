@@ -45,4 +45,11 @@ public class DefaultGameModel extends AbstractGameModel {
 	}
 
 
+	//just added
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 }

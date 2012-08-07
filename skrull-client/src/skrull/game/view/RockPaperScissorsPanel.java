@@ -13,14 +13,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
+
 import skrull.game.model.IPlayer;
+
+import skrull.game.model.Move;
+
 import skrull.game.view.IClientAction.ActionType;
 import skrull.util.logging.SkrullLogger;
 
@@ -32,6 +38,12 @@ public class RockPaperScissorsPanel extends UserPanel {
 	JButton rockButton;
 	JButton paperButton;
 	JButton scissorButton;
+	JButton selected;
+	int indexOfButton;
+	private boolean eventFired = false;
+	String activePlayer;
+	
+
 	
 	public RockPaperScissorsPanel(ClientInputHandler cih, IPlayer player){
 		super(player);
@@ -81,9 +93,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 		rockButton.setBorder(null);
 		paperButton.setBorder(null);
 		scissorButton.setBorder(null);
-		rockButton.setForeground(getBackground());
-		paperButton.setForeground(getBackground());
-		scissorButton.setForeground(getBackground());
+		//rockButton.setForeground(getBackground());
+		//paperButton.setForeground(getBackground());
+		//scissorButton.setForeground(getBackground());
 
 		rockButton.addActionListener(rpsHandler);
 		paperButton.addActionListener(rpsHandler);
@@ -107,11 +119,10 @@ public class RockPaperScissorsPanel extends UserPanel {
 		
 		@Override
 		public void actionPerformed(ActionEvent buttonEvent) {
-
-
-			JButton buttonPressed = (JButton)buttonEvent.getSource();
 			
-			buttonPressed.setEnabled(false);
+			eventFired = true;
+			JButton buttonSelected = (JButton)buttonEvent.getSource();
+			setSelectedButton(buttonSelected.getText());
 			cih.handleInput(buttonEvent);
 		}
 	
@@ -127,16 +138,47 @@ public class RockPaperScissorsPanel extends UserPanel {
 	@Override
 	public void modelChanged(IGameModel model) {
 		
+		if(eventFired == true){
+			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
+			Move move = (Move)ca.getMove();
+			
+			activePlayer = "Active Player:"+model.getActivePlayer();
+			this.setMessage(activePlayer);
+			
+			//index of the button that changed
+			//int idx = move.getMoveIndex();
+			int idx = move.getMoveIndex()-1;
+			this.getComponent(idx);
+			selected = (JButton)this.getComponent(idx);
+			selected.setEnabled(false);
+			
+			
+			String mySelection =  model.getActivePlayer().getPlayerToken();
+			String charToString = String.valueOf(mySelection);
+			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
+			selected.setText(charToString );
+		
 
-		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	rockButton.revalidate(); // triggers a repaint
-		    	paperButton.revalidate(); 
-		    	scissorButton.revalidate(); 
+		  this.repaint();
+		  eventFired = false;
+		}
+	
+	}
+	public void setMessage(String s){
+		activePlayer = s;
+		
+	}
+	public String getMessage(){
+		return activePlayer;
+	}
+	public void setSelectedButton(String s){
+		indexOfButton = Integer.parseInt(s);
+		System.out.println("setSelectedButton "+indexOfButton);
+	}
 
-		    }
-		  });
-
-		this.repaint();
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return indexOfButton;
 	}
 }

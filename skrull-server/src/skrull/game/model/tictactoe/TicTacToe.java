@@ -31,7 +31,7 @@ public class TicTacToe extends AbstractGameModel{
 		setMoveCount(0);
 
 		setActiveplayer(startingPlayer);
-		startingPlayer.setPlayerToken('X');
+		startingPlayer.setPlayerToken("X");
 		
 		super.updateListener();
 
@@ -47,7 +47,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 
 		super.addPlayer(action.getPlayer());
 		setActiveplayer(action.getPlayer());
-		action.getPlayer().setPlayerToken('O');
+		action.getPlayer().setPlayerToken("O");
 		gameStop = false;	// Allow starting player to start game
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
 

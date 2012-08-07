@@ -90,15 +90,10 @@ public class ClientInputHandler {
 					
 					viewMove.setMoveIndex(buttonIndex);
 					viewMove.setPlayer(player);
-					
-			
-					/*System.out.println("TOKEN "+token);
-					System.out.println(player.getPlayerToken());*/
-					
-					//find out who is active player and make their buttons uneditable
-					// NOTE - we don't set anything until we get a message back from the model
 
-					
+					//	buttonPressed.setText( token );
+				//	}
+
 					/*System.out.println("BUTTON INDEX/MOVE INDEX "+viewMove.getMoveIndex());
 					System.out.println("PLAYER "+viewMove.getPlayer());
 					System.out.println(gameId);

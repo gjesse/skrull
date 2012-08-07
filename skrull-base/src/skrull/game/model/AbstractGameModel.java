@@ -249,7 +249,6 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.players.add(player);
 	}
 
-	@Override
 	public IBoard getBoard() {
 		return board;
 	}
@@ -265,7 +264,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.activeplayer = activeplayer;
 	}
 
-	protected IClientAction getLastAction() {
+	public IClientAction getLastAction() {
 		return lastAction;
 	}
 

@@ -19,8 +19,10 @@ import skrull.game.model.IPlayer;
 public class WinnerPanel extends UserPanel {
 
 	ClientInputHandler cih;
+
 	public WinnerPanel(ClientInputHandler cih, IPlayer player){
 		super(player);
+
 		this.cih = cih;
 		winnerPanel();
 	}
@@ -60,6 +62,18 @@ public class WinnerPanel extends UserPanel {
 	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getMessage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -281,4 +281,10 @@ public class DefaultPanel extends UserPanel {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public String getMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

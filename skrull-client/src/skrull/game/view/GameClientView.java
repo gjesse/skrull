@@ -124,8 +124,9 @@ public class GameClientView extends JFrame implements IGameClientView{
 			buildClientMainView(userPanel);
 		}
 		else if( model.isGameOver() ){
-			//if there is a winner then
+			//if there is a winner then display the winner panel
 			whoWon = model.getWinner();
+			
 			userPanel = new WinnerPanel(cih);
 			mainFrame.removeAll();
 			mainFrame.setVisible(false);
@@ -152,9 +153,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 			System.out.println("nothing");
 		}
 		else
+			if(gameType == GameType.ROCK_PAPER_SCISSORS)
+				userPanel.getMessage();
 			chatPanel.addMessage(broadcastMessage);
 	}
-
+	public String getMessage(){
+		return userPanel.getMessage();
+	}
 	public IPlayer getWinner(){
 		return whoWon;
 	}

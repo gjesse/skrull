@@ -23,6 +23,7 @@ import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IMove;
 import skrull.game.model.Move;
 import skrull.game.view.GameClientView.Handler;
 
@@ -107,6 +108,18 @@ public class TicTacToePanel extends UserPanel {
 		//button uneditable
 		
 		if( eventFired == true ){
+			
+/*		 	 
+		 	    for(IMove move : model.getBoard().getBoard()){
+		 	 	 	
+		 	      if (move != null){
+		 	 	 	
+		 	        ticTacToeButtons[move.getMoveIndex()].setText(String.valueOf(move.getPlayer().getPlayerToken()));
+		 	 		
+		 	       ticTacToeButtons[move.getMoveIndex()].setEnabled(false);*/
+			
+
+			
 			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
 			Move move = (Move)ca.getMove();
 			
@@ -121,16 +134,11 @@ public class TicTacToePanel extends UserPanel {
 			//setting up the player tokens to display on the button after it
 			//has been pushed
 			char mySelection =  model.getActivePlayer().getPlayerToken();
+			
 			String charToString = String.valueOf(mySelection);
 			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
 			selected.setText(charToString );
 			
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-			    	selected.revalidate(); // triggers a repaint of all the items in the JList.
-				    	//activeGameScroller.repaint(); // Not sure if this one is needed
-			    }
-			});
 			eventFired = false;
 		}
 		this.repaint();
@@ -146,5 +154,10 @@ public class TicTacToePanel extends UserPanel {
 	public int getSelectedButton() {
 		// TODO Auto-generated method stub
 		return indexOfButton;
+	}
+	@Override
+	public String getMessage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

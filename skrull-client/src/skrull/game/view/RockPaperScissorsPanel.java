@@ -37,6 +37,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 	JButton selected;
 	int indexOfButton;
 	private boolean eventFired = false;
+	String activePlayer;
 	public RockPaperScissorsPanel(ClientInputHandler cih){
 		
 		this.cih = cih;
@@ -134,27 +135,34 @@ public class RockPaperScissorsPanel extends UserPanel {
 			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
 			Move move = (Move)ca.getMove();
 			
+			activePlayer = "Active Player:"+model.getActivePlayer();
+			this.setMessage(activePlayer);
+			
 			//index of the button that changed
+			//int idx = move.getMoveIndex();
 			int idx = move.getMoveIndex()-1;
-			//disable and repaint the button here not handler
 			this.getComponent(idx);
 			selected = (JButton)this.getComponent(idx);
 			selected.setEnabled(false);
+			
+			
 			char mySelection =  model.getActivePlayer().getPlayerToken();
 			String charToString = String.valueOf(mySelection);
 			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
 			selected.setText(charToString );
 		
-		  SwingUtilities.invokeLater(new Runnable() {
-			    public void run() {
-			    	selected.revalidate(); // triggers a repaint of all the items in the JList.
-			    	//activeGameScroller.repaint(); // Not sure if this one is needed
-			    }
-			  });
+
 		  this.repaint();
 		  eventFired = false;
 		}
 	
+	}
+	public void setMessage(String s){
+		activePlayer = s;
+		
+	}
+	public String getMessage(){
+		return activePlayer;
 	}
 	public void setSelectedButton(String s){
 		indexOfButton = Integer.parseInt(s);

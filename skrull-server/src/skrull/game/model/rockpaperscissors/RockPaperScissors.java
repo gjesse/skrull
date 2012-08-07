@@ -111,4 +111,9 @@ public class RockPaperScissors extends AbstractGameModel{
 			return true;
 	}
 
+	public int getSelectedButton() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

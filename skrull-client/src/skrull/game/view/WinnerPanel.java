@@ -70,4 +70,10 @@ public class WinnerPanel extends UserPanel {
 		return 0;
 	}
 
+	@Override
+	public String getMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

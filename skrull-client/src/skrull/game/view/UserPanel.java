@@ -62,6 +62,7 @@ public abstract class UserPanel extends JPanel {
 		return 0;
 	}
 	public abstract int getSelectedButton();
+	public abstract String getMessage();
 	
 	
 }

@@ -19,8 +19,6 @@ public class Player implements IPlayer {
 		return playerId;
 	}
 	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

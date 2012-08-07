@@ -248,7 +248,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.players.add(player);
 	}
 
-	protected IBoard getBoard() {
+	public IBoard getBoard() {
 		return board;
 	}
 

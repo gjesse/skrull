@@ -263,7 +263,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.activeplayer = activeplayer;
 	}
 
-	protected IClientAction getLastAction() {
+	public IClientAction getLastAction() {
 		return lastAction;
 	}
 

@@ -50,7 +50,6 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 		action.getPlayer().setPlayerToken("O");
 		gameStop = false;	// Allow starting player to start game
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
-
 		super.updateListener();
 		
 	}

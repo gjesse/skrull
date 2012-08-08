@@ -44,12 +44,12 @@ public class DefaultPanel extends UserPanel {
 	JButton joinButton;
 	JList newGameList;
 	JList activeGamesToJoin;
-	ClientInputHandler cih;
+	ActionListener cih;
 	String createGame = IClientAction.ActionType.CREATE_GAME.toString();
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
 	private JScrollPane activeGameScroller;
 	
-	public DefaultPanel(ClientInputHandler cih, IPlayer player){
+	public DefaultPanel(ActionListener cih, IPlayer player){
 		super(player);
 		this.cih = cih;
 		buildUserPanel();
@@ -57,20 +57,17 @@ public class DefaultPanel extends UserPanel {
 
 	private void buildUserPanel(){
 	
-		//handler needed for the buttons
-		Handler handler = new Handler();
-
 
 		this.setSize(new Dimension(600,0));
 		this.setLayout(new GridLayout(0,2));
 		
 		startButton = new JButton(createGame);
 		startButton.setActionCommand(createGame);
-		startButton.addActionListener(handler);
+		startButton.addActionListener(cih);
 		
 		joinButton = new JButton(joinGame);
 		joinButton.setActionCommand(joinGame);
-		joinButton.addActionListener(handler);
+		joinButton.addActionListener(cih);
 	
 		this.add( buildLeftPanel() );
 		this.add( buildMiddlePanel() );
@@ -155,7 +152,7 @@ public class DefaultPanel extends UserPanel {
 			        super.paintComponent(g);
 			        return;
 			    }
-			 
+	
 			    int w = getWidth( );
 			    int h = getHeight( );
 			    Color color1 = getBackground( );
@@ -206,7 +203,7 @@ public class DefaultPanel extends UserPanel {
 	
 	@Override
 	public GameType getGameType() {
-		//TODO get user selection of game type from the Jlist
+		gameType = (GameType)newGameList.getSelectedValue();
 		if(gameType == null){
 			gameType = GameType.DEFAULT;
 		}
@@ -217,29 +214,12 @@ public class DefaultPanel extends UserPanel {
 	public String getJoinGameString() {
 		return (String)activeGamesToJoin.getSelectedValue();
 	};
-	public class Handler implements ActionListener {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			
-			   String command = e.getActionCommand();
-			   
-			   GameType gameSelection = (GameType)newGameList.getSelectedValue();
-			   
-			   // save the game type for the handler
-			   gameType = gameSelection;
-			   
-			   cih.handleInput(e);
-		}
-
-	}
+	
 
 
 	
 	@Override
 	public void modelChanged(IGameModel model) {
-		// TODO Auto-generated method stub
 
 		Collection<IGameModel> games = model.getActiveGames();
 		//Collection<String> activeGames = new ArrayList<String>();
@@ -280,13 +260,11 @@ public class DefaultPanel extends UserPanel {
 
 	@Override
 	public int getSelectedButton() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String getMessage() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

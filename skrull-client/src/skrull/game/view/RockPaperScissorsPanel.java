@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,10 +12,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory.GameType;
@@ -27,14 +22,15 @@ import skrull.game.model.IPlayer;
 
 import skrull.game.model.Move;
 
-import skrull.game.view.IClientAction.ActionType;
 import skrull.util.logging.SkrullLogger;
 
 public class RockPaperScissorsPanel extends UserPanel {
 	
+
+	private static final long serialVersionUID = 7079367552263468840L;
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	private static final String IMAGE_DIR = System.getProperty("image.dir");
-	ClientInputHandler cih;
+	ActionListener cih;
 	JButton rockButton;
 	JButton paperButton;
 	JButton scissorButton;
@@ -45,7 +41,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 	
 
 	
-	public RockPaperScissorsPanel(ClientInputHandler cih, IPlayer player){
+	public RockPaperScissorsPanel(ActionListener cih, IPlayer player){
 		super(player);
 		this.cih = cih;
 		sampleRockPaperScissorBoard();
@@ -54,9 +50,10 @@ public class RockPaperScissorsPanel extends UserPanel {
 	private void sampleRockPaperScissorBoard(){
 		
 	
-		RockPaperScissorHandler rpsHandler = new RockPaperScissorHandler();
-		
 		this.setLayout(new GridBagLayout());
+		
+		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		this.add(returnToMain);
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -97,9 +94,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 		//paperButton.setForeground(getBackground());
 		//scissorButton.setForeground(getBackground());
 
-		rockButton.addActionListener(rpsHandler);
-		paperButton.addActionListener(rpsHandler);
-		scissorButton.addActionListener(rpsHandler);
+		rockButton.addActionListener(cih);
+		paperButton.addActionListener(cih);
+		scissorButton.addActionListener(cih);
 		
 		
 		this.setBackground(Color.white);
@@ -115,29 +112,16 @@ public class RockPaperScissorsPanel extends UserPanel {
 		this.add(scissorButton,c);
 	}
 
-	class RockPaperScissorHandler implements ActionListener{
-		
-		@Override
-		public void actionPerformed(ActionEvent buttonEvent) {
-			
-			eventFired = true;
-			JButton buttonSelected = (JButton)buttonEvent.getSource();
-			setSelectedButton(buttonSelected.getText());
-			cih.handleInput(buttonEvent);
-		}
-	
-	}
 
 	@Override
 	public GameType getGameType() {
-		// TODO Auto-generated method stub
-		//return GameType.ROCK_PAPER_SCISSORS;
+
 		return gameType = GameType.ROCK_PAPER_SCISSORS;
 	}
 	
 	@Override
 	public void modelChanged(IGameModel model) {
-		
+		//TODO: this needs work
 		if(eventFired == true){
 			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
 			Move move = (Move)ca.getMove();
@@ -178,7 +162,6 @@ public class RockPaperScissorsPanel extends UserPanel {
 
 	@Override
 	public int getSelectedButton() {
-		// TODO Auto-generated method stub
 		return indexOfButton;
 	}
 }

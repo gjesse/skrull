@@ -2,28 +2,26 @@ package skrull.game.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 
 public class WinnerPanel extends UserPanel {
 
-	ClientInputHandler cih;
 
-	public WinnerPanel(ClientInputHandler cih, IPlayer player){
+	private static final long serialVersionUID = 6676770154441309212L;
+	ActionListener cih;
+
+	public WinnerPanel(ActionListener cih2, IPlayer player){
 		super(player);
 
-		this.cih = cih;
+		this.cih = cih2;
 		winnerPanel();
 	}
 	

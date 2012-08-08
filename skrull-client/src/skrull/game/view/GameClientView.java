@@ -25,7 +25,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	private static final long serialVersionUID = 733356106858477245L;
 	 private static final String IMAGE_DIR = System.getProperty("image.dir");
-	private ClientInputHandler cih;
+	private ActionListener cih;
 
 	private int gameId = IGameFactory.DEFAULT_GAME_ID;
 
@@ -53,7 +53,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private IPlayer player;
 	
 
-	public GameClientView(ClientInputHandler cih, IPlayer player) {
+	public GameClientView(ActionListener cih, IPlayer player) {
 		this.cih = cih;
 		this.player = player;
 		this.gameType = GameType.DEFAULT; // start in default game
@@ -85,12 +85,17 @@ public class GameClientView extends JFrame implements IGameClientView{
 	}
 	private void updateView(IGameModel model){
 		
-		//if we are still on the main screen with the default panel
-/*		if( model.getGameType() == GameType.DEFAULT ){
+		//if we are still on the main screen with the default panel (or have switched bac)
+		if( model.getGameType() == GameType.DEFAULT ){
 			
-
+			mainFrame.removeAll();
+			mainFrame.setVisible(false);
+			userPanel = new DefaultPanel(cih, player);
+			userPanel.repaint();
+			mainFrame.repaint();
+			buildClientMainView(userPanel);
 		}
-		else */
+		else
 		if(model.getGameType() == GameType.TIC_TAC_TOE){
 			System.out.println("INSIDE THE TTT PART OF UPDATE BOARD");
 			System.out.println("game Type  ="+ gameType + " model.getGameType = "+model.getGameType() );
@@ -175,52 +180,8 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player ){};
 
-		mainFrame.addWindowListener(new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				logger.debug("close event received");
-				cih.handleWindowEvent(e);
-				System.exit(0);
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		mainFrame.addWindowListener((WindowListener)cih);
+		
 		
 		
 		/*******************RIGHT PROPERTIES************************/	
@@ -243,7 +204,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		mainFrame.getContentPane().add(userPanel);		
 		mainFrame.getContentPane().add(right);
 		
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		mainFrame.setSize(800,600);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setVisible(true);

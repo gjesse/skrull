@@ -29,23 +29,21 @@ public class ChatPanel extends JPanel {
 	private JTextField chatTextInputField;
 	String sendChat = IClientAction.ActionType.CHAT.toString();
 	JTextArea chatWindow;
-	ClientInputHandler cih;
+	ActionListener cih;
 	private final static String newline = "\n";
 	JScrollPane messageScrollPane;
-	public ChatPanel(ClientInputHandler cih){	
-		this.cih = cih;
+	public ChatPanel(ActionListener cih2){	
+		this.cih = cih2;
 		buildChatClient();
 		
 	}
 	private JPanel buildChatClient(){
-
-		Handler handler = new Handler();
 		
 		//creating text field for user to enter chat text
 		chatTextInputField = new JTextField();
 		chatTextInputField.setText("Enter Message...");
 		chatTextInputField.setForeground(Color.gray);
-		chatTextInputField.addActionListener(handler);
+		chatTextInputField.addActionListener(cih);
 		
 		//creating chat window in which the users messages will be displayed
 		chatWindow = new JTextArea(5,20);
@@ -58,7 +56,7 @@ public class ChatPanel extends JPanel {
         
         // TODO REMOVE ME   String sendChat = IClientAction.ActionType.CHAT.toString();
         
-        sendButton.addActionListener(handler);
+        sendButton.addActionListener(cih);
 		
 		//changing the border of the panel
 		this.setBorder(BorderFactory.createEmptyBorder());
@@ -120,16 +118,6 @@ public class ChatPanel extends JPanel {
 		return chatTextInputField.getText();
 	}
 	
-	class Handler implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			// TODO Auto-generated method stub
-			//JOptionPane.showMessageDialog(null,"INSIDE CHATPANEL HANDLER-about to send cih to ClientInputHandler");
-			cih.handleInput(event);
-		}
-		
-	}
 
 	public void setText(String chatContents) {
 		// TODO Auto-generated method stub

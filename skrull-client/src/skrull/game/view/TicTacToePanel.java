@@ -2,50 +2,31 @@ package skrull.game.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-
-import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
-import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IMove;
 
 import skrull.game.model.IPlayer;
 
-import skrull.game.model.Move;
-
-import skrull.game.view.GameClientView.Handler;
-
 
 public class TicTacToePanel extends UserPanel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 8769270277983184938L;
-	ClientInputHandler cih;
+	ActionListener cih;
 	private JButton[] ticTacToeButtons = new JButton[9];
 	String chooseMe = "Choose Me";
 	int indexOfButton;
 	JButton selected;
 	boolean eventFired = false;
 	
-	public TicTacToePanel(ClientInputHandler cih, IPlayer player){
+	public TicTacToePanel(ActionListener cih, IPlayer player){
 		super(player);
 		this.cih = cih;
 		sampleTicTacToeBoard();
@@ -58,9 +39,10 @@ public class TicTacToePanel extends UserPanel {
 		this.setBackground(Color.WHITE);
 		
 
-		TicTacToeHandler gameHandler = new TicTacToeHandler();
-		ReturnToMainButton returnToMain = new ReturnToMainButton(gameHandler);
+		
+		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
 		this.add(returnToMain);
+//		returnToMain.s
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints constrainers = new GridBagConstraints();
 		this.setBackground(Color.WHITE);
@@ -78,7 +60,7 @@ public class TicTacToePanel extends UserPanel {
 			ticTacToeButtons[i].setSize(chooseMe.length(), chooseMe.length());
 			ticTacToeButtons[i].setActionCommand("MOVE");
 			
-			ticTacToeButtons[i].addActionListener(gameHandler);
+			ticTacToeButtons[i].addActionListener(cih);
 			if(constrainers.gridx == 3){
 				constrainers.gridx = 0;
 				constrainers.gridy++;
@@ -89,25 +71,10 @@ public class TicTacToePanel extends UserPanel {
 		
 		
 	}
-	class TicTacToeHandler implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent buttonEvent) {
-			// TODO need to determine turn and change the button text to 
-			
-
-		//	eventFired = true;
-		//	JButton buttonSelected = (JButton)buttonEvent.getSource();
-		//	setSelectedButton(buttonSelected.getText());
-			
-			cih.handleInput(buttonEvent);
-		}
-		
-	}
 	@Override
 	public GameType getGameType() {
-		// TODO Auto-generated method stub
-		//return GameType.TIC_TAC_TOE;
+
 		return gameType = GameType.TIC_TAC_TOE;
 	}
 	@Override
@@ -116,7 +83,8 @@ public class TicTacToePanel extends UserPanel {
 		System.out.println("about to check if GAME OVER!");
 		if( model.isGameOver() ){
 			System.out.println("GAME OVER!");
-			if( model.getWinner().equals(this.player) ){
+			IPlayer winner = model.getWinner();
+			if(winner != null && winner.equals(this.player) ){
 				JOptionPane.showConfirmDialog(null, "Player "+model.getWinner()+" is the winner!");
 			}
 		}
@@ -146,12 +114,10 @@ public class TicTacToePanel extends UserPanel {
 
 	@Override
 	public int getSelectedButton() {
-		// TODO Auto-generated method stub
 		return indexOfButton;
 	}
 	@Override
 	public String getMessage() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -36,12 +36,7 @@ public class TicTacToePanel extends UserPanel {
 		this.setPreferredSize(new Dimension(600,0));
 		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
 		this.setBackground(Color.WHITE);
-		
 
-		
-//		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-//		this.add(returnToMain);
-//		returnToMain.s
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints constrainers = new GridBagConstraints();
 		this.setBackground(Color.WHITE);
@@ -67,7 +62,11 @@ public class TicTacToePanel extends UserPanel {
 			this.add(ticTacToeButtons[i],constrainers);
 			constrainers.gridx++;	 
 		}
-		
+		constrainers.gridx = 0;
+		constrainers.gridy = 4;
+		constrainers.gridwidth = 3;
+		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		this.add(returnToMain,constrainers);
 		
 	}
 

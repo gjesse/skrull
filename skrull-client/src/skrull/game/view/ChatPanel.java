@@ -90,6 +90,11 @@ public class ChatPanel extends JPanel {
         constraints.ipady = 0;
         this.add(sendButton, constraints);
         
+/*		constraints.gridy = 4;
+		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		this.add(returnToMain, constraints);*/
+        
+        
 		return this;
 	}
 	public JScrollPane buildMessageCenter(){

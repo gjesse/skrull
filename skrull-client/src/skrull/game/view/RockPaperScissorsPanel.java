@@ -53,8 +53,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 	
 		this.setLayout(new GridBagLayout());
 		
-//		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-//		this.add(returnToMain);
+
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -92,6 +91,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 			this.add(rpsButtons[i],c);
 			c.gridy++;	
 		}
+		
+		//		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		//		this.add(returnToMain);
 		
 /*		paperButton = new JButton(new ImageIcon(buttonIcon));
 		rockButton = new JButton(new ImageIcon(buttonIcon2));
@@ -155,13 +157,14 @@ public class RockPaperScissorsPanel extends UserPanel {
 			System.out.println("active player is "+ model.getActivePlayer() );
 			System.out.println( "number of players "+model.getPlayers().size() );
 		}
+		
+		//at least one player has made a move
 		else
 		{
-			//at least one player has made a move
 			Move move ;
 			IPlayer iPlayer;
 			
-/*			if( model.getMoveCount() == 1){
+/*			if( model.getMoveCount() == 2){
 				//if both players have input their moves
 				//we want to update the board with their moves
 				

@@ -53,7 +53,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 		this.setLayout(new GridBagLayout());
 		
 		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-		this.add(returnToMain);
+		// this.add(returnToMain);
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -103,6 +103,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 		c.insets = new Insets(25,0,15,5);
 		c.gridx = 0;
 		c.gridy = 0;
+		
 		this.add(rockButton,c);
 		c.gridx = 0;
 		c.gridy = 1;
@@ -110,6 +111,11 @@ public class RockPaperScissorsPanel extends UserPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		this.add(scissorButton,c);
+		c.gridx = 0;
+
+		c.gridy = 3;
+		this.add(returnToMain, c);
+
 	}
 
 

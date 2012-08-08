@@ -93,10 +93,10 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 				this.setLastAction(action);
 				
 				// TODO announce what the move was.
-				System.out.println("location: ");
+				System.out.println("location on board: ");
 				System.out.println(boardLoc);
-				System.out.println(" player: ");
-				System.out.println(getCurrentPlayer());
+				System.out.println("current player: ");
+				System.out.println(getActivePlayer());
 				System.out.println("/n");
 			}
 			// Invalid move by correct player.
@@ -113,7 +113,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 	}
 		
 	private boolean haveWinner() {
-		
+		System.out.println("in the have winner function!");
 		boolean winnerDetected = false;
 		
 		// winning combinations  rows, columns, diagonals

@@ -201,19 +201,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		return chatPanel.getChatText();
 	}
 	
-    // Inner classes for Event Handling 
-   class Handler implements ActionListener {
-       // Event handling is handled locally
-	   @Override
-       public void actionPerformed(ActionEvent e) {
-		   
-
-		   JOptionPane.showMessageDialog(null,"In the handler for GameClientView");
-		   //cih.handleInput(e);
-       }
-	   
-	
-   }
 
 	@Override
 	public int getGameId() {

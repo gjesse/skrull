@@ -68,6 +68,11 @@ public class TicTacToePanel extends UserPanel {
 			constrainers.gridx++;	 
 		}
 		
+		constrainers.gridx = 0;
+		constrainers.gridy = 4;
+		constrainers.gridwidth = 3;
+		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		this.add(returnToMain,constrainers);
 		
 	}
 

@@ -51,12 +51,11 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);
 	
-	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater, int maxMoves, int playersRequired) {
+	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater, int boardSize, int maxMoves, int playersRequired) {
 		this(gameId, type, updater);
 		this.players.add(startingPlayer);
+		this.board = new Board(boardSize);
 		this.maxMoves = maxMoves;
-		// TODO: need a better way to specify board size
-		this.board = new Board(9);
 		this.playersRequired = playersRequired;
 	}
 	

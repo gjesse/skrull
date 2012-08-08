@@ -80,7 +80,7 @@ public class TicTacToeTest {
 	}
 
 	@Test
-	public void testDoProcessMoveMoveCount() {
+	public void testDoProcessMoveMoveCount() throws SkrullGameException {
 		
 		assertEquals(0,mygame.getMoveCount());
 		
@@ -124,7 +124,7 @@ public class TicTacToeTest {
 	}
 
 	@Test
-	public void testIsOccupied() {
+	public void testIsOccupied() throws SkrullGameException {
 				
 		move1.setMoveIndex(1);
 		move1.setPlayer(player1);		

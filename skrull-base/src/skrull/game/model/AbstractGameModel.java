@@ -35,7 +35,10 @@ public abstract class AbstractGameModel implements IGameModel {
 	
 	protected IBoard board;
 	protected boolean finished;
+	protected boolean draw;
 	
+
+
 	private long lastMoveTime;
 	private IClientAction lastAction;
 	
@@ -288,16 +291,6 @@ public abstract class AbstractGameModel implements IGameModel {
 	}
 
 	@Override
-	public int getCurrentPlayer() {
-		return currentPlayer;
-	}
-
-	@Override
-	public void setCurrentPlayer(int currentPlayer) {
-		this.currentPlayer = currentPlayer;
-	}
-
-	@Override
 	public int getMoveCount() {
 		return moveCount;
 	}
@@ -323,5 +316,13 @@ public abstract class AbstractGameModel implements IGameModel {
 
 	protected void setBroadcastMessage(String msg){
 		this.broadcastMsg = msg;
+	}
+	
+	public boolean isDraw() {
+		return draw;
+	}
+
+	public void setDraw(boolean draw) {
+		this.draw = draw;
 	}
 }

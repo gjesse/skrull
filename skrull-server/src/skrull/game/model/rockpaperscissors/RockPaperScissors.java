@@ -57,7 +57,7 @@ public class RockPaperScissors extends AbstractGameModel{
 	public void doProcessMove(IClientAction action) {
 	
 		// TODO Auto-generated method stub
-		if (myPlayers[getCurrentPlayer()].equals(action.getPlayer()) && !gameStop){
+		if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
 			
 			myRPSmove[0] = action.getMove().getMoveIndex();
 			
@@ -79,9 +79,8 @@ public class RockPaperScissors extends AbstractGameModel{
 				System.out.println("RPS Game is over.  Its a draw.");
 			}
 							
-			// TODO change activePlayer
-			setCurrentPlayer((getCurrentPlayer() + 1) % 2);
-			setActiveplayer(myPlayers[getCurrentPlayer()]);
+			setActiveplayer(getLastAction().getPlayer());
+			this.setLastAction(action);
 			
 			// TODO announce what the move was.
 			

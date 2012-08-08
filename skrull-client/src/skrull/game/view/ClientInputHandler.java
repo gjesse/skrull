@@ -109,6 +109,7 @@ public class ClientInputHandler {
 				break;
 			
 			case QUIT:
+				
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), null));			
 				break;

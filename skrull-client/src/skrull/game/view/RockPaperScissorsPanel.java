@@ -15,9 +15,7 @@ import javax.swing.JButton;
 import org.apache.log4j.Logger;
 
 import skrull.game.factory.IGameFactory.GameType;
-import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
-import skrull.game.model.IMove;
 
 import skrull.game.model.IPlayer;
 

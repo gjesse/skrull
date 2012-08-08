@@ -86,7 +86,7 @@ public class RockPaperScissorsTest {
 	}
 	
 	@Test
-	public void testDoProcessMoveWinner() {
+	public void testDoProcessMoveWinner() throws SkrullGameException {
 		move1.setMoveIndex(0);
 		move1.setPlayer(player1);		
 		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move1);
@@ -101,7 +101,7 @@ public class RockPaperScissorsTest {
 	}
 
 	@Test
-	public void testDoProcessMoveDraw() {
+	public void testDoProcessMoveDraw() throws SkrullGameException {
 		move1.setMoveIndex(0);
 		move1.setPlayer(player1);		
 		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move1);

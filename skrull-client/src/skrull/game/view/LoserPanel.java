@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,7 +18,7 @@ public class LoserPanel extends UserPanel {
 
 	private static final long serialVersionUID = -6731913040598693722L;
 
-	public LoserPanel(ClientInputHandler cih, IPlayer player){
+	public LoserPanel(ActionListener cih2, IPlayer player){
 		super(player);
 		buildLoserPanel();
 	}

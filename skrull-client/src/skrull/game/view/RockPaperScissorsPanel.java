@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.AbstractGameModel;
 import skrull.game.model.IGameModel;
+import skrull.game.model.IMove;
 
 import skrull.game.model.IPlayer;
 
@@ -38,8 +39,8 @@ public class RockPaperScissorsPanel extends UserPanel {
 	int indexOfButton;
 	private boolean eventFired = false;
 	String activePlayer;
-	
-
+	private JButton[] rpsButtons = new JButton[3];
+	private BufferedImage[] buttonIcons = new BufferedImage[3];
 	
 	public RockPaperScissorsPanel(ActionListener cih, IPlayer player){
 		super(player);
@@ -52,26 +53,47 @@ public class RockPaperScissorsPanel extends UserPanel {
 	
 		this.setLayout(new GridBagLayout());
 		
+
 		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-		// this.add(returnToMain);
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
 		
-		BufferedImage buttonIcon = null;
+/*		BufferedImage buttonIcon = null;
 		BufferedImage buttonIcon2 = null;
-		BufferedImage buttonIcon3 = null;
+		BufferedImage buttonIcon3 = null;*/
+
 		
 		try {
-			buttonIcon = ImageIO.read(new File(IMAGE_DIR + "Paperscaled.jpg"));
+			buttonIcons[0] = ImageIO.read(new File(IMAGE_DIR + "Rockscaled2.jpg"));
+			buttonIcons[1] = ImageIO.read(new File(IMAGE_DIR + "Paperscaled.jpg"));
+			buttonIcons[2] = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));
+			
+/*			buttonIcon = ImageIO.read(new File(IMAGE_DIR + "Paperscaled.jpg"));
 			buttonIcon2 = ImageIO.read(new File(IMAGE_DIR + "Rockscaled2.jpg"));
-			buttonIcon3 = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));
+			buttonIcon3 = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));*/
 			
 		} catch (IOException e) {
 			logger.error("error reading from " + IMAGE_DIR, e);
 		}
 		
-		paperButton = new JButton(new ImageIcon(buttonIcon));
+		this.setBackground(Color.white);
+		c.insets = new Insets(25,0,15,5);
+		c.gridx = 0;
+		c.gridy =0;
+		for(int i = 0; i < 3; i++){
+			//should assign into button 1 icon of rock,
+			//button 2 with icon of paper, and button 3
+			//with icon of scissors
+			rpsButtons[i]= new JButton(new ImageIcon(buttonIcons[i]));
+			rpsButtons[i].setActionCommand("MOVE");
+			rpsButtons[i].addActionListener(cih);
+			rpsButtons[i].setText(i+"");
+			this.add(rpsButtons[i],c);
+			c.gridy++;	
+		}
+		
+/*		paperButton = new JButton(new ImageIcon(buttonIcon));
 		rockButton = new JButton(new ImageIcon(buttonIcon2));
 		scissorButton = new JButton(new ImageIcon(buttonIcon3));
 
@@ -97,11 +119,10 @@ public class RockPaperScissorsPanel extends UserPanel {
 		rockButton.addActionListener(cih);
 		paperButton.addActionListener(cih);
 		scissorButton.addActionListener(cih);
+		*/
 		
-		
-		this.setBackground(Color.white);
-		c.insets = new Insets(25,0,15,5);
-		c.gridx = 0;
+
+	/*	c.gridx = 0;
 		c.gridy = 0;
 		
 		this.add(rockButton,c);
@@ -110,7 +131,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 		this.add(paperButton,c);
 		c.gridx = 0;
 		c.gridy = 2;
+
 		this.add(scissorButton,c);
+*/
 		c.gridx = 0;
 
 		c.gridy = 3;
@@ -128,30 +151,78 @@ public class RockPaperScissorsPanel extends UserPanel {
 	@Override
 	public void modelChanged(IGameModel model) {
 		//TODO: this needs work
-		if(eventFired == true){
-			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
-			Move move = (Move)ca.getMove();
-			
-			activePlayer = "Active Player:"+model.getActivePlayer();
-			this.setMessage(activePlayer);
-			
-			//index of the button that changed
-			//int idx = move.getMoveIndex();
-			int idx = move.getMoveIndex()-1;
-			this.getComponent(idx);
-			selected = (JButton)this.getComponent(idx);
-			selected.setEnabled(false);
-			
-			
-			String mySelection =  model.getActivePlayer().getPlayerToken();
-			String charToString = String.valueOf(mySelection);
-			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
-			selected.setText(charToString );
+		System.out.println("INSIDE THE modelChanged OF ROCK PAPER SCISSORS!");
+		System.out.println("move count "+model.getMoveCount());
+		System.out.println( "number of players "+model.getPlayers().size() );
 		
-
-		  this.repaint();
-		  eventFired = false;
+		/*ACTIVE PLAYER IS BEING SET AS NULL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+		System.out.println("active player is "+ model.getActivePlayer() );
+		
+		if(model.getMoveCount() == 0){
+			//we are in a new game where nobody has clicked
+			System.out.println("active player is "+ model.getActivePlayer() );
+			System.out.println( "number of players "+model.getPlayers().size() );
 		}
+		else
+		{
+			//at least one player has made a move
+			Move move ;
+			IPlayer iPlayer;
+			
+/*			if( model.getMoveCount() == 1){
+				//if both players have input their moves
+				//we want to update the board with their moves
+				
+				for( IPlayer player: model.getPlayers() ){
+					if(player.equals(this.player)){
+						this.player.setPlayerToken(player.getPlayerToken() );
+					}
+					System.out.println("token!!! "+player.getPlayerToken()+" for player:"+player);
+					System.out.println("our player"+this.player.getPlayerToken()+" for player:"+player);
+				}
+				
+				for( IMove buttonMove : model.getBoard().getBoard() ){
+					if (buttonMove != null){
+						//ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );
+						//ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);
+						
+					}
+
+						
+				}
+				
+			}*/
+		}
+		
+		
+/*		if( !model.isGameOver() ){
+			System.out.println("game isnt over so..");
+			if(model.getMoveCount() != 0){
+				System.out.println("game has more than 0 moves "+ model.getMoveCount() );
+				
+				ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
+				Move move = (Move)ca.getMove();
+				
+				activePlayer = "Active Player:"+model.getActivePlayer();
+				this.setMessage(activePlayer);
+				
+				//index of the button that changed
+				int idx = move.getMoveIndex();
+				this.getComponent(idx);
+				selected = (JButton)this.getComponent(idx);
+				selected.setEnabled(false);
+				
+				
+				String mySelection =  model.getActivePlayer().getPlayerToken();
+				
+				System.out.println("Player Token: "+mySelection);
+				selected.setText(mySelection );
+			
+	
+				this.repaint();
+			}
+
+		}*/
 	
 	}
 	public void setMessage(String s){

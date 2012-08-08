@@ -24,7 +24,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 
 	JButton startButton;
 	JButton joinButton;
-	JPanel cards;
 	JPanel right;
 	JList newGameList;
 	JList activeGamesToJoin;
@@ -76,6 +75,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	}
 	private void updateView(IGameModel model){
 		
+
 		//if we are still on the main screen with the default panel (or have switched bac)
 		if( model.getGameType() == GameType.DEFAULT ){
 			
@@ -111,22 +111,24 @@ public class GameClientView extends JFrame implements IGameClientView{
 			mainFrame.repaint();
 			buildClientMainView(userPanel);
 		}
-		else if( model.isGameOver() ){
-			//if there is a winner then display the winner panel
-			whoWon = model.getWinner();
-			
-			userPanel = new WinnerPanel(cih, player);
-			mainFrame.removeAll();
-			mainFrame.setVisible(false);
-			userPanel.repaint();
-			mainFrame.repaint();
-			buildClientMainView(userPanel);
-		}
+
 	}
 	private void updateBoard(IGameModel model) {
 			
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
-		
+		if( model.isGameOver() ){
+			//if there is a winner then display the winner panel
+			whoWon = model.getWinner();
+			
+				
+				userPanel = new WinnerPanel(cih, whoWon);
+				mainFrame.removeAll();
+				mainFrame.setVisible(false);
+				userPanel.repaint();
+				mainFrame.repaint();
+				buildClientMainView(userPanel);
+
+		}
 		userPanel.modelChanged(model);
 		chatPanel.setText(model.getChatContents());
 		setBroadcastMessage( model.getBroadcastMessage() );
@@ -157,15 +159,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 		//USER PANEL WILL EITHER BE THE DEFAULT PANEL, 
 		//TIC TAC TOE PANEL, ROCK PAPER SCISSORS PANEL,
 		//THE WINNER PANEL, OR THE LOSER PANEL
-		
-		
-		/*
-		 * TODO
-		 * NEED TO CHECK IF THE gameId EXISTS; IF IT DOESNT THEN WE 
-		 * CREATE A NEW_GAME PANEL
-		 * 
-		 * OTHERWISE NEED TO GET THE EXISTING PANEL?
-		 * */
 		
 		userPanel = myPanel;
 		

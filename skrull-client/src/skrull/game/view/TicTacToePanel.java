@@ -33,15 +33,14 @@ public class TicTacToePanel extends UserPanel {
 	}
 	private void sampleTicTacToeBoard(){
 
-//TODO HARD CODE THE SIZE OF THE BUTTONS
 		this.setPreferredSize(new Dimension(600,0));
 		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
 		this.setBackground(Color.WHITE);
 		
 
 		
-		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-		this.add(returnToMain);
+//		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+//		this.add(returnToMain);
 //		returnToMain.s
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints constrainers = new GridBagConstraints();
@@ -85,10 +84,11 @@ public class TicTacToePanel extends UserPanel {
 			System.out.println("GAME OVER!");
 			IPlayer winner = model.getWinner();
 			if(winner != null && winner.equals(this.player) ){
-				JOptionPane.showConfirmDialog(null, "Player "+model.getWinner()+" is the winner!");
+				System.out.println("Player "+" is the winner!");
 			}
 		}
-		System.out.println("the GAME WASNT OVER!");
+		else 
+			System.out.println("the GAME WASNT OVER!");
 		
 		for( IPlayer player: model.getPlayers() ){
 			if(player.equals(this.player)){

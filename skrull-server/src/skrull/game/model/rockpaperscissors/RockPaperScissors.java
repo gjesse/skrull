@@ -17,19 +17,14 @@ import skrull.rmi.server.IClientUpdater;
 public class RockPaperScissors extends AbstractGameModel{
 
 	private static final long serialVersionUID = 1870980829045671398L;
-	private IPlayer myPlayers[];
-	private int myRPSmove[];
 	private boolean gameStop;
 	
-	
 	public RockPaperScissors(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
-		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater, 3, 2);
+		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater, 3, 2, 2);
 		gameStop = true;   // block moves until second player joins.
 		setMoveCount(0);
-		// TODO: handle this in the abstract superclass
-		myPlayers = new IPlayer[2];
-		myRPSmove = new int[2];
-		myPlayers[0] = startingPlayer;
+		setDraw(false);
+		setActiveplayer(startingPlayer);
 		startingPlayer.setPlayerToken("1");
 		
 	}
@@ -37,65 +32,78 @@ public class RockPaperScissors extends AbstractGameModel{
 	@Override
 	public void joinGame(IClientAction action) throws SkrullGameException {
 		if (!needsPlayers()){
-			throw new SkrullGameException("game full");
+			throw new SkrullGameException("Game Full");
 		}
 		super.addPlayer(action.getPlayer());
-		
-		myPlayers[1] = action.getPlayer();
+
 		action.getPlayer().setPlayerToken("2");
+		this.setLastAction(action);
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
 
 		gameStop = false;
-		
 		super.updateListener();
-
 		
 	}
 
 	@Override
-	public void doProcessMove(IClientAction action) {
-	
-		// TODO Auto-generated method stub
-		if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
+	public void doProcessMove(IClientAction action) throws SkrullGameException {
+		
+		if (!finished){
 			
-			myRPSmove[0] = action.getMove().getMoveIndex();
-			
-			setMoveCount(getMoveCount() + 1);
-			if (getMoveCount() == getMaxMoves())
-				finished = true;
-			
-			// WINNER Check
-			if(haveWinner()){
-				if((myRPSmove[0] == 0 && myRPSmove[1] == 2) || (myRPSmove[0] == 1 && myRPSmove[1] == 0) || (myRPSmove[0] == 2 && myRPSmove[1] == 1))
-					winner = myPlayers[0];
-				else 
-					winner = myPlayers[1];
+			if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
+		
+				// Store the moves.  Player1 in board[1], PLayer2 in board[2].  The moves contain the index of the choice.
+				board.setBoard(action.getMove(), getMoveCount());  
+				
+				setMoveCount(getMoveCount() + 1);
+				if (getMoveCount() == getMaxMoves())
+					finished = true;
+				
+				// WINNER Check
+				if(haveWinner()){
+					
+					finished = true;  // redundant - but why not.
+					setBroadcastMessage("We have a winner:  " + winner);
+					int p1Choice = board.getBoardLoc(1).getMoveIndex();
+					int p2Choice = board.getBoardLoc(1).getMoveIndex();
+					
+					if((p1Choice == 0 && p2Choice == 2) || (p1Choice == 1 && p2Choice == 0) || (p1Choice == 2 && p2Choice == 1))
+						winner = board.getBoardLoc(1).getPlayer();
+					else 
+						winner = board.getBoardLoc(2).getPlayer();
+				
+				}
+				
+				// Announce that a move was made.
+				setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " has chosen. ");
+				
+				// DRAW Check
+				if(!haveWinner() && isGameOver()){
+					setDraw(true);
+				}
+					
+				// Switch Active player to allow them to move.
+				setActiveplayer(getLastAction().getPlayer());
+				this.setLastAction(action);
+				
 			}
-			
-			// DRAW Check
-			if(!haveWinner() && isGameOver()){
-				// TODO make active player impossible.
-				System.out.println("RPS Game is over.  Its a draw.");
-			}
-							
-			setActiveplayer(getLastAction().getPlayer());
-			this.setLastAction(action);
-			
-			// TODO announce what the move was.
-			
+			// Not valid player
+			else throw new SkrullGameException("Please wait your turn."); 
+		// Game Over
 		}
-		// Not valid player
-		// TODO send to chat window instead
-		else System.out.println("Please wait your turn"); 
+		else throw new SkrullGameException("Game is Over, please return to main menu.");
 	
-	// TODO notify other player of move
 	updateListener();
+	
 	}
 	
 	private boolean haveWinner() {
 		
+		int p1Choice = board.getBoardLoc(1).getMoveIndex();
+		int p2Choice = board.getBoardLoc(1).getMoveIndex();
+		
 		boolean winnerDetected = false;
-		if (myRPSmove[0] != myRPSmove[1] && getMoveCount()==getMaxMoves())
+		if (p1Choice != p2Choice && getMoveCount()==getMaxMoves())
 			winnerDetected =true;
 		return winnerDetected;
 	}
@@ -108,10 +116,4 @@ public class RockPaperScissors extends AbstractGameModel{
 		else
 			return true;
 	}
-
-	public int getSelectedButton() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

@@ -24,13 +24,12 @@ public class TicTacToe extends AbstractGameModel{
 	
 	public TicTacToe(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
 		// Instantiate Game
-		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater, 9, 2);
+		super(startingPlayer, gameId, GameType.TIC_TAC_TOE, updater, 9, 9, 2);
 		
 		// Initialize Model Specific Parameters
 		gameStop = true;   // block moves until second player joins.
 		setDraw(false);
 		setMoveCount(0);
-
 		setActiveplayer(startingPlayer);
 		startingPlayer.setPlayerToken("X");
 		
@@ -45,13 +44,12 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 			throw new SkrullGameException("Game full");
 		}
 		
-
 		super.addPlayer(action.getPlayer());
-		// setActiveplayer(action.getPlayer());
 		action.getPlayer().setPlayerToken("O");
-		gameStop = false;	// Allow starting player to start game
 		this.setLastAction(action);
 		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
+
+		gameStop = false;	// Allow starting player to start game
 		super.updateListener();
 		
 	}
@@ -80,8 +78,6 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 						finished = true;
 						winner = getActiveplayer();
 						setBroadcastMessage("We have a winner:  " + winner);
-						
-						// TODO set isFinished flag
 					}
 					
 					// DRAW Check
@@ -92,18 +88,9 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 					// Announce Move
 					setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " played on location " + boardLoc);
 					
-					// TODO change activePlayer
+					// Change activePlayer
 					setActiveplayer(getLastAction().getPlayer());
 					this.setLastAction(action);
-
-
-				
-				// TODO announce what the move was.
-				System.out.println("location on board: ");
-				System.out.println(boardLoc);
-				System.out.println("current player: ");
-				System.out.println(getActivePlayer());
-				System.out.println("/n");
 
 				}
 				// Invalid move by correct player.

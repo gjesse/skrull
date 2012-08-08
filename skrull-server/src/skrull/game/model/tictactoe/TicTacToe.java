@@ -134,8 +134,13 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 			if (board.getBoardLoc(w[0]) == null || board.getBoardLoc(w[1]) == null || board.getBoardLoc(w[2]) == null)
 				continue;
 			
+			IPlayer p1 = board.getBoardLoc(w[0]).getPlayer();
+			IPlayer p2 = board.getBoardLoc(w[1]).getPlayer();
+
+					IPlayer p3 = board.getBoardLoc(w[2]).getPlayer();
+
             // no null reference chance, check for matches indicating a winner
-			if (board.getBoardLoc(w[0]).equals(board.getBoardLoc(w[1])) && board.getBoardLoc(w[1]).equals(board.getBoardLoc(w[2]))){
+			if (p1.equals(p2) && p2.equals(p3)){
                 winnerDetected = true;
                 break;
 			}                      

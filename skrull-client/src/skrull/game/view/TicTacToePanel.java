@@ -57,8 +57,10 @@ public class TicTacToePanel extends UserPanel {
 		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
 		this.setBackground(Color.WHITE);
 		
+
 		TicTacToeHandler gameHandler = new TicTacToeHandler();
-		
+		ReturnToMainButton returnToMain = new ReturnToMainButton(gameHandler);
+		this.add(returnToMain);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints constrainers = new GridBagConstraints();
 		this.setBackground(Color.WHITE);
@@ -94,9 +96,9 @@ public class TicTacToePanel extends UserPanel {
 			// TODO need to determine turn and change the button text to 
 			
 
-			eventFired = true;
-			JButton buttonSelected = (JButton)buttonEvent.getSource();
-			setSelectedButton(buttonSelected.getText());
+		//	eventFired = true;
+		//	JButton buttonSelected = (JButton)buttonEvent.getSource();
+		//	setSelectedButton(buttonSelected.getText());
 			
 			cih.handleInput(buttonEvent);
 		}

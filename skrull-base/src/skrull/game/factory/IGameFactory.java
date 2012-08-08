@@ -1,9 +1,6 @@
 package skrull.game.factory;
 
-import javax.swing.ListModel;
-
 import skrull.game.controller.IGameController;
-import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IPlayer;
 
 public interface IGameFactory {

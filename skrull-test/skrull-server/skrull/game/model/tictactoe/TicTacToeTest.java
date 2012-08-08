@@ -17,7 +17,6 @@ import org.junit.Test;
 
 import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
-import skrull.game.model.Board;
 import skrull.game.model.IPlayer;
 import skrull.game.model.Move;
 import skrull.game.view.ClientAction;

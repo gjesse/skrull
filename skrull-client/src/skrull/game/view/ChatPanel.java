@@ -1,29 +1,24 @@
 package skrull.game.view;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import skrull.game.factory.IGameFactory;
 import skrull.game.factory.IGameFactory.GameType;
-import skrull.game.view.GameClientView.Handler;
 
 public class ChatPanel extends JPanel {
 	
+
+	private static final long serialVersionUID = -7900339949223125405L;
 	JButton sendButton;
 	JTextArea messageCenter;
 	private JTextField chatTextInputField;

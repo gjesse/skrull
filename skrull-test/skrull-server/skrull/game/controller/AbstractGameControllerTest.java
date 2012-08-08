@@ -43,6 +43,7 @@ public class AbstractGameControllerTest {
 		ctrl.verify();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testProcessGameActionChat() throws SkrullException {
 		ActionType a = ActionType.CHAT;
@@ -62,6 +63,7 @@ public class AbstractGameControllerTest {
 		ctrl.verify();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testProcessGameActionMove() throws SkrullException {
 		ActionType a = ActionType.MOVE;
@@ -79,6 +81,7 @@ public class AbstractGameControllerTest {
 		ctrl.verify();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testProcessGameActionJoinGame() throws SkrullException {
 		ActionType a = ActionType.JOIN_GAME;
@@ -98,6 +101,7 @@ public class AbstractGameControllerTest {
 		ctrl.verify();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testProcessGameActionJoinServer() throws SkrullException {
 		ActionType a = ActionType.JOIN_SERVER;
@@ -115,6 +119,7 @@ public class AbstractGameControllerTest {
 		ctrl.verify();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testProcessGameActionCreateGame() throws SkrullException {
 		ActionType a = ActionType.CREATE_GAME;
@@ -132,6 +137,7 @@ public class AbstractGameControllerTest {
 		ctrl.verify();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testProcessGameActionQuit() throws SkrullException {
 		ActionType a = ActionType.QUIT;

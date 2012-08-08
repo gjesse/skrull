@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 
 import skrull.SkrullException;
 import skrull.SkrullGameException;
-import skrull.game.controller.IGameController;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.rmi.SkrullRMIException;
@@ -26,7 +25,6 @@ public abstract class AbstractGameModel implements IGameModel {
 	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
 	
 	private IPlayer activeplayer;	// The player attempting to update the board
-	private int currentPlayer;  	// The player allowed to update the board (an array indexer)
 	protected IPlayer winner;		//	
 	
 	private int moveCount;			// move

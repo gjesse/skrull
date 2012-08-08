@@ -14,7 +14,6 @@ import org.junit.Test;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
-import skrull.game.view.IGameClientView;
 import skrull.rmi.PolicyFileLocater;
 import skrull.rmi.server.IServerListener;
 import skrull.util.SkrullClientStarter;
@@ -65,6 +64,7 @@ public class SkrullClientSterterIntegrationTest {
 	public void viewToServer() throws Exception{
 
 	
+			@SuppressWarnings("unused")
 			SkrullClientStarter starter = new SkrullClientStarter();
 			assertTrue(listener.action.getActionType().equals(ActionType.JOIN_SERVER));
 			assertTrue(listener.action.getGameType().equals(GameType.DEFAULT));

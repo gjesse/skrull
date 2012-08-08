@@ -1,7 +1,6 @@
 package skrull.game.view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -10,20 +9,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
@@ -38,6 +31,10 @@ public class DefaultPanel extends UserPanel {
 	
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3874495546834222191L;
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	//GameType gameType;
 	JButton startButton;
@@ -78,6 +75,9 @@ public class DefaultPanel extends UserPanel {
 		JPanel leftPanel = new JPanel(){
 			//painting the left panel with a gradient
 			
+	
+			private static final long serialVersionUID = -2664464346248898687L;
+
 			protected void paintComponent(Graphics g){
 				Graphics2D g2d = (Graphics2D)g;
 				
@@ -143,6 +143,9 @@ public class DefaultPanel extends UserPanel {
 		
 		JPanel middlePanel = new JPanel(){
 			
+
+			private static final long serialVersionUID = -5187558315946252680L;
+
 			//painting the middle panel with a gradient
 			protected void paintComponent(Graphics g){
 				Graphics2D g2d = (Graphics2D)g;

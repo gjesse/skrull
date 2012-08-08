@@ -32,6 +32,7 @@ public class SkrullServerStarter extends RmiStarter {
 	}
 	public static void main(String[] args) throws Exception {
 
+		@SuppressWarnings("unused")
 		SkrullServerStarter starter = new SkrullServerStarter();
 	}
 

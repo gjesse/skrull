@@ -2,14 +2,6 @@ package skrull.game.view;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.apache.log4j.Logger;
@@ -24,7 +16,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
 	private static final long serialVersionUID = 733356106858477245L;
-	 private static final String IMAGE_DIR = System.getProperty("image.dir");
 	private ActionListener cih;
 
 	private int gameId = IGameFactory.DEFAULT_GAME_ID;
@@ -178,7 +169,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		userPanel = myPanel;
 		
-		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player ){};
+		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player );
 
 		mainFrame.addWindowListener((WindowListener)cih);
 		

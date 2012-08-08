@@ -7,13 +7,15 @@ import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 
 public class LoserPanel extends UserPanel {
+
+
+	private static final long serialVersionUID = -6731913040598693722L;
 
 	public LoserPanel(ClientInputHandler cih, IPlayer player){
 		super(player);

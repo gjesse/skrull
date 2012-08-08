@@ -7,20 +7,17 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
-
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.rmi.SkrullRMIException;
 import skrull.rmi.client.IClientListener;
-import skrull.util.logging.SkrullLogger;
 
 public class SkrullClientUpdater implements IClientUpdater {
 
 
 	private static final long serialVersionUID = 1308396593090902859L;
 	Registry registry;
-	private static final Logger logger = SkrullLogger.getLogger(SkrullClientUpdater.class);
+	// private static final Logger logger = SkrullLogger.getLogger(SkrullClientUpdater.class);
 
 	public SkrullClientUpdater() throws RemoteException{
 		registry = LocateRegistry.getRegistry();		

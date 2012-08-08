@@ -42,6 +42,7 @@ public class SkrullServerEndToEndTest {
 
         System.setProperty("java.security.policy", PolicyFileLocater.getLocationOfPolicyFile());
 
+		@SuppressWarnings("unused")
 		SkrullServerStarter starter = new SkrullServerStarter();
 
         

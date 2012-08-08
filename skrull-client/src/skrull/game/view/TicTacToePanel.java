@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -111,13 +112,22 @@ public class TicTacToePanel extends UserPanel {
 	}
 	@Override
 	public void modelChanged(IGameModel model) {
-		//getboardLoc
+		
+		System.out.println("about to check if GAME OVER!");
+		if( model.isGameOver() ){
+			System.out.println("GAME OVER!");
+			if( model.getWinner().equals(this.player) ){
+				JOptionPane.showConfirmDialog(null, "Player "+model.getWinner()+" is the winner!");
+			}
+		}
+		System.out.println("the GAME WASNT OVER!");
+		
 		for( IPlayer player: model.getPlayers() ){
 			if(player.equals(this.player)){
 				this.player.setPlayerToken(player.getPlayerToken() );
 			}
-			System.out.println("token!!! "+player.getPlayerToken());
-			System.out.println("our player"+this.player.getPlayerToken());
+			System.out.println("token!!! "+player.getPlayerToken()+" for player:"+player);
+			System.out.println("our player"+this.player.getPlayerToken()+" for player:"+player);
 		}
 		for( IMove buttonMove : model.getBoard().getBoard() ){
 			if (buttonMove != null){
@@ -127,36 +137,6 @@ public class TicTacToePanel extends UserPanel {
 			}
 		}
 		
-		//System.out.println("player token "+ move.getPlayer().getPlayerToken());
-		
-		//if there are previous moves that we can get
-		//we want to update the board by making the 
-		//button uneditable
-		
-/*		if( eventFired == true ){
-			
-			ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
-			Move move = (Move)ca.getMove();
-			
-			//index of the button that changed
-			int idx = move.getMoveIndex();
-			
-			//disable and repaint the button here not handler
-			this.getComponent(idx);
-			selected = (JButton)this.getComponent(idx);
-			selected.setEnabled(false);
-			
-			//setting up the player tokens to display on the button after it
-			//has been pushed
-			String mySelection =  model.getActivePlayer().getPlayerToken();
-			
-			String charToString = String.valueOf(mySelection);
-			System.out.println("char to String: "+charToString+" charToken: "+mySelection);
-			selected.setText(charToString );
-			
-			eventFired = false;
-		}*/
-
 		
 	}
 	public void setSelectedButton(String s){

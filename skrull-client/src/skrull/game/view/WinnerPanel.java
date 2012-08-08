@@ -1,5 +1,6 @@
 package skrull.game.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -52,6 +53,8 @@ public class WinnerPanel extends UserPanel {
 		winnerField.setForeground(Color.cyan);
 		winnerField.setEditable(false);
 		this.add(winnerField,winnerConstraints);
+		//ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		//this.add(returnToMain,BorderLayout.SOUTH);
 /*		JButton winnerButton = new JButton("WINNER is... ");
 		JButton lowerButton = new JButton(player+"");
 		lowerButton.setForeground(Color.cyan);

@@ -135,7 +135,6 @@ public class RockPaperScissorsPanel extends UserPanel {
 		this.add(scissorButton,c);
 */
 		c.gridx = 0;
-
 		c.gridy = 3;
 		this.add(returnToMain, c);
 
@@ -155,13 +154,14 @@ public class RockPaperScissorsPanel extends UserPanel {
 		System.out.println("move count "+model.getMoveCount());
 		System.out.println( "number of players "+model.getPlayers().size() );
 		
-		/*ACTIVE PLAYER IS BEING SET AS NULL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+		
 		System.out.println("active player is "+ model.getActivePlayer() );
 		
 		if(model.getMoveCount() == 0){
 			//we are in a new game where nobody has clicked
-			System.out.println("active player is "+ model.getActivePlayer() );
 			System.out.println( "number of players "+model.getPlayers().size() );
+			System.out.println("active player is "+ model.getActivePlayer() );
+			
 		}
 		else
 		{
@@ -169,11 +169,16 @@ public class RockPaperScissorsPanel extends UserPanel {
 			Move move ;
 			IPlayer iPlayer;
 			
-/*			if( model.getMoveCount() == 1){
+			if( model.getMoveCount() == 2){
 				//if both players have input their moves
 				//we want to update the board with their moves
 				
-				for( IPlayer player: model.getPlayers() ){
+				for(IPlayer player: model.getPlayers() ){
+					
+					this.player.setPlayerToken(player.getPlayerToken());
+					System.out.println("player token: "+ player.getPlayerToken() );
+				}
+/*				for( IPlayer player: model.getPlayers() ){
 					if(player.equals(this.player)){
 						this.player.setPlayerToken(player.getPlayerToken() );
 					}
@@ -184,14 +189,11 @@ public class RockPaperScissorsPanel extends UserPanel {
 				for( IMove buttonMove : model.getBoard().getBoard() ){
 					if (buttonMove != null){
 						//ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );
-						//ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);
-						
+						//ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);		
 					}
-
-						
-				}
+				}*/
 				
-			}*/
+			}
 		}
 		
 		

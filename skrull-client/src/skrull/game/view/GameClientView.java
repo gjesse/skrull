@@ -118,16 +118,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
 		if( model.isGameOver() ){
 			//if there is a winner then display the winner panel
-			whoWon = model.getWinner();
-			
-				
+			whoWon = model.getWinner();	
 				userPanel = new WinnerPanel(cih, whoWon);
 				mainFrame.removeAll();
 				mainFrame.setVisible(false);
 				userPanel.repaint();
 				mainFrame.repaint();
 				buildClientMainView(userPanel);
-
 		}
 		userPanel.modelChanged(model);
 		chatPanel.setText(model.getChatContents());

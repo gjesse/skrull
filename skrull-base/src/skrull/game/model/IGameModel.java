@@ -50,9 +50,9 @@ public interface IGameModel extends Serializable {
 	
 	public abstract Collection<IGameModel> getActiveGames();
 
-	public int getCurrentPlayer();
+	// public int getCurrentPlayer();
 
-	public void setCurrentPlayer(int currentPlayer);
+	// public void setCurrentPlayer(int currentPlayer);
 
 	public int getMoveCount();
 

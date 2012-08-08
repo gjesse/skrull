@@ -28,6 +28,7 @@ public class TicTacToe extends AbstractGameModel{
 		
 		// Initialize Model Specific Parameters
 		gameStop = true;   // block moves until second player joins.
+		setDraw(false);
 		setMoveCount(0);
 
 		setActiveplayer(startingPlayer);
@@ -63,52 +64,50 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 
 		
 		// match player making move to current player 
-		
-		if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
-			
-			// verify move is legal
-			if (!isOccupied(boardLoc)){
+		if (!finished){
+			if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
 				
-				board.setBoard(action.getMove(), boardLoc);
-				setMoveCount(getMoveCount() + 1);
-				if(getMoveCount() == getMaxMoves())
-					finished = true;
-			
-				// WINNER Check
-				if(haveWinner()){
-					winner = getActiveplayer();
-					finished = true;
-					// TODO set isFinished flag
-				}
+				// verify move is legal
+				if (!isOccupied(boardLoc)){
+					
+					board.setBoard(action.getMove(), boardLoc);
+					setMoveCount(getMoveCount() + 1);
+					if(getMoveCount() == getMaxMoves())
+						finished = true;
 				
-				// DRAW Check
-				if(!haveWinner() && isGameOver()){
-					// TODO make active player impossible.
-					// TODO set draw flag
-				}
-								
-				// TODO change activePlayer
+					// WINNER Check
+					if(haveWinner()){
+						finished = true;
+						winner = getActiveplayer();
+						setBroadcastMessage("We have a winner:  " + winner);
+						
+						// TODO set isFinished flag
+					}
+					
+					// DRAW Check
+					if(!haveWinner() && isGameOver()){
+						setDraw(true);						
+					}
+	
+					// Announce Move
+					setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " played on location " + boardLoc);
+					
+					// TODO change activePlayer
+					setActiveplayer(getLastAction().getPlayer());
+					this.setLastAction(action);
 
-				setActiveplayer(getLastAction().getPlayer());
-				this.setLastAction(action);
-				
-				// TODO announce what the move was.
-				System.out.println("location: ");
-				System.out.println(boardLoc);
-				System.out.println(" player: ");
-				System.out.println(getCurrentPlayer());
-				System.out.println("/n");
+				}
+				// Invalid move by correct player.
+				else throw new SkrullGameException("Invalid Move...");
+			
 			}
-			// Invalid move by correct player.
-			// TODO send to chat window.
-			else throw new SkrullGameException("Invalid Move...");
-		
+			// Not valid player
+			else throw new SkrullGameException("Please wait your turn."); 
 		}
-		// Not valid player
-		// TODO send to chat window instead
-		else throw new SkrullGameException("Please wait your turn."); 
+		// Game Over
+		else throw new SkrullGameException("Game is Over, please return to main menu.");
 		
-		// TODO notify other player of move
+		// Duh - Update the Listener
 		updateListener();
 	}
 		

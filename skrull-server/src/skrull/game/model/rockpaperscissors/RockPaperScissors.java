@@ -53,35 +53,38 @@ public class RockPaperScissors extends AbstractGameModel{
 			if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
 		
 				// Store the moves.  Player1 in board[1], PLayer2 in board[2].  The moves contain the index of the choice.
-				board.setBoard(action.getMove(), getMoveCount());  
-				
-				setMoveCount(getMoveCount() + 1);
-				if (getMoveCount() == getMaxMoves())
-					finished = true;
-				
-				// WINNER Check
-				if(haveWinner()){
-					
-					finished = true;  // redundant - but why not.
-					setBroadcastMessage("We have a winner:  " + winner);
-					int p1Choice = board.getBoardLoc(1).getMoveIndex();
-					int p2Choice = board.getBoardLoc(1).getMoveIndex();
-					
-					if((p1Choice == 0 && p2Choice == 2) || (p1Choice == 1 && p2Choice == 0) || (p1Choice == 2 && p2Choice == 1))
-						winner = board.getBoardLoc(1).getPlayer();
-					else 
-						winner = board.getBoardLoc(2).getPlayer();
-				
-				}
+				board.setBoard(action.getMove(), getMoveCount()); 
 				
 				// Announce that a move was made.
 				setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " has chosen. ");
 				
-				// DRAW Check
-				if(!haveWinner() && isGameOver()){
-					setDraw(true);
-				}
+				setMoveCount(getMoveCount() + 1);
+				if (getMoveCount() == getMaxMoves()){
 					
+					finished = true;
+					
+					// WINNER Check
+					if(haveWinner()){
+					
+						int p1Choice = board.getBoardLoc(1).getMoveIndex();
+						int p2Choice = board.getBoardLoc(1).getMoveIndex();
+						
+						if((p1Choice == 0 && p2Choice == 2) || (p1Choice == 1 && p2Choice == 0) || (p1Choice == 2 && p2Choice == 1))
+							winner = board.getBoardLoc(1).getPlayer();
+						else {
+							winner = board.getBoardLoc(2).getPlayer();
+						}
+						setBroadcastMessage("We have a winner:  " + winner);  // TODO: Comment me out before turn in, View side will take care of this.
+					}
+					
+
+					
+					// DRAW Check
+					if(!haveWinner() && isGameOver()){
+						setBroadcastMessage("We have a draw");  // TODO: Comment me out before turn in, View side will take care of this.
+						setDraw(true);
+					}
+				}	
 				// Switch Active player to allow them to move.
 				setActiveplayer(getLastAction().getPlayer());
 				this.setLastAction(action);
@@ -106,14 +109,5 @@ public class RockPaperScissors extends AbstractGameModel{
 		if (p1Choice != p2Choice && getMoveCount()==getMaxMoves())
 			winnerDetected =true;
 		return winnerDetected;
-	}
-	
-	// KH - Adapted from Java How to Program, 3rd Edition, Deitel & Deitel chapter 21
-	public boolean isOccupied(int m){
-		
-		if (board.getBoardLoc(m).equals(null))
-			return false;
-		else
-			return true;
 	}
 }

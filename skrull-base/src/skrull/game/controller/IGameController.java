@@ -5,6 +5,15 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.view.IClientAction;
 
+/** Game Controller Interface
+ * 
+ *  
+ *  
+ *  
+ *  */
+
+
+
 public interface IGameController {
 	public void RunGame();
 

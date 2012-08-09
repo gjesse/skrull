@@ -7,6 +7,14 @@ import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.view.IClientAction;
 
+
+/**
+ *   IGameModel 
+ *
+ *   The Interface for the game model.
+ *   Blocks out the constructors, getters, and setters for the abstract model
+ *   and specific game models.
+ */
 public interface IGameModel extends Serializable {
 
 	public abstract void chatUpdate(IClientAction aAction);
@@ -14,6 +22,7 @@ public interface IGameModel extends Serializable {
 	/**
 	 * Validation must be done here by the game before
 	 * adding the new player to the game
+	 * 
 	 * @param aAction
 	 * @throws SkrullGameException 
 	 */
@@ -49,10 +58,6 @@ public interface IGameModel extends Serializable {
 	public abstract void setActiveGames(Collection<IGameModel> activeGames);
 	
 	public abstract Collection<IGameModel> getActiveGames();
-
-	// public int getCurrentPlayer();
-
-	// public void setCurrentPlayer(int currentPlayer);
 
 	public int getMoveCount();
 

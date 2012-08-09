@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>DefaultPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">DefaultPanel.java</span></div><h1>DefaultPanel.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package skrull.game.view;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>DefaultPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">DefaultPanel.java</span></div><h1>DefaultPanel.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package skrull.game.view;</span>
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,243 +32,252 @@ import skrull.util.logging.SkrullLogger;
 
 
 	/**
-	 * 
+	 * DefaultPanel is the default view that the user 
+	 * will see upon launching the game. DefaultPanel
+	 * has a list of games to create and if available 
+	 * a list of games to join. DefaultPanel also
+	 * has modelChanged to update the view with 
+	 * any new additions to the list of games to join.
 	 */
 	private static final long serialVersionUID = -3874495546834222191L;
-<span class="fc" id="L38">	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);</span>
+<span class="fc" id="L43">	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);</span>
 	//GameType gameType;
 	JButton startButton;
 	JButton joinButton;
 	JList newGameList;
 	JList activeGamesToJoin;
 	ActionListener cih;
-<span class="fc" id="L45">	String createGame = IClientAction.ActionType.CREATE_GAME.toString();</span>
-<span class="fc" id="L46">	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();</span>
+<span class="fc" id="L50">	String createGame = IClientAction.ActionType.CREATE_GAME.toString();</span>
+<span class="fc" id="L51">	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();</span>
 	private JScrollPane activeGameScroller;
 	
 	public DefaultPanel(ActionListener cih, IPlayer player){
-<span class="fc" id="L50">		super(player);</span>
-<span class="fc" id="L51">		this.cih = cih;</span>
-<span class="fc" id="L52">		buildUserPanel();</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L55">		super(player);</span>
+<span class="fc" id="L56">		this.cih = cih;</span>
+<span class="fc" id="L57">		buildUserPanel();</span>
+<span class="fc" id="L58">	}</span>
 
 	private void buildUserPanel(){
 	
 
-<span class="fc" id="L58">		this.setSize(new Dimension(600,0));</span>
-<span class="fc" id="L59">		this.setLayout(new GridLayout(0,2));</span>
+<span class="fc" id="L63">		this.setSize(new Dimension(600,0));</span>
+<span class="fc" id="L64">		this.setLayout(new GridLayout(0,2));</span>
 		
-<span class="fc" id="L61">		startButton = new JButton(createGame);</span>
-<span class="fc" id="L62">		startButton.setActionCommand(createGame);</span>
-<span class="fc" id="L63">		startButton.addActionListener(cih);</span>
+<span class="fc" id="L66">		startButton = new JButton(createGame);</span>
+<span class="fc" id="L67">		startButton.setActionCommand(createGame);</span>
+<span class="fc" id="L68">		startButton.addActionListener(cih);</span>
 		
-<span class="fc" id="L65">		joinButton = new JButton(joinGame);</span>
-<span class="fc" id="L66">		joinButton.setActionCommand(joinGame);</span>
-<span class="fc" id="L67">		joinButton.addActionListener(cih);</span>
+<span class="fc" id="L70">		joinButton = new JButton(joinGame);</span>
+<span class="fc" id="L71">		joinButton.setActionCommand(joinGame);</span>
+<span class="fc" id="L72">		joinButton.addActionListener(cih);</span>
 	
-<span class="fc" id="L69">		this.add( buildLeftPanel() );</span>
-<span class="fc" id="L70">		this.add( buildMiddlePanel() );</span>
+<span class="fc" id="L74">		this.add( buildLeftPanel() );</span>
+<span class="fc" id="L75">		this.add( buildMiddlePanel() );</span>
 	
-<span class="fc" id="L72">}</span>
+<span class="fc" id="L77">}</span>
 	private JPanel buildLeftPanel(){
 		
-<span class="fc" id="L75">		JPanel leftPanel = new JPanel(){</span>
+<span class="fc" id="L80">		JPanel leftPanel = new JPanel(){</span>
 			//painting the left panel with a gradient
 			
 	
 			private static final long serialVersionUID = -2664464346248898687L;
 
 			protected void paintComponent(Graphics g){
-<span class="nc" id="L82">				Graphics2D g2d = (Graphics2D)g;</span>
+<span class="nc" id="L87">				Graphics2D g2d = (Graphics2D)g;</span>
 				
-<span class="nc bnc" id="L84" title="All 2 branches missed.">			    if ( !isOpaque() )</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			    if ( !isOpaque() )</span>
 			    {
-<span class="nc" id="L86">			        super.paintComponent(g);</span>
-<span class="nc" id="L87">			        return;</span>
+<span class="nc" id="L91">			        super.paintComponent(g);</span>
+<span class="nc" id="L92">			        return;</span>
 			    }
 			 
-<span class="nc" id="L90">			    int w = getWidth( );</span>
-<span class="nc" id="L91">			    int h = getHeight( );</span>
-<span class="nc" id="L92">			    Color color1 = getBackground( );</span>
-<span class="nc" id="L93">			    Color color2 = color1.darker( );</span>
+<span class="nc" id="L95">			    int w = getWidth( );</span>
+<span class="nc" id="L96">			    int h = getHeight( );</span>
+<span class="nc" id="L97">			    Color color1 = getBackground( );</span>
+<span class="nc" id="L98">			    Color color2 = color1.darker( );</span>
 			    
 			    // Paint a gradient from top to bottom
-<span class="nc" id="L96">			    GradientPaint gp = new GradientPaint(</span>
-<span class="nc" id="L97">			        0, 0, color1,</span>
-<span class="nc" id="L98">			        0, h, color2 );</span>
+<span class="nc" id="L101">			    GradientPaint gp = new GradientPaint(</span>
+<span class="nc" id="L102">			        0, 0, color1,</span>
+<span class="nc" id="L103">			        0, h, color2 );</span>
 
-<span class="nc" id="L100">			    g2d.setPaint( gp );</span>
-<span class="nc" id="L101">			    g2d.fillRect( 0, 0, w, h );</span>
+<span class="nc" id="L105">			    g2d.setPaint( gp );</span>
+<span class="nc" id="L106">			    g2d.fillRect( 0, 0, w, h );</span>
 			    
-<span class="nc" id="L103">			    setOpaque( false );</span>
-<span class="nc" id="L104">			    super.paintComponent( g );</span>
-<span class="nc" id="L105">			    setOpaque( true );  </span>
-<span class="nc" id="L106">			}</span>
+<span class="nc" id="L108">			    setOpaque( false );</span>
+<span class="nc" id="L109">			    super.paintComponent( g );</span>
+<span class="nc" id="L110">			    setOpaque( true );  </span>
+<span class="nc" id="L111">			}</span>
 		};
-<span class="fc" id="L108">		leftPanel.setSize(new Dimension(300,0));</span>
+<span class="fc" id="L113">		leftPanel.setSize(new Dimension(300,0));</span>
 		
 		//setting up the layout of the panel
-<span class="fc" id="L111">		leftPanel.setLayout(new GridBagLayout());</span>
-<span class="fc" id="L112">		GridBagConstraints gbc = new GridBagConstraints();</span>
+<span class="fc" id="L116">		leftPanel.setLayout(new GridBagLayout());</span>
+<span class="fc" id="L117">		GridBagConstraints gbc = new GridBagConstraints();</span>
 		
-<span class="fc" id="L114">		gbc.gridx =0;</span>
-<span class="fc" id="L115">		gbc.gridy = 0;</span>
-<span class="fc" id="L116">		gbc.ipadx = 30;</span>
-<span class="fc" id="L117">		gbc.ipady = 75;</span>
-<span class="fc" id="L118">		gbc.insets = new Insets(0,10,10,10);</span>
+<span class="fc" id="L119">		gbc.gridx =0;</span>
+<span class="fc" id="L120">		gbc.gridy = 0;</span>
+<span class="fc" id="L121">		gbc.ipadx = 20;</span>
+<span class="fc" id="L122">		gbc.ipady = 93;</span>
+<span class="fc" id="L123">		gbc.insets = new Insets(0,0,0,0);</span>
 		
-<span class="fc" id="L120">		DefaultListModel m = new DefaultListModel();</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (GameType t: IGameFactory.GameType.values()){</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (t.isDefault()) </span>
-<span class="fc" id="L123">				continue;</span>
-<span class="fc" id="L124">			m.addElement(t);</span>
+<span class="fc" id="L125">		DefaultListModel m = new DefaultListModel();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (GameType t: IGameFactory.GameType.values()){</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (t.isDefault()) </span>
+<span class="fc" id="L128">				continue;</span>
+<span class="fc" id="L129">			m.addElement(t);</span>
 		}
-<span class="fc" id="L126">		newGameList = new JList(m);</span>
+<span class="fc" id="L131">		newGameList = new JList(m);</span>
 			
-<span class="fc" id="L128">		newGameList.setBorder(BorderFactory.createTitledBorder(&quot;Create A New Game&quot;));</span>
+<span class="fc" id="L133">		newGameList.setBorder(BorderFactory.createTitledBorder(&quot;Create A New Game&quot;));</span>
 		
-<span class="fc" id="L130">		leftPanel.add(newGameList,gbc);</span>
-<span class="fc" id="L131">		gbc.gridy = 1;</span>
-<span class="fc" id="L132">		gbc.ipadx = 10;</span>
-<span class="fc" id="L133">		gbc.ipady = 30;</span>
-<span class="fc" id="L134">		gbc.insets = new Insets(3,3,3,3);</span>
-<span class="fc" id="L135">		leftPanel.add(startButton,gbc);</span>
-<span class="fc" id="L136">		leftPanel.setBorder(BorderFactory.createEtchedBorder());</span>
+<span class="fc" id="L135">		leftPanel.add(newGameList,gbc);</span>
+<span class="fc" id="L136">		gbc.gridy = 1;</span>
+<span class="fc" id="L137">		gbc.ipadx = 57;</span>
+<span class="fc" id="L138">		gbc.ipady = 30;</span>
+<span class="fc" id="L139">		gbc.insets = new Insets(10,0,0,0);</span>
+<span class="fc" id="L140">		leftPanel.add(startButton,gbc);</span>
+<span class="fc" id="L141">		leftPanel.setBorder(BorderFactory.createEtchedBorder());</span>
 		
-<span class="fc" id="L138">		return leftPanel;</span>
+<span class="fc" id="L143">		return leftPanel;</span>
 		
 	}
 	
 	private JPanel buildMiddlePanel(){
 		
-<span class="fc" id="L144">		JPanel middlePanel = new JPanel(){</span>
+<span class="fc" id="L149">		JPanel middlePanel = new JPanel(){</span>
 			
 
 			private static final long serialVersionUID = -5187558315946252680L;
 
 			//painting the middle panel with a gradient
 			protected void paintComponent(Graphics g){
-<span class="nc" id="L151">				Graphics2D g2d = (Graphics2D)g;</span>
+<span class="nc" id="L156">				Graphics2D g2d = (Graphics2D)g;</span>
 				
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			    if ( !isOpaque() )</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			    if ( !isOpaque() )</span>
 			    {
-<span class="nc" id="L155">			        super.paintComponent(g);</span>
-<span class="nc" id="L156">			        return;</span>
+<span class="nc" id="L160">			        super.paintComponent(g);</span>
+<span class="nc" id="L161">			        return;</span>
 			    }
 	
-<span class="nc" id="L159">			    int w = getWidth( );</span>
-<span class="nc" id="L160">			    int h = getHeight( );</span>
-<span class="nc" id="L161">			    Color color1 = getBackground( );</span>
-<span class="nc" id="L162">			    Color color2 = color1.darker( );</span>
+<span class="nc" id="L164">			    int w = getWidth( );</span>
+<span class="nc" id="L165">			    int h = getHeight( );</span>
+<span class="nc" id="L166">			    Color color1 = getBackground( );</span>
+<span class="nc" id="L167">			    Color color2 = color1.darker( );</span>
 			    
 			    // Paint a gradient from top to bottom
-<span class="nc" id="L165">			    GradientPaint gp = new GradientPaint(</span>
-<span class="nc" id="L166">			        0, 0, color1,</span>
-<span class="nc" id="L167">			        0, h, color2 );</span>
+<span class="nc" id="L170">			    GradientPaint gp = new GradientPaint(</span>
+<span class="nc" id="L171">			        0, 0, color1,</span>
+<span class="nc" id="L172">			        0, h, color2 );</span>
 
-<span class="nc" id="L169">			    g2d.setPaint( gp );</span>
-<span class="nc" id="L170">			    g2d.fillRect( 0, 0, w, h );</span>
+<span class="nc" id="L174">			    g2d.setPaint( gp );</span>
+<span class="nc" id="L175">			    g2d.fillRect( 0, 0, w, h );</span>
 			    
-<span class="nc" id="L172">			    setOpaque( false );</span>
-<span class="nc" id="L173">			    super.paintComponent( g );</span>
-<span class="nc" id="L174">			    setOpaque( true );  </span>
-<span class="nc" id="L175">			}</span>
+<span class="nc" id="L177">			    setOpaque( false );</span>
+<span class="nc" id="L178">			    super.paintComponent( g );</span>
+<span class="nc" id="L179">			    setOpaque( true );  </span>
+<span class="nc" id="L180">			}</span>
 		};
-<span class="fc" id="L177">		middlePanel.setSize(new Dimension(300,0));</span>
+<span class="fc" id="L182">		middlePanel.setSize(new Dimension(300,0));</span>
 		
 		//setting up the layout of the panel
-<span class="fc" id="L180">		GridBagConstraints gbc = new GridBagConstraints();</span>
-<span class="fc" id="L181">		middlePanel.setLayout(new GridBagLayout());</span>
+<span class="fc" id="L185">		GridBagConstraints gbc = new GridBagConstraints();</span>
+<span class="fc" id="L186">		middlePanel.setLayout(new GridBagLayout());</span>
 
-<span class="fc" id="L183">		gbc.gridx =0;</span>
-<span class="fc" id="L184">		gbc.gridy = 0;</span>
-<span class="fc" id="L185">		gbc.ipadx = 75;</span>
-<span class="fc" id="L186">		gbc.ipady = 0;</span>
-<span class="fc" id="L187">		gbc.insets = new Insets(0,0,0,0);</span>
+<span class="fc" id="L188">		gbc.gridx =0;</span>
+<span class="fc" id="L189">		gbc.gridy = 0;</span>
+<span class="fc" id="L190">		gbc.ipadx = 70;</span>
+<span class="fc" id="L191">		gbc.ipady = 0;</span>
+<span class="fc" id="L192">		gbc.insets = new Insets(0,0,0,0);</span>
 	
 		//using a scrollPane for the list of active games
-<span class="fc" id="L190">		activeGamesToJoin = new JList(new DefaultListModel());</span>
-<span class="fc" id="L191">		activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);</span>
-<span class="fc" id="L192">		activeGameScroller.setPreferredSize(new Dimension(100,155));</span>
-<span class="fc" id="L193">		activeGameScroller.setBorder(BorderFactory.createTitledBorder(&quot;Join A Game&quot;));</span>
-<span class="fc" id="L194">		middlePanel.add(activeGameScroller,gbc);</span>
+<span class="fc" id="L195">		activeGamesToJoin = new JList(new DefaultListModel());</span>
+<span class="fc" id="L196">		activeGameScroller = new JScrollPane(activeGamesToJoin,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);</span>
+<span class="fc" id="L197">		activeGameScroller.setPreferredSize(new Dimension(100,155));</span>
+<span class="fc" id="L198">		activeGameScroller.setBorder(BorderFactory.createTitledBorder(&quot;Join A Game&quot;));</span>
+<span class="fc" id="L199">		middlePanel.add(activeGameScroller,gbc);</span>
 		
-<span class="fc" id="L196">		gbc.gridy = 1;</span>
-<span class="fc" id="L197">		gbc.ipadx = 10;</span>
-<span class="fc" id="L198">		gbc.ipady = 30;</span>
-<span class="fc" id="L199">		gbc.insets = new Insets(12,3,3,3);</span>
 		
-<span class="fc" id="L201">		middlePanel.add(joinButton,gbc);</span>
-<span class="fc" id="L202">		middlePanel.setBorder(BorderFactory.createEtchedBorder());</span>
+<span class="fc" id="L202">		gbc.gridy = 1;</span>
+<span class="fc" id="L203">		gbc.ipadx = 65;</span>
+<span class="fc" id="L204">		gbc.ipady = 30;</span>
+<span class="fc" id="L205">		gbc.insets = new Insets(10,0,0,0);</span>
 		
-<span class="fc" id="L204">		return middlePanel;</span>
+<span class="fc" id="L207">		middlePanel.add(joinButton,gbc);</span>
+<span class="fc" id="L208">		middlePanel.setBorder(BorderFactory.createEtchedBorder());</span>
+		
+<span class="fc" id="L210">		return middlePanel;</span>
 	}
 	
 	@Override
 	public GameType getGameType() {
-<span class="nc" id="L209">		gameType = (GameType)newGameList.getSelectedValue();</span>
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		if(gameType == null){</span>
-<span class="nc" id="L211">			gameType = GameType.DEFAULT;</span>
+<span class="nc" id="L215">		gameType = (GameType)newGameList.getSelectedValue();</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if(gameType == null){</span>
+<span class="nc" id="L217">			gameType = GameType.DEFAULT;</span>
 		}
-<span class="nc" id="L213">		return gameType;</span>
+<span class="nc" id="L219">		return gameType;</span>
 	}
 	
 	@Override
 	public String getJoinGameString() {
-<span class="nc" id="L218">		return (String)activeGamesToJoin.getSelectedValue();</span>
-	};
+<span class="nc" id="L224">		return (String)activeGamesToJoin.getSelectedValue();</span>
+	}
 	
-
+	@Override
+	public String getCreateGameString(){
+<span class="nc" id="L229">		return (String)newGameList.getSelectedValue();</span>
+	}
 
 	
 	@Override
 	public void modelChanged(IGameModel model) {
 
-<span class="nc" id="L227">		Collection&lt;IGameModel&gt; games = model.getActiveGames();</span>
+<span class="nc" id="L236">		Collection&lt;IGameModel&gt; games = model.getActiveGames();</span>
 		//Collection&lt;String&gt; activeGames = new ArrayList&lt;String&gt;();
-<span class="nc" id="L229">		DefaultListModel m = new DefaultListModel();</span>
+<span class="nc" id="L238">		DefaultListModel m = new DefaultListModel();</span>
 		//activeGamesToJoin = new JList(m);
 
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		for (IGameModel game: games){</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		for (IGameModel game: games){</span>
 			//activeGames.add(game.getGameId() + &quot;:&quot; + game.getGameType());
 			// TODO; this should go to a method on the model
 			// like game.isJoinable();
-<span class="nc bnc" id="L236" title="All 2 branches missed.">			if (game.getGameType().isDefault())</span>
-<span class="nc" id="L237">				continue;</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">			if (game.isGameOver())</span>
-<span class="nc" id="L239">				continue;</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">			if (!game.needsPlayers())</span>
-<span class="nc" id="L241">				continue;</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			if (game.getGameType().isDefault())</span>
+<span class="nc" id="L246">				continue;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			if (game.isGameOver())</span>
+<span class="nc" id="L248">				continue;</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (!game.needsPlayers())</span>
+<span class="nc" id="L250">				continue;</span>
 			
 			//if (game.isInProgress()){
 			//	continue;
 			//}
-<span class="nc" id="L246">			m.addElement(game.getGameId() + &quot;:&quot; + game.getGameType());</span>
+<span class="nc" id="L255">			m.addElement(game.getGameId() + &quot;:&quot; + game.getGameType());</span>
 
-<span class="nc" id="L248">			logger.debug(&quot;active game: &quot; + game);</span>
+<span class="nc" id="L257">			logger.debug(&quot;active game: &quot; + game);</span>
 			
 		}
-<span class="nc" id="L251">		activeGamesToJoin.setModel(m);</span>
+<span class="nc" id="L260">		activeGamesToJoin.setModel(m);</span>
 		
-<span class="nc" id="L253">		  SwingUtilities.invokeLater(new Runnable() {</span>
+<span class="nc" id="L262">		  SwingUtilities.invokeLater(new Runnable() {</span>
 			    public void run() {
-<span class="nc" id="L255">			    	activeGamesToJoin.revalidate(); // triggers a repaint of all the items in the JList.</span>
+<span class="nc" id="L264">			    	activeGamesToJoin.revalidate(); // triggers a repaint of all the items in the JList.</span>
 			    	//activeGameScroller.repaint(); // Not sure if this one is needed
-<span class="nc" id="L257">			    }</span>
+<span class="nc" id="L266">			    }</span>
 			  });
 
-<span class="nc" id="L260">		this.repaint();</span>
+<span class="nc" id="L269">		this.repaint();</span>
 		
-<span class="nc" id="L262">	}</span>
+<span class="nc" id="L271">	}</span>
 
 	@Override
 	public int getSelectedButton() {
-<span class="nc" id="L266">		return 0;</span>
+<span class="nc" id="L275">		return 0;</span>
 	}
 
 	@Override
 	public String getMessage() {
-<span class="nc" id="L271">		return null;</span>
+<span class="nc" id="L280">		return null;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

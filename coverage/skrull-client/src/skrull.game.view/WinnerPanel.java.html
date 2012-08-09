@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WinnerPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">WinnerPanel.java</span></div><h1>WinnerPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>WinnerPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">WinnerPanel.java</span></div><h1>WinnerPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,45 +16,55 @@ import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.game.model.Move;
 
+
+/**
+ * WinnerPanel is a panel that will be
+ * displayed when a user wins. Currently
+ * both users will see the panel which 
+ * contains the user id of the winner. 
+ * From here the chatPanel has been overridden 
+ * to provide the functionality of taking 
+ * the user back to the default screen.
+ * */
 public class WinnerPanel extends UserPanel {
 
-<span class="nc" id="L21">	String newline =&quot;\n&quot;;</span>
+<span class="nc" id="L31">	String newline =&quot;\n&quot;;</span>
 	private static final long serialVersionUID = 6676770154441309212L;
 	ActionListener cih;
 
 	public WinnerPanel(ActionListener cih2, IPlayer player){
-<span class="nc" id="L26">		super(player);</span>
+<span class="nc" id="L36">		super(player);</span>
 
-<span class="nc" id="L28">		this.cih = cih2;</span>
-<span class="nc" id="L29">		winnerPanel();</span>
-<span class="nc" id="L30">	}</span>
+<span class="nc" id="L38">		this.cih = cih2;</span>
+<span class="nc" id="L39">		winnerPanel();</span>
+<span class="nc" id="L40">	}</span>
 	
 	@Override
 	public GameType getGameType() {
 		// TODO Auto-generated method stub
-<span class="nc" id="L35">		return null;</span>
+<span class="nc" id="L45">		return gameType;</span>
 	}
 	
 	private void winnerPanel(){
 		
-<span class="nc" id="L40">		this.setLayout( new GridBagLayout() );</span>
-<span class="nc" id="L41">		GridBagConstraints winnerConstraints = new GridBagConstraints();</span>
+<span class="nc" id="L50">		this.setLayout( new GridBagLayout() );</span>
+<span class="nc" id="L51">		GridBagConstraints winnerConstraints = new GridBagConstraints();</span>
 		
-<span class="nc" id="L43">		JFormattedTextField winnerField = new JFormattedTextField();</span>
+<span class="nc" id="L53">		JFormattedTextField winnerField = new JFormattedTextField();</span>
 		
-<span class="nc" id="L45">		winnerConstraints.ipady = 100;</span>
-<span class="nc" id="L46">		winnerConstraints.ipadx = 400;</span>
-<span class="nc" id="L47">		winnerConstraints.gridx = 1;</span>
-<span class="nc" id="L48">		winnerConstraints.gridy = 1;</span>
-<span class="nc" id="L49">		winnerConstraints.fill = GridBagConstraints.BOTH;</span>
+<span class="nc" id="L55">		winnerConstraints.ipady = 100;</span>
+<span class="nc" id="L56">		winnerConstraints.ipadx = 400;</span>
+<span class="nc" id="L57">		winnerConstraints.gridx = 1;</span>
+<span class="nc" id="L58">		winnerConstraints.gridy = 1;</span>
+<span class="nc" id="L59">		winnerConstraints.fill = GridBagConstraints.BOTH;</span>
 		
-<span class="nc" id="L51">		winnerField.setText(&quot;  Winner of the game is...&quot;+newline+player);</span>
-<span class="nc" id="L52">		winnerField.setBackground(Color.black);</span>
-<span class="nc" id="L53">		winnerField.setForeground(Color.cyan);</span>
-<span class="nc" id="L54">		winnerField.setEditable(false);</span>
-<span class="nc" id="L55">		this.add(winnerField,winnerConstraints);</span>
-		//ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-		//this.add(returnToMain,BorderLayout.SOUTH);
+<span class="nc" id="L61">		winnerField.setText(&quot;  Winner of the game is...&quot;+newline+player);</span>
+<span class="nc" id="L62">		winnerField.setBackground(Color.black);</span>
+<span class="nc" id="L63">		winnerField.setForeground(Color.cyan);</span>
+<span class="nc" id="L64">		winnerField.setEditable(false);</span>
+<span class="nc" id="L65">		this.add(winnerField,winnerConstraints);</span>
+/*		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		this.add(returnToMain,BorderLayout.SOUTH);*/
 /*		JButton winnerButton = new JButton(&quot;WINNER is... &quot;);
 		JButton lowerButton = new JButton(player+&quot;&quot;);
 		lowerButton.setForeground(Color.cyan);
@@ -77,28 +87,28 @@ public class WinnerPanel extends UserPanel {
 		winnerConstraints.gridx = 1;
 		winnerConstraints.gridy = 2;
 		this.add(lowerButton,winnerConstraints);*/
-<span class="nc" id="L80">		this.setPreferredSize(new Dimension(600,0));</span>
+<span class="nc" id="L90">		this.setPreferredSize(new Dimension(600,0));</span>
 		//winnerPanel.setBackground(Color.white);	
 		
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L93">	}</span>
 
 	@Override
 	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub
-
-<span class="nc" id="L89">	}</span>
+<span class="nc" id="L98">		gameType = model.getGameType();</span>
+<span class="nc" id="L99">	}</span>
 
 	@Override
 	public int getSelectedButton() {
 		// TODO Auto-generated method stub
-<span class="nc" id="L94">		return 0;</span>
+<span class="nc" id="L104">		return 0;</span>
 	}
 
 	@Override
 	public String getMessage() {
 		// TODO Auto-generated method stub
-<span class="nc" id="L100">		return null;</span>
+<span class="nc" id="L110">		return null;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

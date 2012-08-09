@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ClientInputHandler.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">ClientInputHandler.java</span></div><h1>ClientInputHandler.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ClientInputHandler.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">ClientInputHandler.java</span></div><h1>ClientInputHandler.java</h1><pre class="source lang-java linenums">package skrull.game.view;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -50,88 +50,93 @@ import skrull.util.logging.SkrullLogger;
 <span class="nc" id="L50">				break;</span>
 				
 			case CREATE_GAME:
+				//need to handle when no selection was made in the list and the user
+				//chooses to start a new game
+				
+					
 				// TODO: a builder or factory seems to be in order for the ClientActions
-<span class="nc" id="L54">				GameType gameType = view.getGameType();</span>
-<span class="nc" id="L55">				serverUpdater.processClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));	</span>
-<span class="nc" id="L56">				serverUpdater.processClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			</span>
+<span class="nc" id="L58">				GameType gameType = view.getGameType();</span>
+<span class="nc" id="L59">				serverUpdater.processClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));	</span>
+<span class="nc" id="L60">				serverUpdater.processClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			</span>
 				
 
-<span class="nc" id="L59">				break;</span>
+<span class="nc" id="L63">				break;</span>
 				
 			case JOIN_GAME:
+				//need to handle when user hits join but nothing is selected in the list
 
-<span class="nc" id="L63">				String selectedGame[] =  view.getJoinGameString().split(&quot;:&quot;);</span>
-<span class="nc" id="L64">				int index = Integer.parseInt(selectedGame[0]);</span>
-<span class="nc" id="L65">				GameType toJoinType = GameType.valueOf(selectedGame[1]);</span>
-<span class="nc" id="L66">				serverUpdater.processClientAction(new ClientAction(index, player, type, toJoinType, view.getChatText(), null));			</span>
-<span class="nc" id="L67">				serverUpdater.processClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			</span>
+<span class="nc" id="L68">				String selectedGame[] =  view.getJoinGameString().split(&quot;:&quot;);</span>
+<span class="nc" id="L69">				int index = Integer.parseInt(selectedGame[0]);</span>
+<span class="nc" id="L70">				GameType toJoinType = GameType.valueOf(selectedGame[1]);</span>
+<span class="nc" id="L71">				serverUpdater.processClientAction(new ClientAction(index, player, type, toJoinType, view.getChatText(), null));			</span>
+<span class="nc" id="L72">				serverUpdater.processClientAction(new ClientAction(0, player, ActionType.QUIT, GameType.DEFAULT, view.getChatText(), null));			</span>
 
-<span class="nc" id="L69">				break;</span>
+<span class="nc" id="L74">				break;</span>
 				
 			case MOVE:
 	
 					
-<span class="nc" id="L74">					Move viewMove = new Move();				</span>
-<span class="nc" id="L75">					actionEvent.getActionCommand();	//will set actionEvent To MOVE</span>
+<span class="nc" id="L79">					Move viewMove = new Move();				</span>
+<span class="nc" id="L80">					actionEvent.getActionCommand();	//will set actionEvent To MOVE</span>
 					
-<span class="nc" id="L77">					JButton buttonPressed = (JButton)actionEvent.getSource();</span>
-<span class="nc" id="L78">					int buttonIndex = Integer.parseInt(buttonPressed.getText());</span>
+<span class="nc" id="L82">					JButton buttonPressed = (JButton)actionEvent.getSource();</span>
+<span class="nc" id="L83">					int buttonIndex = Integer.parseInt(buttonPressed.getText());</span>
 					
-<span class="nc" id="L80">					viewMove.setMoveIndex(buttonIndex);</span>
-<span class="nc" id="L81">					viewMove.setPlayer(player);</span>
+<span class="nc" id="L85">					viewMove.setMoveIndex(buttonIndex);</span>
+<span class="nc" id="L86">					viewMove.setPlayer(player);</span>
 					
-<span class="nc" id="L83">					serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), viewMove));</span>
-<span class="nc" id="L84">				break;</span>
+<span class="nc" id="L88">					serverUpdater.processClientAction(new ClientAction(gameId, player, type, view.getGameType(), view.getChatText(), viewMove));</span>
+<span class="nc" id="L89">				break;</span>
 			
 			case QUIT:
 				
 			
-<span class="nc" id="L89">				int confirmResult = JOptionPane.showConfirmDialog((Component)view, &quot;Return to main screen?&quot;, &quot;Quit?&quot;, 1);</span>
-<span class="nc" id="L90">				System.out.println(confirmResult);</span>
+<span class="nc" id="L94">				int confirmResult = JOptionPane.showConfirmDialog((Component)view, &quot;Return to main screen?&quot;, &quot;Quit?&quot;, 1);</span>
+<span class="nc" id="L95">				System.out.println(confirmResult);</span>
 				
-<span class="nc bnc" id="L92" title="All 2 branches missed.">				if (JOptionPane.OK_OPTION == confirmResult){</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (JOptionPane.OK_OPTION == confirmResult){</span>
 				
 					try {
-<span class="nc" id="L95">						serverUpdater.processClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));</span>
-<span class="nc" id="L96">						serverUpdater.processClientAction(getStartupAction());	</span>
+<span class="nc" id="L100">						serverUpdater.processClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));</span>
+<span class="nc" id="L101">						serverUpdater.processClientAction(getStartupAction());	</span>
 
 						// System.exit(0);
-<span class="nc" id="L99">					} catch (RemoteException e1) {</span>
+<span class="nc" id="L104">					} catch (RemoteException e1) {</span>
 						
-<span class="nc" id="L101">						logger.fatal(&quot;cant' contact server&quot;, e1);</span>
-<span class="nc" id="L102">						view.setBroadcastMessage(e1.getMessage());</span>
-<span class="nc" id="L103">					} catch (SkrullException e1) {</span>
-<span class="nc" id="L104">						handleSkrullException(e1);</span>
+<span class="nc" id="L106">						logger.fatal(&quot;cant' contact server&quot;, e1);</span>
+<span class="nc" id="L107">						view.setBroadcastMessage(e1.getMessage());</span>
+<span class="nc" id="L108">					} catch (SkrullException e1) {</span>
+<span class="nc" id="L109">						handleSkrullException(e1);</span>
 					}
 				}
 				
-<span class="nc" id="L108">				break;</span>
+<span class="nc" id="L113">				break;</span>
 				
 			default:
-<span class="nc" id="L111">				throw new UnsupportedOperationException(actionEvent + actionEvent.getActionCommand());</span>
+<span class="nc" id="L116">				throw new UnsupportedOperationException(actionEvent + actionEvent.getActionCommand());</span>
 			}
 		
-<span class="nc" id="L114">		} catch (SkrullException ex) {</span>
-<span class="nc" id="L115">			handleSkrullException(ex);</span>
+<span class="nc" id="L119">		} catch (SkrullException ex) {</span>
+<span class="nc" id="L120">			handleSkrullException(ex);</span>
 
-<span class="nc" id="L117">		} catch (RemoteException ex){</span>
-<span class="nc" id="L118">			view.setBroadcastMessage( ex.getMessage() );</span>
-<span class="nc" id="L119">			logger.fatal(&quot;Can't contact server&quot;, ex);</span>
+<span class="nc" id="L122">		} catch (RemoteException ex){</span>
+<span class="nc" id="L123">			view.setBroadcastMessage( ex.getMessage() );</span>
+<span class="nc" id="L124">			logger.fatal(&quot;Can't contact server&quot;, ex);</span>
 		}
-<span class="nc" id="L121">	}</span>
-
-	private void handleSkrullException(SkrullException ex) {
-<span class="nc" id="L124">		view.setBroadcastMessage( ex.getClientMessage() );</span>
-<span class="nc" id="L125">		logger.error(&quot;excepition received&quot;, ex);		</span>
 <span class="nc" id="L126">	}</span>
 
+	private void handleSkrullException(SkrullException ex) {
+<span class="nc" id="L129">		view.setBroadcastMessage( ex.getClientMessage() );</span>
+<span class="nc" id="L130">		logger.error(&quot;excepition received&quot;, ex);		</span>
+<span class="nc" id="L131">	}</span>
+
 	public IClientAction getStartupAction() {
-<span class="fc" id="L129">		return new ClientAction(IGameFactory.DEFAULT_GAME_ID, player, ActionType.JOIN_SERVER, GameType.DEFAULT, null, null);</span>
+<span class="fc" id="L134">		return new ClientAction(IGameFactory.DEFAULT_GAME_ID, player, ActionType.JOIN_SERVER, GameType.DEFAULT, null, null);</span>
 	}
 
 	public void setView(IGameClientView view) {
-<span class="fc" id="L133">		this.view = view;</span>
-<span class="fc" id="L134">	}</span>
+<span class="fc" id="L138">		this.view = view;</span>
+<span class="fc" id="L139">	}</span>
 
 
 	/// windowListener methods
@@ -139,60 +144,60 @@ import skrull.util.logging.SkrullLogger;
 	@Override
 	public void windowOpened(WindowEvent e) {
 		
-<span class="fc" id="L142">	}</span>
+<span class="fc" id="L147">	}</span>
 	
 	@Override
 	public void windowIconified(WindowEvent e) {
 		
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L152">	}</span>
 	
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L157">	}</span>
 	
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		
-<span class="nc" id="L157">	}</span>
+<span class="nc" id="L162">	}</span>
 	
 	@Override
 	public void windowClosing(WindowEvent e) {
-<span class="nc" id="L161">		logger.debug(&quot;closing event received&quot;);</span>
-<span class="nc" id="L162">		int confirmResult = JOptionPane.showConfirmDialog((Component)view, &quot;Are you sure?&quot;, &quot;Leaving so soon?&quot;, 1);</span>
-<span class="nc" id="L163">		System.out.println(confirmResult);</span>
+<span class="nc" id="L166">		logger.debug(&quot;closing event received&quot;);</span>
+<span class="nc" id="L167">		int confirmResult = JOptionPane.showConfirmDialog((Component)view, &quot;Are you sure?&quot;, &quot;Leaving so soon?&quot;, 1);</span>
+<span class="nc" id="L168">		System.out.println(confirmResult);</span>
 		
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (JOptionPane.OK_OPTION == confirmResult){</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (JOptionPane.OK_OPTION == confirmResult){</span>
 		
 			try {
-<span class="nc" id="L168">				serverUpdater.processClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));</span>
-<span class="nc" id="L169">				System.exit(0);</span>
+<span class="nc" id="L173">				serverUpdater.processClientAction(new ClientAction(gameId, player, ActionType.QUIT, view.getGameType(), view.getChatText(), null));</span>
+<span class="nc" id="L174">				System.exit(0);</span>
 
-<span class="nc" id="L171">			} catch (RemoteException e1) {</span>
+<span class="nc" id="L176">			} catch (RemoteException e1) {</span>
 				
-<span class="nc" id="L173">				logger.fatal(&quot;cant' contact server&quot;, e1);</span>
-<span class="nc" id="L174">				e1.printStackTrace();</span>
-<span class="nc" id="L175">			} catch (SkrullException e1) {</span>
-<span class="nc" id="L176">				handleSkrullException(e1);</span>
-<span class="nc" id="L177">			} finally {</span>
+<span class="nc" id="L178">				logger.fatal(&quot;cant' contact server&quot;, e1);</span>
+<span class="nc" id="L179">				e1.printStackTrace();</span>
+<span class="nc" id="L180">			} catch (SkrullException e1) {</span>
+<span class="nc" id="L181">				handleSkrullException(e1);</span>
+<span class="nc" id="L182">			} finally {</span>
 				// if there was an error quitting the game (like if the server wasn't there)
 				// then still exit but with error status
-<span class="nc" id="L180">				System.exit(1);</span>
-<span class="nc" id="L181">			}</span>
+<span class="nc" id="L185">				System.exit(1);</span>
+<span class="nc" id="L186">			}</span>
 		}
-<span class="nc" id="L183">	}</span>
+<span class="nc" id="L188">	}</span>
 	
 	@Override
 	public void windowClosed(WindowEvent e) {
 		
-<span class="nc" id="L188">	}</span>
+<span class="nc" id="L193">	}</span>
 
 	
 	@Override
 	public void windowActivated(WindowEvent e) {
 		
-<span class="nc" id="L194">	}</span>
+<span class="nc" id="L199">	}</span>
 
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

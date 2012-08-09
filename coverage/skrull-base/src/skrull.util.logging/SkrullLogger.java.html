@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullLogger.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.util.logging</a> &gt; <span class="el_source">SkrullLogger.java</span></div><h1>SkrullLogger.java</h1><pre class="source lang-java linenums">package skrull.util.logging;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullLogger.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.util.logging</a> &gt; <span class="el_source">SkrullLogger.java</span></div><h1>SkrullLogger.java</h1><pre class="source lang-java linenums">package skrull.util.logging;
 
 import java.io.InputStream;
 
@@ -7,17 +7,24 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 
-
-<span class="pc" id="L11">public class SkrullLogger {</span>
+/**
+ * provides a log4j logger with our properties specified either in system property
+ * log4j.config, or a file in this package named log4j.properties, or failing that, 
+ * a basic log4j configuration
+ * 
+ * @author jesse
+ *
+ */
+<span class="pc" id="L18">public class SkrullLogger {</span>
 
 	static {
         // setup log4j config
-<span class="fc" id="L15">        final String log4jFile = System.getProperty(&quot;log4j.config&quot;, &quot;log4j.properties&quot;);</span>
-<span class="fc" id="L16">        InputStream is = SkrullLogger.class.getResourceAsStream(log4jFile);</span>
-<span class="pc bpc" id="L17" title="1 of 2 branches missed.">        if (is != null){</span>
-<span class="nc" id="L18">        	PropertyConfigurator.configure(is);</span>
+<span class="fc" id="L22">        final String log4jFile = System.getProperty(&quot;log4j.config&quot;, &quot;log4j.properties&quot;);</span>
+<span class="fc" id="L23">        InputStream is = SkrullLogger.class.getResourceAsStream(log4jFile);</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        if (is != null){</span>
+<span class="fc" id="L25">        	PropertyConfigurator.configure(is);</span>
         	}else{
-<span class="fc" id="L20">        		BasicConfigurator.configure(); // default to a basic setup</span>
+<span class="nc" id="L27">        		BasicConfigurator.configure(); // default to a basic setup</span>
         	}
         
 	}
@@ -37,8 +44,8 @@ import org.apache.log4j.PropertyConfigurator;
 	 * @return a logger object
 	 */
 	public static Logger getLogger(Class&lt;?&gt; clazz){
-<span class="fc" id="L40">		return Logger.getLogger(clazz);</span>
+<span class="fc" id="L47">		return Logger.getLogger(clazz);</span>
 	}
 	
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AbstractGameModel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.model</a> &gt; <span class="el_source">AbstractGameModel.java</span></div><h1>AbstractGameModel.java</h1><pre class="source lang-java linenums">package skrull.game.model;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AbstractGameModel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.model</a> &gt; <span class="el_source">AbstractGameModel.java</span></div><h1>AbstractGameModel.java</h1><pre class="source lang-java linenums">package skrull.game.model;
 
 import java.util.Collection;
 import java.util.Set;
@@ -24,7 +24,7 @@ import skrull.util.logging.SkrullLogger;
 	private static final long serialVersionUID = -5970164504419304864L;
 <span class="fc" id="L25">	private Set&lt;IPlayer&gt; players = new CopyOnWriteArraySet&lt;IPlayer&gt;();</span>
 	
-	private IPlayer activeplayer;	// The player attempting to update the board
+	private IPlayer activePlayer;	// The player attempting to update the board
 	protected IPlayer winner;		//	
 	
 	private int moveCount;			// move
@@ -35,8 +35,6 @@ import skrull.util.logging.SkrullLogger;
 	protected boolean finished;
 	protected boolean draw;
 	
-
-
 	private long lastMoveTime;
 	private IClientAction lastAction;
 	
@@ -44,31 +42,31 @@ import skrull.util.logging.SkrullLogger;
 	private IClientUpdater clientUpdater;
 	int gameId;
 	private GameType gameType;
-<span class="fc" id="L47">	private StringBuffer chatBuffer = new StringBuffer(1024);</span>
+<span class="fc" id="L45">	private StringBuffer chatBuffer = new StringBuffer(1024);</span>
 	private String broadcastMsg;
 	private Collection&lt;IGameModel&gt; activeGames;
 	private int playersRequired;
 
-<span class="fc" id="L52">	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);</span>
+<span class="fc" id="L50">	private static final Logger  logger = SkrullLogger.getLogger(AbstractGameModel.class);</span>
 	
 	public AbstractGameModel(IPlayer startingPlayer, int gameId, GameType type, IClientUpdater updater, int boardSize, int maxMoves, int playersRequired) {
-<span class="fc" id="L55">		this(gameId, type, updater);</span>
-<span class="fc" id="L56">		this.players.add(startingPlayer);</span>
-<span class="fc" id="L57">		this.board = new Board(boardSize);</span>
-<span class="fc" id="L58">		this.maxMoves = maxMoves;</span>
-<span class="fc" id="L59">		this.playersRequired = playersRequired;</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L53">		this(gameId, type, updater);</span>
+<span class="fc" id="L54">		this.players.add(startingPlayer);</span>
+<span class="fc" id="L55">		this.board = new Board(boardSize);</span>
+<span class="fc" id="L56">		this.maxMoves = maxMoves;</span>
+<span class="fc" id="L57">		this.playersRequired = playersRequired;</span>
+<span class="fc" id="L58">	}</span>
 	
-<span class="fc" id="L62">	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {</span>
-<span class="fc" id="L63">		this.gameType = type;</span>
-<span class="fc" id="L64">		this.gameId = gameId;</span>
-<span class="fc" id="L65">		this.lastMoveTime = System.currentTimeMillis();</span>
-<span class="fc" id="L66">		this.clientUpdater = updater;</span>
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L60">	public AbstractGameModel(int gameId, GameType type, IClientUpdater updater) {</span>
+<span class="fc" id="L61">		this.gameType = type;</span>
+<span class="fc" id="L62">		this.gameId = gameId;</span>
+<span class="fc" id="L63">		this.lastMoveTime = System.currentTimeMillis();</span>
+<span class="fc" id="L64">		this.clientUpdater = updater;</span>
+<span class="fc" id="L65">	}</span>
 	
 	@Override
 	public boolean needsPlayers() {
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		return getPlayers().size() &lt; getPlayersRequired();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		return getPlayers().size() &lt; getPlayersRequired();</span>
 	}
 
 	/* (non-Javadoc)
@@ -76,13 +74,13 @@ import skrull.util.logging.SkrullLogger;
 	 */
 	@Override
 	public void chatUpdate(IClientAction action) {
-<span class="fc" id="L79">		this.chatBuffer.append(action.getActionMessage() + &quot;\n&quot;);</span>
-<span class="fc" id="L80">		updateListener();</span>
-<span class="fc" id="L81">	}</span>
+<span class="fc" id="L77">		this.chatBuffer.append(action.getActionMessage() + &quot;\n&quot;);</span>
+<span class="fc" id="L78">		updateListener();</span>
+<span class="fc" id="L79">	}</span>
 
 	@Override
 	public String getChatContents() {
-<span class="fc" id="L85">		return chatBuffer.toString();</span>
+<span class="fc" id="L83">		return chatBuffer.toString();</span>
 	};
 	
 	/* (non-Javadoc)
@@ -97,13 +95,13 @@ import skrull.util.logging.SkrullLogger;
 	@Override
 	public final void processMove(IClientAction action) throws SkrullGameException{
 		// let the subclass do the actual move logic
-<span class="nc" id="L100">		doProcessMove(action);</span>
+<span class="nc" id="L98">		doProcessMove(action);</span>
 		
 		// then do some common move housekeeping
-<span class="nc" id="L103">		this.lastMoveTime = System.currentTimeMillis();</span>
+<span class="nc" id="L101">		this.lastMoveTime = System.currentTimeMillis();</span>
 		// this.activeplayer = action.getPlayer();   // TDO kh - may need to remove this
 		// this.lastAction = action;
-<span class="nc" id="L106">	}</span>
+<span class="nc" id="L104">	}</span>
 	
 	/**
 	 * implemented by subclasses
@@ -117,7 +115,7 @@ import skrull.util.logging.SkrullLogger;
 	 */
 	@Override
 	public boolean isGameOver() {
-<span class="fc" id="L120">		return finished;</span>
+<span class="fc" id="L118">		return finished;</span>
 	}
 
 	/* (non-Javadoc)
@@ -125,17 +123,17 @@ import skrull.util.logging.SkrullLogger;
 	 */
 	@Override
 	public IPlayer getWinner() {
-<span class="nc" id="L128">		return winner;</span>
+<span class="fc" id="L126">		return winner;</span>
 	}
 	
 	@Override
 	public IPlayer getActivePlayer() {
-<span class="nc" id="L133">		return activeplayer;</span>
+<span class="nc" id="L131">		return activePlayer;</span>
 	}
 
 	@Override
 	public Collection&lt;IPlayer&gt; getPlayers(){
-<span class="fc" id="L138">		return players;</span>
+<span class="fc" id="L136">		return players;</span>
 	}
 
 	/* (non-Javadoc)
@@ -145,43 +143,49 @@ import skrull.util.logging.SkrullLogger;
 	public void checkActivity() {
 
 		
-<span class="fc" id="L148">		IPlayer playerBeingChecked = null;</span>
+<span class="fc" id="L146">		IPlayer playerBeingChecked = null;</span>
 		
-<span class="fc" id="L150">		final long now = System.currentTimeMillis();</span>
+<span class="fc" id="L148">		final long now = System.currentTimeMillis();</span>
 
 		try {
 
-<span class="fc bfc" id="L154" title="All 2 branches covered.">			for (IPlayer p : getPlayers()){</span>
-<span class="fc" id="L155">					playerBeingChecked = p;</span>
-<span class="fc" id="L156">					clientUpdater.checkPlayerConnected(playerBeingChecked);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			for (IPlayer p : this.players){</span>
+<span class="fc" id="L153">					playerBeingChecked = p;</span>
+<span class="fc" id="L154">					clientUpdater.checkPlayerConnected(playerBeingChecked);</span>
 					
 			}
 						
-<span class="pc bpc" id="L160" title="3 of 4 branches missed.">			if ((lastMoveTime + getInactivityTimeout()) &lt; now &amp;&amp; activeplayer != null){</span>
-<span class="nc" id="L161">				playerBeingChecked = activeplayer;</span>
-<span class="nc" id="L162">				throw new SkrullGameException(&quot;Player &quot; + playerBeingChecked.getPlayerId() + &quot; timed out. game over&quot;);</span>
+<span class="pc bpc" id="L158" title="3 of 4 branches missed.">			if ((lastMoveTime + getInactivityTimeout()) &lt; now &amp;&amp; activePlayer != null){</span>
+<span class="nc" id="L159">				playerBeingChecked = activePlayer;</span>
+<span class="nc" id="L160">				activePlayer = null;</span>
+<span class="nc" id="L161">				throw new SkrullGameException(&quot;Player &quot; + playerBeingChecked.getPlayerId() + &quot; timed out. game over&quot;);</span>
 			}
 
-<span class="fc" id="L165">		} catch (SkrullException e) {</span>
+<span class="fc" id="L164">		} catch (SkrullException e) {</span>
 			
-<span class="fc" id="L167">			logger.error(e.getMessage(), e);</span>
+<span class="fc" id="L166">			logger.error(e.getMessage(), e);</span>
 			
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			if (!this.getGameType().equals(GameType.DEFAULT)){</span>
-<span class="nc" id="L170">				this.finished = true;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (!this.getGameType().equals(GameType.DEFAULT)){</span>
+<span class="nc" id="L169">				this.finished = true;</span>
 			}
 			
-<span class="fc" id="L173">			this.broadcastMsg = e.getMessage();</span>
-<span class="fc" id="L174">			this.players.remove(playerBeingChecked);</span>
+<span class="fc" id="L172">			this.broadcastMsg = e.getMessage();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			if (!this.players.remove(playerBeingChecked)){</span>
+<span class="nc" id="L174">				logger.error(&quot;cant't remove &quot; + playerBeingChecked + &quot;. Is player in collection? &quot; + players.contains(playerBeingChecked));</span>
+				
+			}
+
 			try {
-<span class="fc" id="L176">				clientUpdater.modelChanged(this);</span>
-<span class="nc" id="L177">			} catch (SkrullRMIException e1) {</span>
-<span class="nc" id="L178">				logger.error(&quot;rmi issue encountered&quot;, e1);</span>
+<span class="fc" id="L179">				clientUpdater.modelChanged(this);</span>
+<span class="nc" id="L180">			} catch (SkrullRMIException e1) {</span>
+<span class="nc" id="L181">				logger.error(&quot;rmi issue encountered&quot;, e1);</span>
 			}
 		}
 
 		
 		
-<span class="fc" id="L184">	}</span>
+<span class="fc" id="L187">	}</span>
+
 
 	/**
 	 * Must return the value, in milliseconds, in which the active player
@@ -193,27 +197,28 @@ import skrull.util.logging.SkrullLogger;
 	 * @return number of milliseconds to timeout on
 	 */
 	protected long getInactivityTimeout(){
-<span class="nc" id="L196">		return Long.parseLong(System.getProperty(&quot;inactivity.timeout&quot;, String.valueOf( 5 * 60 * 1000 )));</span>
+<span class="nc" id="L200">		final Long t = Long.parseLong(System.getProperty(&quot;inactivity.timeout&quot;, String.valueOf( 25 * 60 * 1000 )));</span>
+<span class="nc" id="L201">		return t;</span>
 	}
 	
 	public void updateListener() {
 		
 		try {
-<span class="fc" id="L202">			clientUpdater.modelChanged(this);</span>
-<span class="nc" id="L203">		} catch (SkrullRMIException e) {</span>
-<span class="nc" id="L204">			logger.error(&quot;Problem encountered notifying listener, re-checking activity&quot;, e);</span>
-<span class="nc" id="L205">			checkActivity();</span>
+<span class="fc" id="L207">			clientUpdater.modelChanged(this);</span>
+<span class="nc" id="L208">		} catch (SkrullRMIException e) {</span>
+<span class="nc" id="L209">			logger.error(&quot;Problem encountered notifying listener, re-checking activity&quot;, e);</span>
+<span class="nc" id="L210">			checkActivity();</span>
 		}
-<span class="fc" id="L207">	}</span>
+<span class="fc" id="L212">	}</span>
 
 	@Override
 	public GameType getGameType() {
-<span class="fc" id="L211">		return gameType;</span>
+<span class="fc" id="L216">		return gameType;</span>
 	}
 
 	@Override
 	public int getGameId() {
-<span class="fc" id="L216">		return gameId;</span>
+<span class="fc" id="L221">		return gameId;</span>
 	}
 
 	@Override
@@ -221,15 +226,15 @@ import skrull.util.logging.SkrullLogger;
 		// this should have been setup already
 		// as in this player should already be in the game
 		// but since we are using a set it shouldn't matter
-<span class="nc" id="L224">		players.add(action.getPlayer());</span>
-<span class="nc" id="L225">		setLastAction(action);</span>
-<span class="nc" id="L226">		setBroadcastMessage(&quot;Waiting for more players...&quot;);</span>
+<span class="nc" id="L229">		players.add(action.getPlayer());</span>
+<span class="nc" id="L230">		setLastAction(action);</span>
+<span class="nc" id="L231">		setBroadcastMessage(&quot;Waiting for more players...&quot;);</span>
 		try {
-<span class="nc" id="L228">			clientUpdater.modelChanged(this);</span>
-<span class="nc" id="L229">		} catch (SkrullRMIException e1) {</span>
-<span class="nc" id="L230">			logger.error(&quot;rmi issue encountered&quot;, e1);</span>
+<span class="nc" id="L233">			clientUpdater.modelChanged(this);</span>
+<span class="nc" id="L234">		} catch (SkrullRMIException e1) {</span>
+<span class="nc" id="L235">			logger.error(&quot;rmi issue encountered&quot;, e1);</span>
 		}
-<span class="nc" id="L232">	}</span>
+<span class="nc" id="L237">	}</span>
 	
 	/**
 	 * Somebody quit, so the 
@@ -237,90 +242,89 @@ import skrull.util.logging.SkrullLogger;
 	 */
 	@Override
 	public void quit(IClientAction action) {
-<span class="nc" id="L240">		this.finished = true;</span>
-<span class="nc" id="L241">		setBroadcastMessage(&quot;Player &quot; + action.getPlayer() + &quot; quit. Game over&quot;);</span>
-<span class="nc" id="L242">		players.remove(action.getPlayer());</span>
-<span class="nc" id="L243">		updateListener();</span>
+<span class="nc" id="L245">		this.finished = true;</span>
+<span class="nc" id="L246">		setBroadcastMessage(&quot;Player &quot; + action.getPlayer() + &quot; quit. Game over&quot;);</span>
+<span class="nc" id="L247">		players.remove(action.getPlayer());</span>
+<span class="nc" id="L248">		updateListener();</span>
 
 		
-<span class="nc" id="L246">	}</span>
+<span class="nc" id="L251">	}</span>
 	
 	protected void addPlayer(IPlayer player){
-<span class="fc" id="L249">		this.players.add(player);</span>
-<span class="fc" id="L250">	}</span>
+<span class="fc" id="L254">		this.players.add(player);</span>
+<span class="fc" id="L255">	}</span>
 
 	public IBoard getBoard() {
-<span class="fc" id="L253">		return board;</span>
+<span class="nc" id="L258">		return board;</span>
 	}
 
 	protected void setBoard(IBoard board) {
-<span class="nc" id="L257">		this.board = board;</span>
-<span class="nc" id="L258">	}</span>
+<span class="nc" id="L262">		this.board = board;</span>
+<span class="nc" id="L263">	}</span>
 	protected IPlayer getActiveplayer() {
-<span class="fc" id="L260">		return activeplayer;</span>
+<span class="fc" id="L265">		return activePlayer;</span>
 	}
 
 	protected void setActiveplayer(IPlayer activeplayer) {
-<span class="fc" id="L264">		this.activeplayer = activeplayer;</span>
-<span class="fc" id="L265">	}</span>
+<span class="fc" id="L269">		this.activePlayer = activeplayer;</span>
+<span class="fc" id="L270">	}</span>
 
 	public IClientAction getLastAction() {
-<span class="fc" id="L268">		return lastAction;</span>
+<span class="fc" id="L273">		return lastAction;</span>
 	}
 
 	protected void setLastAction(IClientAction lastAction) {
-<span class="fc" id="L272">		this.lastAction = lastAction;</span>
-<span class="fc" id="L273">	}</span>
+<span class="fc" id="L277">		this.lastAction = lastAction;</span>
+<span class="fc" id="L278">	}</span>
 
 	@Override
 	public String getBroadcastMessage() {
-<span class="fc" id="L277">		return this.broadcastMsg;</span>
+<span class="fc" id="L282">		return this.broadcastMsg;</span>
 	}
 	
 	@Override
 	public void setActiveGames(Collection&lt;IGameModel&gt; activeGames) {
-<span class="fc" id="L282">		this.activeGames = activeGames;</span>
-<span class="fc" id="L283">	}</span>
+<span class="fc" id="L287">		this.activeGames = activeGames;</span>
+<span class="fc" id="L288">	}</span>
 
 	@Override
 	public Collection&lt;IGameModel&gt; getActiveGames() {
-<span class="nc" id="L287">		return activeGames;</span>
+<span class="nc" id="L292">		return activeGames;</span>
 	}
 
 	@Override
 	public int getMoveCount() {
-<span class="fc" id="L292">		return moveCount;</span>
+<span class="fc" id="L297">		return moveCount;</span>
 	}
 
-	@Override
-	public void setMoveCount(int moveCount) {
-<span class="fc" id="L297">		this.moveCount = moveCount;</span>
-<span class="fc" id="L298">	}</span>
+	protected void setMoveCount(int moveCount) {
+<span class="fc" id="L301">		this.moveCount = moveCount;</span>
+<span class="fc" id="L302">	}</span>
 
 	@Override
 	public int getMaxMoves() {
-<span class="fc" id="L302">		return maxMoves;</span>
+<span class="fc" id="L306">		return maxMoves;</span>
 	}
 
-	@Override
-	public void setMaxMoves(int maxMoves) {
-<span class="nc" id="L307">		this.maxMoves = maxMoves;</span>
-<span class="nc" id="L308">	}</span>
+	protected void setMaxMoves(int maxMoves) {
+<span class="nc" id="L310">		this.maxMoves = maxMoves;</span>
+<span class="nc" id="L311">	}</span>
 
 	protected int getPlayersRequired() {
-<span class="fc" id="L311">		return playersRequired;</span>
+<span class="fc" id="L314">		return playersRequired;</span>
 	}
 
 	protected void setBroadcastMessage(String msg){
-<span class="fc" id="L315">		this.broadcastMsg = msg;</span>
-<span class="fc" id="L316">	}</span>
+<span class="fc" id="L318">		this.broadcastMsg = msg;</span>
+<span class="fc" id="L319">	}</span>
 	
+	@Override
 	public boolean isDraw() {
-<span class="nc" id="L319">		return draw;</span>
+<span class="fc" id="L323">		return draw;</span>
 	}
-
-	public void setDraw(boolean draw) {
-<span class="fc" id="L323">		this.draw = draw;</span>
-<span class="fc" id="L324">	}</span>
+	
+	protected void setDraw(boolean draw) {
+<span class="fc" id="L327">		this.draw = draw;</span>
+<span class="fc" id="L328">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

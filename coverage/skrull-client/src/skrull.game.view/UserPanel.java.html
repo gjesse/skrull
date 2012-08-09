@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">UserPanel.java</span></div><h1>UserPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>UserPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">UserPanel.java</span></div><h1>UserPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -9,53 +9,72 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 
+
+/**
+ * UserPanel is an abstract class that provides functionality 
+ * to other panels that will be used in the user view.
+ * */
 public abstract class UserPanel extends JPanel {
 
 	private static final long serialVersionUID = -4818072651236836682L;
 	GameType gameType;
 	IPlayer player;
-<span class="fc" id="L17">	public UserPanel(IPlayer player){</span>
-<span class="fc" id="L18">		this.player = player;</span>
-<span class="fc" id="L19">	}</span>
+<span class="fc" id="L22">	public UserPanel(IPlayer player){</span>
+<span class="fc" id="L23">		this.player = player;</span>
+<span class="fc" id="L24">	}</span>
 	protected void paintComponent(Graphics g){
-<span class="nc" id="L21">		Graphics2D g2d = (Graphics2D)g;</span>
+<span class="nc" id="L26">		Graphics2D g2d = (Graphics2D)g;</span>
 		
-<span class="nc bnc" id="L23" title="All 2 branches missed.">	    if ( !isOpaque() )</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">	    if ( !isOpaque() )</span>
 	    {
-<span class="nc" id="L25">	        super.paintComponent(g);</span>
-<span class="nc" id="L26">	        return;</span>
+<span class="nc" id="L30">	        super.paintComponent(g);</span>
+<span class="nc" id="L31">	        return;</span>
 	    }
 	 
-<span class="nc" id="L29">	    int w = getWidth( );</span>
-<span class="nc" id="L30">	    int h = getHeight( );</span>
-<span class="nc" id="L31">	    Color color1 = getBackground( );</span>
-<span class="nc" id="L32">	    Color color2 = color1.darker( );</span>
+<span class="nc" id="L34">	    int w = getWidth( );</span>
+<span class="nc" id="L35">	    int h = getHeight( );</span>
+<span class="nc" id="L36">	    Color color1 = getBackground( );</span>
+<span class="nc" id="L37">	    Color color2 = color1.darker( );</span>
 	    
 	    // Paint a gradient from top to bottom
-<span class="nc" id="L35">	    GradientPaint gp = new GradientPaint(</span>
-<span class="nc" id="L36">	        0, 0, color1,</span>
-<span class="nc" id="L37">	        0, h, color2 );</span>
+<span class="nc" id="L40">	    GradientPaint gp = new GradientPaint(</span>
+<span class="nc" id="L41">	        0, 0, color1,</span>
+<span class="nc" id="L42">	        0, h, color2 );</span>
 
-<span class="nc" id="L39">	    g2d.setPaint( gp );</span>
-<span class="nc" id="L40">	    g2d.fillRect( 0, 0, w, h );</span>
+<span class="nc" id="L44">	    g2d.setPaint( gp );</span>
+<span class="nc" id="L45">	    g2d.fillRect( 0, 0, w, h );</span>
 	    
-<span class="nc" id="L42">	    setOpaque( false );</span>
-<span class="nc" id="L43">	    super.paintComponent( g );</span>
-<span class="nc" id="L44">	    setOpaque( true );  </span>
-<span class="nc" id="L45">	}</span>
+<span class="nc" id="L47">	    setOpaque( false );</span>
+<span class="nc" id="L48">	    super.paintComponent( g );</span>
+<span class="nc" id="L49">	    setOpaque( true );  </span>
+<span class="nc" id="L50">	}</span>
+	/**
+	 * Returns the game type for the specific game/panel
+	 * @return
+	 */
 	public abstract GameType getGameType();
+	
+	/**
+	 * Handle view updates based on the current state of 
+	 * the model
+	 * @param model
+	 */
 	public abstract void modelChanged(IGameModel model);
+
 	public String getJoinGameString() {
-<span class="nc" id="L49">		return &quot;&quot;;</span>
+<span class="nc" id="L65">		return &quot;&quot;;</span>
 	}
 
 	
 	protected IPlayer getPlayer(){
-<span class="nc" id="L54">		return player;</span>
+<span class="nc" id="L70">		return player;</span>
 	}
 
 	public abstract int getSelectedButton();
 	public abstract String getMessage();
+	public String getCreateGameString() {
+<span class="nc" id="L76">		return &quot;&quot;;</span>
+	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

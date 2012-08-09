@@ -1,22 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>IGameFactory.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.factory</a> &gt; <span class="el_source">IGameFactory.java</span></div><h1>IGameFactory.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package skrull.game.factory;</span>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>IGameFactory.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.factory</a> &gt; <span class="el_source">IGameFactory.java</span></div><h1>IGameFactory.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package skrull.game.factory;</span>
 
 import skrull.game.controller.IGameController;
+import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.rmi.server.IClientUpdater;
 
+/**
+ * This class is responsible for creating the data structures necessary
+ * to represent a particular game. These should include both the {@link IGameController}
+ * and the {@lin IGameModel}
+ * 
+ * @author jesse
+ *
+ */
 public interface IGameFactory {
 
-<span class="fc" id="L9">	public enum GameType {</span>
-<span class="fc" id="L10">		DEFAULT(true),TIC_TAC_TOE(false),ROCK_PAPER_SCISSORS(false);</span>
+	/**
+	 * All the game types available to the system
+	 * @author jesse
+	 */
+<span class="fc" id="L22">	public enum GameType {</span>
+<span class="fc" id="L23">		DEFAULT(true),TIC_TAC_TOE(false),ROCK_PAPER_SCISSORS(false);</span>
 		
 		private boolean isDefault;
 
-<span class="fc" id="L14">		GameType(boolean isDefault){</span>
-<span class="fc" id="L15">			this.isDefault = isDefault;</span>
-<span class="fc" id="L16">		}</span>
+		
+<span class="fc" id="L28">		GameType(boolean isDefault){</span>
+<span class="fc" id="L29">			this.isDefault = isDefault;</span>
+<span class="fc" id="L30">		}</span>
 
+		/**
+		 * Denotes whether this game type is default,
+		 * as the default game needs special handling at times
+		 * 
+		 * @return
+		 */
 		public boolean isDefault() {
-<span class="fc" id="L19">			return isDefault;</span>
+<span class="fc" id="L39">			return isDefault;</span>
 		}
 
 	}
@@ -33,4 +53,4 @@ public interface IGameFactory {
 	public IGameController setupGame(GameType type, IPlayer startingPlayer, int gameId);
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

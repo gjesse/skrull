@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TicTacToePanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">TicTacToePanel.java</span></div><h1>TicTacToePanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TicTacToePanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">TicTacToePanel.java</span></div><h1>TicTacToePanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,114 +16,122 @@ import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 
 
+/**
+ * TicTacToePanel build the TicTacToe game
+ * view that will display when the user 
+ * selects to either create or join a 
+ * TicTacToe game. modelChanged is 
+ * implemented to update the game board
+ * whenever each user makes a move
+ * */
 public class TicTacToePanel extends UserPanel {
 
 	private static final long serialVersionUID = 8769270277983184938L;
 	ActionListener cih;
-<span class="nc" id="L23">	private JButton[] ticTacToeButtons = new JButton[9];</span>
-<span class="nc" id="L24">	String chooseMe = &quot;Choose Me&quot;;</span>
+<span class="nc" id="L31">	private JButton[] ticTacToeButtons = new JButton[9];</span>
+<span class="nc" id="L32">	String chooseMe = &quot;Choose Me&quot;;</span>
 	int indexOfButton;
 	JButton selected;
-<span class="nc" id="L27">	boolean eventFired = false;</span>
+<span class="nc" id="L35">	boolean eventFired = false;</span>
 	
 	public TicTacToePanel(ActionListener cih, IPlayer player){
-<span class="nc" id="L30">		super(player);</span>
-<span class="nc" id="L31">		this.cih = cih;</span>
-<span class="nc" id="L32">		sampleTicTacToeBoard();</span>
-<span class="nc" id="L33">	}</span>
+<span class="nc" id="L38">		super(player);</span>
+<span class="nc" id="L39">		this.cih = cih;</span>
+<span class="nc" id="L40">		sampleTicTacToeBoard();</span>
+<span class="nc" id="L41">	}</span>
 	private void sampleTicTacToeBoard(){
 
-<span class="nc" id="L36">		this.setPreferredSize(new Dimension(600,0));</span>
+<span class="nc" id="L44">		this.setPreferredSize(new Dimension(600,0));</span>
 		//gameBoardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));	
-<span class="nc" id="L38">		this.setBackground(Color.WHITE);</span>
+<span class="nc" id="L46">		this.setBackground(Color.WHITE);</span>
 		
 
 		
 //		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
 //		this.add(returnToMain);
 //		returnToMain.s
-<span class="nc" id="L45">		this.setLayout(new GridBagLayout());</span>
-<span class="nc" id="L46">		GridBagConstraints constrainers = new GridBagConstraints();</span>
-<span class="nc" id="L47">		this.setBackground(Color.WHITE);</span>
+<span class="nc" id="L53">		this.setLayout(new GridBagLayout());</span>
+<span class="nc" id="L54">		GridBagConstraints constrainers = new GridBagConstraints();</span>
+<span class="nc" id="L55">		this.setBackground(Color.WHITE);</span>
 		
-<span class="nc" id="L49">		constrainers.fill = GridBagConstraints.BOTH;</span>
-<span class="nc" id="L50">		constrainers.ipadx = 25;</span>
-<span class="nc" id="L51">		constrainers.ipady = 25;</span>
-<span class="nc" id="L52">		constrainers.anchor = GridBagConstraints.CENTER;</span>
-<span class="nc" id="L53">		constrainers.gridx = 0;</span>
-<span class="nc" id="L54">		constrainers.gridy = 0;</span>
-<span class="nc" id="L55">		constrainers.insets = new Insets(75,2,2,2);</span>
+<span class="nc" id="L57">		constrainers.fill = GridBagConstraints.BOTH;</span>
+<span class="nc" id="L58">		constrainers.ipadx = 25;</span>
+<span class="nc" id="L59">		constrainers.ipady = 25;</span>
+<span class="nc" id="L60">		constrainers.anchor = GridBagConstraints.CENTER;</span>
+<span class="nc" id="L61">		constrainers.gridx = 0;</span>
+<span class="nc" id="L62">		constrainers.gridy = 0;</span>
+<span class="nc" id="L63">		constrainers.insets = new Insets(75,2,2,2);</span>
 		
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for(int i = 0; i &lt; 9; i++){</span>
-<span class="nc" id="L58">			ticTacToeButtons[i] = new JButton(i+&quot;&quot;);</span>
-<span class="nc" id="L59">			ticTacToeButtons[i].setSize(chooseMe.length(), chooseMe.length());</span>
-<span class="nc" id="L60">			ticTacToeButtons[i].setActionCommand(&quot;MOVE&quot;);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for(int i = 0; i &lt; 9; i++){</span>
+<span class="nc" id="L66">			ticTacToeButtons[i] = new JButton(i+&quot;&quot;);</span>
+<span class="nc" id="L67">			ticTacToeButtons[i].setSize(chooseMe.length(), chooseMe.length());</span>
+<span class="nc" id="L68">			ticTacToeButtons[i].setActionCommand(&quot;MOVE&quot;);</span>
 			
-<span class="nc" id="L62">			ticTacToeButtons[i].addActionListener(cih);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">			if(constrainers.gridx == 3){</span>
-<span class="nc" id="L64">				constrainers.gridx = 0;</span>
-<span class="nc" id="L65">				constrainers.gridy++;</span>
+<span class="nc" id="L70">			ticTacToeButtons[i].addActionListener(cih);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">			if(constrainers.gridx == 3){</span>
+<span class="nc" id="L72">				constrainers.gridx = 0;</span>
+<span class="nc" id="L73">				constrainers.gridy++;</span>
 			}
-<span class="nc" id="L67">			this.add(ticTacToeButtons[i],constrainers);</span>
-<span class="nc" id="L68">			constrainers.gridx++;	 </span>
+<span class="nc" id="L75">			this.add(ticTacToeButtons[i],constrainers);</span>
+<span class="nc" id="L76">			constrainers.gridx++;	 </span>
 		}
 		
-<span class="nc" id="L71">		constrainers.gridx = 0;</span>
-<span class="nc" id="L72">		constrainers.gridy = 4;</span>
-<span class="nc" id="L73">		constrainers.gridwidth = 3;</span>
-<span class="nc" id="L74">		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);</span>
-<span class="nc" id="L75">		this.add(returnToMain,constrainers);</span>
+<span class="nc" id="L79">		constrainers.gridx = 0;</span>
+<span class="nc" id="L80">		constrainers.gridy = 4;</span>
+<span class="nc" id="L81">		constrainers.gridwidth = 3;</span>
+<span class="nc" id="L82">		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);</span>
+<span class="nc" id="L83">		this.add(returnToMain,constrainers);</span>
 		
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L85">	}</span>
 
 	@Override
 	public GameType getGameType() {
 
-<span class="nc" id="L82">		return gameType = GameType.TIC_TAC_TOE;</span>
+<span class="nc" id="L90">		return gameType = GameType.TIC_TAC_TOE;</span>
 	}
 	@Override
 	public void modelChanged(IGameModel model) {
 		
-<span class="nc" id="L87">		System.out.println(&quot;about to check if GAME OVER!&quot;);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if( model.isGameOver() ){</span>
-<span class="nc" id="L89">			System.out.println(&quot;GAME OVER!&quot;);</span>
-<span class="nc" id="L90">			IPlayer winner = model.getWinner();</span>
-<span class="nc bnc" id="L91" title="All 4 branches missed.">			if(winner != null &amp;&amp; winner.equals(this.player) ){</span>
-<span class="nc" id="L92">				System.out.println(&quot;Player &quot;+&quot; is the winner!&quot;);</span>
+<span class="nc" id="L95">		System.out.println(&quot;about to check if GAME OVER!&quot;);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if( model.isGameOver() ){</span>
+<span class="nc" id="L97">			System.out.println(&quot;GAME OVER!&quot;);</span>
+<span class="nc" id="L98">			IPlayer winner = model.getWinner();</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">			if(winner != null &amp;&amp; winner.equals(this.player) ){</span>
+<span class="nc" id="L100">				System.out.println(&quot;Player &quot;+&quot; is the winner!&quot;);</span>
 			}
 		}
 		else 
-<span class="nc" id="L96">			System.out.println(&quot;the GAME WASNT OVER!&quot;);</span>
+<span class="nc" id="L104">			System.out.println(&quot;the GAME WASNT OVER!&quot;);</span>
 		
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		for( IPlayer player: model.getPlayers() ){</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			if(player.equals(this.player)){</span>
-<span class="nc" id="L100">				this.player.setPlayerToken(player.getPlayerToken() );</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for( IPlayer player: model.getPlayers() ){</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if(player.equals(this.player)){</span>
+<span class="nc" id="L108">				this.player.setPlayerToken(player.getPlayerToken() );</span>
 			}
-<span class="nc" id="L102">			System.out.println(&quot;token!!! &quot;+player.getPlayerToken()+&quot; for player:&quot;+player);</span>
-<span class="nc" id="L103">			System.out.println(&quot;our player&quot;+this.player.getPlayerToken()+&quot; for player:&quot;+player);</span>
+<span class="nc" id="L110">			System.out.println(&quot;token!!! &quot;+player.getPlayerToken()+&quot; for player:&quot;+player);</span>
+<span class="nc" id="L111">			System.out.println(&quot;our player&quot;+this.player.getPlayerToken()+&quot; for player:&quot;+player);</span>
 		}
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for( IMove buttonMove : model.getBoard().getBoard() ){</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (buttonMove != null){</span>
-<span class="nc" id="L107">				ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );</span>
-<span class="nc" id="L108">				ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for( IMove buttonMove : model.getBoard().getBoardMoves() ){</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			if (buttonMove != null){</span>
+<span class="nc" id="L115">				ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );</span>
+<span class="nc" id="L116">				ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);</span>
 				
 			}
 		}
 		
 		
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L122">	}</span>
 	public void setSelectedButton(String s){
-<span class="nc" id="L116">		indexOfButton = Integer.parseInt(s);</span>
-<span class="nc" id="L117">		System.out.println(&quot;setSelectedButton &quot;+indexOfButton);</span>
-<span class="nc" id="L118">	}</span>
+<span class="nc" id="L124">		indexOfButton = Integer.parseInt(s);</span>
+<span class="nc" id="L125">		System.out.println(&quot;setSelectedButton &quot;+indexOfButton);</span>
+<span class="nc" id="L126">	}</span>
 
 	@Override
 	public int getSelectedButton() {
-<span class="nc" id="L122">		return indexOfButton;</span>
+<span class="nc" id="L130">		return indexOfButton;</span>
 	}
 	@Override
 	public String getMessage() {
-<span class="nc" id="L126">		return null;</span>
+<span class="nc" id="L134">		return null;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

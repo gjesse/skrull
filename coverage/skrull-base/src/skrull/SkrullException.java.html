@@ -1,26 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullException.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull</a> &gt; <span class="el_source">SkrullException.java</span></div><h1>SkrullException.java</h1><pre class="source lang-java linenums">package skrull;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullException.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull</a> &gt; <span class="el_source">SkrullException.java</span></div><h1>SkrullException.java</h1><pre class="source lang-java linenums">package skrull;
 
+/**
+ * General Exception class. All app-specific checked exceptions should extend from this.
+ * 
+ * As well as debugging, this is used to communicate exceptions and errors back to the client views
+ * 
+ * @author jesse
+ *
+ */
 public class SkrullException extends Exception {
 
 	private String msg;
 
 	public SkrullException(String msg) {
-<span class="fc" id="L8">		super(msg);</span>
-<span class="fc" id="L9">		this.msg = msg;</span>
-<span class="fc" id="L10">	}</span>
+<span class="fc" id="L16">		super(msg);</span>
+<span class="fc" id="L17">		this.msg = msg;</span>
+<span class="fc" id="L18">	}</span>
 
+	/**
+	 * Exception message is stored here for
+	 * display to end user
+	 * 
+	 * @return msg
+	 */
 	public String getClientMessage(){
-<span class="nc" id="L13">		return msg;</span>
+<span class="nc" id="L27">		return msg;</span>
 	}
+	
 	public SkrullException(String msg, Throwable cause) {
-<span class="nc" id="L16">		super(msg, cause);</span>
-<span class="nc" id="L17">	}</span>
+<span class="nc" id="L31">		super(msg, cause);</span>
+<span class="nc" id="L32">	}</span>
 
 	public SkrullException(Exception cause) {
-<span class="nc" id="L20">		super(cause);</span>
-<span class="nc" id="L21">	}</span>
+<span class="nc" id="L35">		super(cause);</span>
+<span class="nc" id="L36">	}</span>
 
 	private static final long serialVersionUID = -3336461660381017745L;
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

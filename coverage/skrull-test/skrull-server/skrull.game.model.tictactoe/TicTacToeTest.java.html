@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TicTacToeTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-test</a> &gt; <a href="../index.html" class="el_bundle">skrull-server</a> &gt; <a href="index.html" class="el_package">skrull.game.model.tictactoe</a> &gt; <span class="el_source">TicTacToeTest.java</span></div><h1>TicTacToeTest.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TicTacToeTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-test</a> &gt; <a href="../index.html" class="el_bundle">skrull-server</a> &gt; <a href="index.html" class="el_package">skrull.game.model.tictactoe</a> &gt; <span class="el_source">TicTacToeTest.java</span></div><h1>TicTacToeTest.java</h1><pre class="source lang-java linenums">/**
  * 
  * @author kyle
  *
@@ -91,48 +91,203 @@ import skrull.rmi.server.IClientUpdater;
 <span class="fc" id="L91">		mygame.doProcessMove(actionMove2);</span>
 		
 <span class="fc" id="L93">		assertEquals(2,mygame.getMoveCount());</span>
-<span class="fc" id="L94">	}</span>
+		
+		
+<span class="fc" id="L96">	}</span>
 
 	@Test
-	public void testDoProcessMove() throws SkrullGameException {
+	public void testDoProcessNineMoveDrawGame() throws SkrullGameException {
 		
-		// TODO play a game here
+		/*
+		 *                   MOVES           MOVE ORDER 
+		 *                   x   o   o       7   2   6  
+		 *                   o   x   x       4   1   3
+		 *                   x   x   o       5   9   8
+		 *   
+		 */
 		
-<span class="fc" id="L101">		assertEquals(0,mygame.getMoveCount());</span>
 		
-<span class="fc" id="L103">		move1.setMoveIndex(1);</span>
-<span class="fc" id="L104">		move1.setPlayer(player1);		</span>
-<span class="fc" id="L105">		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
-<span class="fc" id="L106">		mygame.doProcessMove(actionIsOccupied);</span>
-<span class="fc" id="L107">		assertEquals(1,mygame.getMoveCount());</span>
-<span class="fc" id="L108">		assertTrue(mygame.getBoard().getBoardLoc(1).equals(move1));</span>
-<span class="fc" id="L109">		move2.setMoveIndex(2);</span>
-<span class="fc" id="L110">		move2.setPlayer(player2);</span>
-<span class="fc" id="L111">		actionIsOccupied = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
-<span class="fc" id="L112">		mygame.doProcessMove(actionIsOccupied);</span>
-<span class="fc" id="L113">		assertTrue(mygame.getBoard().getBoardLoc(2).equals(move2));</span>
+<span class="fc" id="L110">		assertEquals(0,mygame.getMoveCount());</span>
+<span class="fc" id="L111">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L112">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L114">		move1.setMoveIndex(4);</span>
+<span class="fc" id="L115">		move1.setPlayer(player1);		</span>
 
-<span class="fc" id="L115">		assertEquals(2,mygame.getMoveCount());</span>
-<span class="fc" id="L116">	}</span>
+<span class="fc" id="L117">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L118">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L119">		assertEquals(1,mygame.getMoveCount());</span>
+
+<span class="fc" id="L121">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L122">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L123">		assertEquals(&quot;X&quot;,actionMove1.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L125">		move2.setMoveIndex(1);</span>
+<span class="fc" id="L126">		move2.setPlayer(player2);</span>
+<span class="fc" id="L127">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L128">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L129">		assertEquals(2,mygame.getMoveCount());</span>
+<span class="fc" id="L130">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L131">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L133">		move1.setMoveIndex(5);</span>
+<span class="fc" id="L134">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L135">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L136">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L137">		assertEquals(3,mygame.getMoveCount());</span>
+<span class="fc" id="L138">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L139">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L141">		move2.setMoveIndex(3);</span>
+<span class="fc" id="L142">		move2.setPlayer(player2);</span>
+<span class="fc" id="L143">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L144">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L145">		assertEquals(4,mygame.getMoveCount());</span>
+<span class="fc" id="L146">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L147">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L149">		move1.setMoveIndex(6);</span>
+<span class="fc" id="L150">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L151">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L152">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L153">		assertEquals(5,mygame.getMoveCount());</span>
+<span class="fc" id="L154">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L155">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L157">		move2.setMoveIndex(2);</span>
+<span class="fc" id="L158">		move2.setPlayer(player2);</span>
+
+<span class="fc" id="L160">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L161">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L162">		assertEquals(6,mygame.getMoveCount());</span>
+<span class="fc" id="L163">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L164">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L166">		move1.setMoveIndex(0);</span>
+<span class="fc" id="L167">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L168">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L169">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L170">		assertEquals(7,mygame.getMoveCount());</span>
+<span class="fc" id="L171">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L172">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L174">		move2.setMoveIndex(8);</span>
+<span class="fc" id="L175">		move2.setPlayer(player2);</span>
+<span class="fc" id="L176">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L177">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L178">		assertEquals(8,mygame.getMoveCount());</span>
+<span class="fc" id="L179">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L180">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L182">		move1.setMoveIndex(7);</span>
+<span class="fc" id="L183">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L184">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L185">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L186">		assertEquals(9,mygame.getMoveCount());</span>
+<span class="fc" id="L187">		assertEquals(true,mygame.isDraw());</span>
+<span class="fc" id="L188">		assertEquals(true,mygame.isGameOver());</span>
+<span class="fc" id="L189">	}</span>
 	
-	@Ignore
 	@Test
-	public void testTicTacToe() {
-<span class="nc" id="L121">		fail(&quot;Not yet implemented&quot;); // TODO</span>
-<span class="nc" id="L122">	}</span>
+	public void testDoProcessEightMoveWinGame() throws SkrullGameException {
+		/*
+		 *      MOVES         MOVE ORDER 
+		 *    o   o   o       8   2   6  
+		 *    o   x   x       4   1   3
+		 *    x   x   -       5   7   -  
+		 */
+		
+<span class="fc" id="L200">		assertEquals(0,mygame.getMoveCount());</span>
+<span class="fc" id="L201">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L202">		assertEquals(false,mygame.isGameOver());</span>
+		
+<span class="fc" id="L204">		move1.setMoveIndex(4);</span>
+<span class="fc" id="L205">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L206">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L207">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L208">		assertEquals(1,mygame.getMoveCount());</span>
+<span class="fc" id="L209">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L210">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L211">		assertEquals(&quot;X&quot;,actionMove1.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L213">		move2.setMoveIndex(1);</span>
+<span class="fc" id="L214">		move2.setPlayer(player2);</span>
+<span class="fc" id="L215">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L216">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L217">		assertEquals(2,mygame.getMoveCount());</span>
+<span class="fc" id="L218">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L219">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L220">		assertEquals(&quot;O&quot;,actionMove2.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L222">		move1.setMoveIndex(5);</span>
+<span class="fc" id="L223">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L224">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L225">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L226">		assertEquals(3,mygame.getMoveCount());</span>
+<span class="fc" id="L227">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L228">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L229">		assertEquals(&quot;X&quot;,actionMove1.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L231">		move2.setMoveIndex(3);</span>
+<span class="fc" id="L232">		move2.setPlayer(player2);</span>
+<span class="fc" id="L233">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L234">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L235">		assertEquals(4,mygame.getMoveCount());</span>
+<span class="fc" id="L236">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L237">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L238">		assertEquals(&quot;O&quot;,actionMove2.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L240">		move1.setMoveIndex(6);</span>
+<span class="fc" id="L241">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L242">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L243">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L244">		assertEquals(5,mygame.getMoveCount());</span>
+<span class="fc" id="L245">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L246">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L247">		assertEquals(&quot;X&quot;,actionMove1.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L249">		move2.setMoveIndex(2);</span>
+<span class="fc" id="L250">		move2.setPlayer(player2);</span>
+<span class="fc" id="L251">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L252">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L253">		assertEquals(6,mygame.getMoveCount());</span>
+<span class="fc" id="L254">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L255">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L256">		assertEquals(&quot;O&quot;,actionMove2.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L258">		move1.setMoveIndex(7);</span>
+<span class="fc" id="L259">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L260">		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L261">		mygame.doProcessMove(actionMove1);</span>
+<span class="fc" id="L262">		assertEquals(7,mygame.getMoveCount());</span>
+<span class="fc" id="L263">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L264">		assertEquals(false,mygame.isGameOver());</span>
+<span class="fc" id="L265">		assertEquals(&quot;X&quot;,actionMove1.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L267">		move2.setMoveIndex(0);</span>
+<span class="fc" id="L268">		move2.setPlayer(player2);</span>
+<span class="fc" id="L269">		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move2);</span>
+<span class="fc" id="L270">		mygame.doProcessMove(actionMove2);</span>
+<span class="fc" id="L271">		assertEquals(8,mygame.getMoveCount());</span>
+<span class="fc" id="L272">		assertEquals(false,mygame.isDraw());</span>
+<span class="fc" id="L273">		assertEquals(true,mygame.isGameOver());</span>
+<span class="fc" id="L274">		assertEquals(player2, mygame.getWinner());</span>
+<span class="fc" id="L275">		assertEquals(&quot;O&quot;,actionMove2.getPlayer().getPlayerToken());</span>
+		
+<span class="fc" id="L277">	}</span>
 
 	@Test
 	public void testIsOccupied() throws SkrullGameException {
 				
-<span class="fc" id="L127">		move1.setMoveIndex(1);</span>
-<span class="fc" id="L128">		move1.setPlayer(player1);		</span>
+<span class="fc" id="L282">		move1.setMoveIndex(1);</span>
+<span class="fc" id="L283">		move1.setPlayer(player1);		</span>
 		
-<span class="fc" id="L130">		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
-<span class="fc" id="L131">		assertEquals(false, mygame.isOccupied(1));</span>
+<span class="fc" id="L285">		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, &quot;&quot;, move1);</span>
+<span class="fc" id="L286">		assertEquals(false, mygame.isOccupied(1));</span>
 		
-<span class="fc" id="L133">		mygame.doProcessMove(actionIsOccupied);</span>
-<span class="fc" id="L134">		assertEquals(true, mygame.isOccupied(1));		</span>
-<span class="fc" id="L135">	}</span>
+<span class="fc" id="L288">		mygame.doProcessMove(actionIsOccupied);</span>
+<span class="fc" id="L289">		assertEquals(true, mygame.isOccupied(1));		</span>
+<span class="fc" id="L290">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

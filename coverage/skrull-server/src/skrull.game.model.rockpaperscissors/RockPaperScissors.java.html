@@ -1,10 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>RockPaperScissors.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.model.rockpaperscissors</a> &gt; <span class="el_source">RockPaperScissors.java</span></div><h1>RockPaperScissors.java</h1><pre class="source lang-java linenums">/**
- * 
- * @author kyle
- *
- */
-
-package skrull.game.model.rockpaperscissors;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>RockPaperScissors.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.model.rockpaperscissors</a> &gt; <span class="el_source">RockPaperScissors.java</span></div><h1>RockPaperScissors.java</h1><pre class="source lang-java linenums">package skrull.game.model.rockpaperscissors;
 
 import skrull.SkrullGameException;
 import skrull.game.factory.IGameFactory.GameType;
@@ -13,102 +7,129 @@ import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
 
-
+/**
+ * 
+ * @author Kyle.Higgins
+ * 
+ * RockPaperScissors (RPS) Model - extends the abstract game with methods specific to Rock paper scissors.
+ * 
+ */
 public class RockPaperScissors extends AbstractGameModel{
 
+
+	private static final int PAPER = 1;
+	private static final int SCISSORS = 2;
+	private static final int ROCK = 0;
 	private static final long serialVersionUID = 1870980829045671398L;
 	private boolean gameStop;
 	
 	public RockPaperScissors(IPlayer startingPlayer, int gameId, IClientUpdater updater) {
-<span class="fc" id="L23">		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater, 3, 2, 2);</span>
-<span class="fc" id="L24">		gameStop = true;   // block moves until second player joins.</span>
-<span class="fc" id="L25">		setMoveCount(0);</span>
-<span class="fc" id="L26">		setDraw(false);</span>
-<span class="fc" id="L27">		setActiveplayer(startingPlayer);</span>
-<span class="fc" id="L28">		startingPlayer.setPlayerToken(&quot;1&quot;);</span>
+<span class="fc" id="L27">		super(startingPlayer, gameId, GameType.ROCK_PAPER_SCISSORS, updater, 3, 2, 2);</span>
+<span class="fc" id="L28">		gameStop = true;   // block moves until second player joins.</span>
+<span class="fc" id="L29">		setMoveCount(0);</span>
+<span class="fc" id="L30">		setDraw(false);</span>
+<span class="fc" id="L31">		setActiveplayer(startingPlayer);</span>
+<span class="fc" id="L32">		startingPlayer.setPlayerToken(&quot;1&quot;);</span>
 		
-<span class="fc" id="L30">	}</span>
+<span class="fc" id="L34">	}</span>
 
 	@Override
 	public void joinGame(IClientAction action) throws SkrullGameException {
-<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (!needsPlayers()){</span>
-<span class="fc" id="L35">			throw new SkrullGameException(&quot;Game Full&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		if (!needsPlayers()){</span>
+<span class="fc" id="L39">			throw new SkrullGameException(&quot;Game Full&quot;);</span>
 		}
-<span class="fc" id="L37">		super.addPlayer(action.getPlayer());</span>
+<span class="fc" id="L41">		super.addPlayer(action.getPlayer());</span>
 
-<span class="fc" id="L39">		action.getPlayer().setPlayerToken(&quot;2&quot;);</span>
-<span class="fc" id="L40">		this.setLastAction(action);</span>
-<span class="fc" id="L41">		setBroadcastMessage(&quot;Player &quot; + action.getPlayer().getPlayerId() + &quot; joined&quot;);</span>
+<span class="fc" id="L43">		action.getPlayer().setPlayerToken(&quot;2&quot;);</span>
+<span class="fc" id="L44">		this.setLastAction(action);</span>
+<span class="fc" id="L45">		setBroadcastMessage(&quot;Player &quot; + action.getPlayer().getPlayerId() + &quot; joined&quot;);</span>
 
-<span class="fc" id="L43">		gameStop = false;</span>
-<span class="fc" id="L44">		super.updateListener();</span>
+<span class="fc" id="L47">		gameStop = false;</span>
+<span class="fc" id="L48">		super.updateListener();</span>
 		
-<span class="fc" id="L46">	}</span>
+<span class="fc" id="L50">	}</span>
 
+	/**
+	 * Process the incoming action from the player.
+	 * 
+	 * Process:
+	 * 	1.  Determine if game is over, if so ignore input and throw &quot;Game Over&quot; exception.
+	 *  2.  Determine if expected player is making a move and throw &quot;Wait Turn&quot; exception.
+	 *  3.  In RPS all moves are legal if the player is legal.
+	 *  4.  If both players have move set finished flag and...
+	 *  	a.  Check for winner
+	 *  	b.  If a winner exists find it by seeing if player 1 won.
+	 *  	c.  If player one did not winner, then winner must be player 2.
+	 *  5.  If game was not finished
+	 *  	a. Change active player and wait for next move.
+	 *      b. Tell all players that a player moved.
+	 *  6.  Update listener so both 
+	 */
 	@Override
 	public void doProcessMove(IClientAction action) throws SkrullGameException {
 		
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (!finished){</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (!finished){</span>
 			
-<span class="pc bpc" id="L53" title="1 of 4 branches missed.">			if (getActiveplayer().equals(action.getPlayer()) &amp;&amp; !gameStop){</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">			if (getActiveplayer().equals(action.getPlayer()) &amp;&amp; !gameStop){</span>
 		
-				// Store the moves.  Player1 in board[1], PLayer2 in board[2].  The moves contain the index of the choice.
-<span class="fc" id="L56">				board.setBoard(action.getMove(), getMoveCount()); </span>
+				// Store the moves.  Player1 in board[0], PLayer2 in board[1].  The moves contain the index of the choice.
+<span class="fc" id="L76">				board.setBoardMove(action.getMove(), getMoveCount()); </span>
 				
 				// Announce that a move was made.
-<span class="fc" id="L59">				setBroadcastMessage(&quot;Player &quot; + action.getPlayer().getPlayerToken() + &quot; has chosen. &quot;);</span>
+<span class="fc" id="L79">				setBroadcastMessage(&quot;Player &quot; + action.getPlayer().getPlayerToken() + &quot; has chosen. &quot;);</span>
+				// setBroadcastMessage(&quot;Player &quot; + action.getPlayer() + &quot; joined&quot;);
 				
-<span class="fc" id="L61">				setMoveCount(getMoveCount() + 1);</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">				if (getMoveCount() == getMaxMoves()){</span>
+<span class="fc" id="L82">				setMoveCount(getMoveCount() + 1);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">				if (getMoveCount() == getMaxMoves()){</span>
 					
-<span class="nc" id="L64">					finished = true;</span>
+<span class="fc" id="L85">					finished = true;</span>
 					
 					// WINNER Check
-<span class="nc bnc" id="L67" title="All 2 branches missed.">					if(haveWinner()){</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">					if(haveWinner()){</span>
 					
-<span class="nc" id="L69">						int p1Choice = board.getBoardLoc(1).getMoveIndex();</span>
-<span class="nc" id="L70">						int p2Choice = board.getBoardLoc(1).getMoveIndex();</span>
+<span class="fc" id="L90">						int p1Choice = board.getBoardLoc(0).getMoveIndex();</span>
+<span class="fc" id="L91">						int p2Choice = board.getBoardLoc(1).getMoveIndex();</span>
 						
-<span class="nc bnc" id="L72" title="All 12 branches missed.">						if((p1Choice == 0 &amp;&amp; p2Choice == 2) || (p1Choice == 1 &amp;&amp; p2Choice == 0) || (p1Choice == 2 &amp;&amp; p2Choice == 1))</span>
-<span class="nc" id="L73">							winner = board.getBoardLoc(1).getPlayer();</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">						if((p1Choice == ROCK &amp;&amp; p2Choice == SCISSORS) || </span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">									(p1Choice == PAPER &amp;&amp; p2Choice == ROCK) || </span>
+<span class="pc bpc" id="L95" title="3 of 4 branches missed.">									(p1Choice == SCISSORS &amp;&amp; p2Choice == PAPER))</span>
+<span class="fc" id="L96">							winner = board.getBoardLoc(0).getPlayer();</span>
 						else {
-<span class="nc" id="L75">							winner = board.getBoardLoc(2).getPlayer();</span>
+<span class="fc" id="L98">							winner = board.getBoardLoc(1).getPlayer();</span>
 						}
-<span class="nc" id="L77">						setBroadcastMessage(&quot;We have a winner:  &quot; + winner);  // TODO: Comment me out before turn in, View side will take care of this.</span>
-					}
-					
-
-					
-					// DRAW Check
-<span class="nc bnc" id="L83" title="All 4 branches missed.">					if(!haveWinner() &amp;&amp; isGameOver()){</span>
-<span class="nc" id="L84">						setBroadcastMessage(&quot;We have a draw&quot;);  // TODO: Comment me out before turn in, View side will take care of this.</span>
-<span class="nc" id="L85">						setDraw(true);</span>
+<span class="fc" id="L100">						setBroadcastMessage(&quot;We have a winner:  &quot; + winner);  // TODO: Comment me out before turn in, View side will take care of this.</span>
+					}else{
+<span class="fc" id="L102">						setBroadcastMessage(&quot;We have a draw&quot;);  // TODO: Comment me out before turn in, View side will take care of this.</span>
+<span class="fc" id="L103">						setDraw(true);</span>
 					}
 				}	
 				// Switch Active player to allow them to move.
-<span class="fc" id="L89">				setActiveplayer(getLastAction().getPlayer());</span>
-<span class="fc" id="L90">				this.setLastAction(action);</span>
+<span class="fc" id="L107">				setActiveplayer(getLastAction().getPlayer());</span>
+<span class="fc" id="L108">				this.setLastAction(action);</span>
 				
 			}
 			// Not valid player
-<span class="fc" id="L94">			else throw new SkrullGameException(&quot;Please wait your turn.&quot;); </span>
+<span class="nc" id="L112">			else throw new SkrullGameException(&quot;Please wait your turn.&quot;); </span>
 		// Game Over
 		}
-<span class="nc" id="L97">		else throw new SkrullGameException(&quot;Game is Over, please return to main menu.&quot;);</span>
+<span class="nc" id="L115">		else throw new SkrullGameException(&quot;Game is Over, please return to main menu.&quot;);</span>
 	
-<span class="fc" id="L99">	updateListener();</span>
+<span class="fc" id="L117">	updateListener();</span>
 	
-<span class="fc" id="L101">	}</span>
-	
+<span class="fc" id="L119">	}</span>
+	/**
+	 * 
+	 * @return  If the moves indexes do not match and both players have moved there is a winner.
+	 */
 	private boolean haveWinner() {
 		
-<span class="nc" id="L105">		int p1Choice = board.getBoardLoc(1).getMoveIndex();</span>
-<span class="nc" id="L106">		int p2Choice = board.getBoardLoc(1).getMoveIndex();</span>
+<span class="fc" id="L126">		int p1Choice = board.getBoardLoc(0).getMoveIndex();</span>
+<span class="fc" id="L127">		int p2Choice = board.getBoardLoc(1).getMoveIndex();</span>
 		
-<span class="nc" id="L108">		boolean winnerDetected = false;</span>
-<span class="nc bnc" id="L109" title="All 4 branches missed.">		if (p1Choice != p2Choice &amp;&amp; getMoveCount()==getMaxMoves())</span>
-<span class="nc" id="L110">			winnerDetected =true;</span>
-<span class="nc" id="L111">		return winnerDetected;</span>
+<span class="fc" id="L129">		boolean winnerDetected = false;</span>
+<span class="pc bpc" id="L130" title="1 of 4 branches missed.">		if (p1Choice != p2Choice &amp;&amp; getMoveCount()==getMaxMoves())</span>
+<span class="fc" id="L131">			winnerDetected =true;</span>
+<span class="fc" id="L132">		return winnerDetected;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ChatPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">ChatPanel.java</span></div><h1>ChatPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ChatPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 9, 2012 3:55:18 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">ChatPanel.java</span></div><h1>ChatPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -15,113 +15,123 @@ import javax.swing.JTextField;
 
 import skrull.game.factory.IGameFactory.GameType;
 
+
+/**
+ * ChatPanel builds the chat panel for the 
+ * user to interact with and is part of 
+ * every view that the user will see except
+ * once a game has finished with a winner.
+ * Users can chat in a general lobby within
+ * the default view. Once the users
+ * start or join a game the chat is
+ * restricted to the users within that game.
+ * */
 public class ChatPanel extends JPanel {
-	
 
 	private static final long serialVersionUID = -7900339949223125405L;
 	JButton sendButton;
 	JTextArea messageCenter;
 	private JTextField chatTextInputField;
-<span class="fc" id="L25">	String sendChat = IClientAction.ActionType.CHAT.toString();</span>
+<span class="fc" id="L35">	String sendChat = IClientAction.ActionType.CHAT.toString();</span>
 	JTextArea chatWindow;
 	ActionListener cih;
 	private final static String newline = &quot;\n&quot;;
 	JScrollPane messageScrollPane;
-<span class="fc" id="L30">	public ChatPanel(ActionListener cih2){	</span>
-<span class="fc" id="L31">		this.cih = cih2;</span>
-<span class="fc" id="L32">		buildChatClient();</span>
+<span class="fc" id="L40">	public ChatPanel(ActionListener cih2){	</span>
+<span class="fc" id="L41">		this.cih = cih2;</span>
+<span class="fc" id="L42">		buildChatClient();</span>
 		
-<span class="fc" id="L34">	}</span>
+<span class="fc" id="L44">	}</span>
 	private JPanel buildChatClient(){
 		
 		//creating text field for user to enter chat text
-<span class="fc" id="L38">		chatTextInputField = new JTextField();</span>
-<span class="fc" id="L39">		chatTextInputField.setText(&quot;Enter Message...&quot;);</span>
-<span class="fc" id="L40">		chatTextInputField.setForeground(Color.gray);</span>
-<span class="fc" id="L41">		chatTextInputField.addActionListener(cih);</span>
+<span class="fc" id="L48">		chatTextInputField = new JTextField();</span>
+<span class="fc" id="L49">		chatTextInputField.setText(&quot;Enter Message...&quot;);</span>
+<span class="fc" id="L50">		chatTextInputField.setForeground(Color.gray);</span>
+<span class="fc" id="L51">		chatTextInputField.addActionListener(cih);</span>
 		
 		//creating chat window in which the users messages will be displayed
-<span class="fc" id="L44">		chatWindow = new JTextArea(5,20);</span>
-<span class="fc" id="L45">        chatWindow.setText(&quot;Welcome to Skrull Gaming...&quot;);</span>
-<span class="fc" id="L46">		chatWindow.setEditable(false);</span>
+<span class="fc" id="L54">		chatWindow = new JTextArea(5,20);</span>
+<span class="fc" id="L55">        chatWindow.setText(&quot;Welcome to Skrull Gaming...&quot;);</span>
+<span class="fc" id="L56">		chatWindow.setEditable(false);</span>
 		
 		//button that will initiate the sending of messages
-<span class="fc" id="L49">		sendButton = new JButton(sendChat);</span>
-<span class="fc" id="L50">        sendButton.setActionCommand(IClientAction.ActionType.CHAT.toString());</span>
+<span class="fc" id="L59">		sendButton = new JButton(sendChat);</span>
+<span class="fc" id="L60">        sendButton.setActionCommand(IClientAction.ActionType.CHAT.toString());</span>
         
         // TODO REMOVE ME   String sendChat = IClientAction.ActionType.CHAT.toString();
         
-<span class="fc" id="L54">        sendButton.addActionListener(cih);</span>
+<span class="fc" id="L64">        sendButton.addActionListener(cih);</span>
 		
 		//changing the border of the panel
-<span class="fc" id="L57">		this.setBorder(BorderFactory.createEmptyBorder());</span>
+<span class="fc" id="L67">		this.setBorder(BorderFactory.createEmptyBorder());</span>
 		
 		//setting up layout for panel
-<span class="fc" id="L60">		this.setLayout(new GridBagLayout());</span>
-<span class="fc" id="L61">		GridBagConstraints constraints = new GridBagConstraints();</span>
+<span class="fc" id="L70">		this.setLayout(new GridBagLayout());</span>
+<span class="fc" id="L71">		GridBagConstraints constraints = new GridBagConstraints();</span>
 		
 		//adding the chatWindow to a scroll pane so that user messages can be scrollable
-<span class="fc" id="L64">        JScrollPane scroll = new JScrollPane(chatWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );</span>
+<span class="fc" id="L74">        JScrollPane scroll = new JScrollPane(chatWindow, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );</span>
         
         //building the message center
-<span class="fc" id="L67">        constraints.gridx = 1;</span>
-<span class="fc" id="L68">        constraints.gridy = 0;</span>
-<span class="fc" id="L69">        constraints.insets = new Insets(20,0,0,0);</span>
-<span class="fc" id="L70">        this.add( buildMessageCenter(),constraints );</span>
+<span class="fc" id="L77">        constraints.gridx = 1;</span>
+<span class="fc" id="L78">        constraints.gridy = 0;</span>
+<span class="fc" id="L79">        constraints.insets = new Insets(20,0,0,0);</span>
+<span class="fc" id="L80">        this.add( buildMessageCenter(),constraints );</span>
         
-<span class="fc" id="L72">        constraints.insets = new Insets(50,0,0,0);</span>
-<span class="fc" id="L73">        constraints.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L74">        constraints.gridx = 1;</span>
-<span class="fc" id="L75">        constraints.gridy = 1;</span>
-<span class="fc" id="L76">        constraints.ipady = 100;</span>
-<span class="fc" id="L77">        this.add(scroll, constraints);</span>
+<span class="fc" id="L82">        constraints.insets = new Insets(50,0,0,0);</span>
+<span class="fc" id="L83">        constraints.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L84">        constraints.gridx = 1;</span>
+<span class="fc" id="L85">        constraints.gridy = 1;</span>
+<span class="fc" id="L86">        constraints.ipady = 100;</span>
+<span class="fc" id="L87">        this.add(scroll, constraints);</span>
         
         //adding text field
-<span class="fc" id="L80">        constraints.insets = new Insets(0,0,0,0);</span>
-<span class="fc" id="L81">        constraints.ipady = 10;</span>
-<span class="fc" id="L82">        constraints.gridx = 1;</span>
-<span class="fc" id="L83">        constraints.gridy = 2;</span>
-<span class="fc" id="L84">        chatTextInputField.setBorder(BorderFactory.createLoweredBevelBorder());</span>
-<span class="fc" id="L85">        this.add(chatTextInputField,constraints);</span>
+<span class="fc" id="L90">        constraints.insets = new Insets(0,0,0,0);</span>
+<span class="fc" id="L91">        constraints.ipady = 10;</span>
+<span class="fc" id="L92">        constraints.gridx = 1;</span>
+<span class="fc" id="L93">        constraints.gridy = 2;</span>
+<span class="fc" id="L94">        chatTextInputField.setBorder(BorderFactory.createLoweredBevelBorder());</span>
+<span class="fc" id="L95">        this.add(chatTextInputField,constraints);</span>
         
         //adding the button
-<span class="fc" id="L88">        constraints.gridx = 1;</span>
-<span class="fc" id="L89">        constraints.gridy = 3;</span>
-<span class="fc" id="L90">        constraints.ipady = 0;</span>
-<span class="fc" id="L91">        this.add(sendButton, constraints);</span>
+<span class="fc" id="L98">        constraints.gridx = 1;</span>
+<span class="fc" id="L99">        constraints.gridy = 3;</span>
+<span class="fc" id="L100">        constraints.ipady = 0;</span>
+<span class="fc" id="L101">        this.add(sendButton, constraints);</span>
         
-<span class="fc" id="L93">		return this;</span>
+<span class="fc" id="L103">		return this;</span>
 	}
 	public JScrollPane buildMessageCenter(){
 		
-<span class="fc" id="L97">		messageCenter = new JTextArea(5,30);</span>
-<span class="fc" id="L98">		messageCenter.setText(&quot;Message Center&quot;+newline);</span>
-<span class="fc" id="L99">		messageCenter.setEditable(false);</span>
-<span class="fc" id="L100">		messageCenter.setForeground(Color.gray);</span>
-<span class="fc" id="L101">		messageScrollPane = new JScrollPane( messageCenter,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );</span>
+<span class="fc" id="L107">		messageCenter = new JTextArea(5,30);</span>
+<span class="fc" id="L108">		messageCenter.setText(&quot;Message Center&quot;+newline);</span>
+<span class="fc" id="L109">		messageCenter.setEditable(false);</span>
+<span class="fc" id="L110">		messageCenter.setForeground(Color.gray);</span>
+<span class="fc" id="L111">		messageScrollPane = new JScrollPane( messageCenter,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );</span>
 		
-<span class="fc" id="L103">		return messageScrollPane;</span>
+<span class="fc" id="L113">		return messageScrollPane;</span>
 		
 	}
 	public void addMessage(String message){
 		
-<span class="nc" id="L108">		messageCenter.setText(message + newline);</span>
+<span class="nc" id="L118">		messageCenter.setText(message + newline);</span>
 		
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L120">	}</span>
 	public String getChatText(){
 		//JOptionPane.showMessageDialog(null,&quot;INSIDE CHAT PANEL GETCHATTEXT()--about to get text from ChatTextInputField&quot;);
-<span class="nc" id="L113">		return chatTextInputField.getText();</span>
+<span class="nc" id="L123">		return chatTextInputField.getText();</span>
 	}
 	
 
 	public void setText(String chatContents) {
 		// TODO Auto-generated method stub
-<span class="nc" id="L119">		chatWindow.setText(chatContents);</span>
+<span class="nc" id="L129">		chatWindow.setText(chatContents);</span>
 		
-<span class="nc" id="L121">	}</span>
+<span class="nc" id="L131">	}</span>
 	public GameType getGameType() {
-<span class="nc" id="L123">		return GameType.DEFAULT;</span>
+<span class="nc" id="L133">		return GameType.DEFAULT;</span>
 	}
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 9, 2012 3:55:18 PM)</div></body></html>

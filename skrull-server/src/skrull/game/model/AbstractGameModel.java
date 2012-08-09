@@ -24,7 +24,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	private static final long serialVersionUID = -5970164504419304864L;
 	private Set<IPlayer> players = new CopyOnWriteArraySet<IPlayer>();
 	
-	private IPlayer activeplayer;	// The player attempting to update the board
+	private IPlayer activePlayer;	// The player attempting to update the board
 	protected IPlayer winner;		//	
 	
 	private int moveCount;			// move
@@ -130,7 +130,7 @@ public abstract class AbstractGameModel implements IGameModel {
 	
 	@Override
 	public IPlayer getActivePlayer() {
-		return activeplayer;
+		return activePlayer;
 	}
 
 	@Override
@@ -151,14 +151,15 @@ public abstract class AbstractGameModel implements IGameModel {
 
 		try {
 
-			for (IPlayer p : getPlayers()){
+			for (IPlayer p : this.players){
 					playerBeingChecked = p;
 					clientUpdater.checkPlayerConnected(playerBeingChecked);
 					
 			}
 						
-			if ((lastMoveTime + getInactivityTimeout()) < now && activeplayer != null){
-				playerBeingChecked = activeplayer;
+			if ((lastMoveTime + getInactivityTimeout()) < now && activePlayer != null){
+				playerBeingChecked = activePlayer;
+				activePlayer = null;
 				throw new SkrullGameException("Player " + playerBeingChecked.getPlayerId() + " timed out. game over");
 			}
 
@@ -171,8 +172,11 @@ public abstract class AbstractGameModel implements IGameModel {
 			}
 			
 			this.broadcastMsg = e.getMessage();
-			this.players.remove(playerBeingChecked);
-			logger.info(this.players);
+			if (!this.players.remove(playerBeingChecked)){
+				logger.error("cant't remove " + playerBeingChecked + ". Is player in collection? " + players.contains(playerBeingChecked));
+				
+			}
+
 			try {
 				clientUpdater.modelChanged(this);
 			} catch (SkrullRMIException e1) {
@@ -183,6 +187,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		
 		
 	}
+
 
 	/**
 	 * Must return the value, in milliseconds, in which the active player
@@ -258,11 +263,11 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.board = board;
 	}
 	protected IPlayer getActiveplayer() {
-		return activeplayer;
+		return activePlayer;
 	}
 
 	protected void setActiveplayer(IPlayer activeplayer) {
-		this.activeplayer = activeplayer;
+		this.activePlayer = activeplayer;
 	}
 
 	public IClientAction getLastAction() {
@@ -293,8 +298,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		return moveCount;
 	}
 
-	@Override
-	public void setMoveCount(int moveCount) {
+	protected void setMoveCount(int moveCount) {
 		this.moveCount = moveCount;
 	}
 
@@ -303,8 +307,7 @@ public abstract class AbstractGameModel implements IGameModel {
 		return maxMoves;
 	}
 
-	@Override
-	public void setMaxMoves(int maxMoves) {
+	protected void setMaxMoves(int maxMoves) {
 		this.maxMoves = maxMoves;
 	}
 

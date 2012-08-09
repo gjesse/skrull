@@ -1,7 +1,7 @@
 Skrull networked multiplayer turn-based gaming system
 ======================
 
-## Overview
+## Introduction & Purpose
 
 Skrull is a project to create a simple multiplayer gaming framework that will allow multiple clients to simultaneously play various turn-based games. Although the initial system will include very simple games, it should be extensible enough to theoretically support more complex games.
 
@@ -9,7 +9,7 @@ Components will include a single Game Engine that will handle overall management
 
 Additional detail and project metrics is available at https://github.com/gjesse/skrull/wiki/Requirements
 
-## Core functional requirements
+## Core Functional Requirements
 
 1. Users will choose a unique non-persistent username when first connecting to the engine.
 
@@ -32,6 +32,16 @@ Additional detail and project metrics is available at https://github.com/gjesse/
    * Tic Tac Toe
    * Rock, Paper, Scissors
 
+## Non-functional Requirements
+
+1. System will by multi-threaded, games shall not block each other.
+
+2. System will use java RMI for communication between views and Game Engine.
+
+3. Extensible.
+
+4 Easy to maintain.
+
 ## Stretch goals (nice-to-haves)
 
 1. A chat room window will be made available for conversation among players of a particular game
@@ -40,9 +50,7 @@ Additional detail and project metrics is available at https://github.com/gjesse/
 
 3. Users will have a "Voyeur mode" option under which they can observe an existing game in progress.
 
-## Non-functional requirements
+## Design and Implementation Constraints
 
-1. System will by multi-threaded, games shall not block each other
-
-2. System will use java RMI for communication between views and Game Engine
+1. Must be run on a computer capable of running Java 1.6.
 

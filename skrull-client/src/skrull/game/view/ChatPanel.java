@@ -15,8 +15,18 @@ import javax.swing.JTextField;
 
 import skrull.game.factory.IGameFactory.GameType;
 
+
+/**
+ * ChatPanel builds the chat panel for the 
+ * user to interact with and is part of 
+ * every view that the user will see except
+ * once a game has finished with a winner.
+ * Users can chat in a general lobby within
+ * the default view. Once the users
+ * start or join a game the chat is
+ * restricted to the users within that game.
+ * */
 public class ChatPanel extends JPanel {
-	
 
 	private static final long serialVersionUID = -7900339949223125405L;
 	JButton sendButton;

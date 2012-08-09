@@ -23,8 +23,14 @@ import skrull.game.model.Move;
 
 import skrull.util.logging.SkrullLogger;
 
+/**
+ * RockPaperScissorsPanel builds the
+ * game panel for rock, paper, scissors
+ * and lays out the components that will be 
+ * used if the user selects to either
+ * start or join a RockPaperScissors game.
+ * */
 public class RockPaperScissorsPanel extends UserPanel {
-	
 
 	private static final long serialVersionUID = 7079367552263468840L;
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
@@ -35,7 +41,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 	JButton scissorButton;
 	JButton selected;
 	int indexOfButton;
-	private boolean eventFired = false;
+
 	String activePlayer;
 	private JButton[] rpsButtons = new JButton[3];
 	private BufferedImage[] buttonIcons = new BufferedImage[3];
@@ -153,7 +159,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 		System.out.println( "number of players "+model.getPlayers().size() );
 		
 		
-		System.out.println("active player is "+ model.getActivePlayer() );
+		System.out.println("token with active player is "+ model.getActivePlayer().getPlayerToken() );
 		
 		if(model.getMoveCount() == 0){
 			//we are in a new game where nobody has clicked
@@ -161,21 +167,14 @@ public class RockPaperScissorsPanel extends UserPanel {
 			System.out.println("active player is "+ model.getActivePlayer() );
 			
 		}
-		else
-		{
-			//at least one player has made a move
-			Move move ;
-			IPlayer iPlayer;
-			
-			if( model.getMoveCount() == 2){
-				//if both players have input their moves
-				//we want to update the board with their moves
-				
-				for(IPlayer player: model.getPlayers() ){
-					
-					this.player.setPlayerToken(player.getPlayerToken());
-					System.out.println("player token: "+ player.getPlayerToken() );
-				}
+	
+		//if both players have input their moves
+		//we want to update the board with their moves
+		System.out.println("about to set TOKENS");
+		for(IPlayer player: model.getPlayers() ){
+			this.player.setPlayerToken(player.getPlayerToken());
+			System.out.println("player token: "+ player.getPlayerToken() );
+		}
 /*				for( IPlayer player: model.getPlayers() ){
 					if(player.equals(this.player)){
 						this.player.setPlayerToken(player.getPlayerToken() );
@@ -189,10 +188,9 @@ public class RockPaperScissorsPanel extends UserPanel {
 						//ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );
 						//ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);		
 					}
-				}*/
-				
-			}
-		}
+				}*/		
+		
+	
 		
 		
 /*		if( !model.isGameOver() ){

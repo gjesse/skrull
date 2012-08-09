@@ -9,6 +9,11 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 
+
+/**
+ * UserPanel is an abstract class that provides functionality 
+ * to other panels that will be used in the user view.
+ * */
 public abstract class UserPanel extends JPanel {
 
 	private static final long serialVersionUID = -4818072651236836682L;
@@ -56,5 +61,8 @@ public abstract class UserPanel extends JPanel {
 
 	public abstract int getSelectedButton();
 	public abstract String getMessage();
+	public String getCreateGameString() {
+		return "";
+	}
 
 }

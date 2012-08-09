@@ -16,6 +16,14 @@ import skrull.game.model.IMove;
 import skrull.game.model.IPlayer;
 
 
+/**
+ * TicTacToePanel build the TicTacToe game
+ * view that will display when the user 
+ * selects to either create or join a 
+ * TicTacToe game. modelChanged is 
+ * implemented to update the game board
+ * whenever each user makes a move
+ * */
 public class TicTacToePanel extends UserPanel {
 
 	private static final long serialVersionUID = 8769270277983184938L;

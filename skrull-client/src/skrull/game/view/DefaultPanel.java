@@ -32,7 +32,12 @@ public class DefaultPanel extends UserPanel {
 
 
 	/**
-	 * 
+	 * DefaultPanel is the default view that the user 
+	 * will see upon launching the game. DefaultPanel
+	 * has a list of games to create and if available 
+	 * a list of games to join. DefaultPanel also
+	 * has modelChanged to update the view with 
+	 * any new additions to the list of games to join.
 	 */
 	private static final long serialVersionUID = -3874495546834222191L;
 	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);
@@ -113,9 +118,9 @@ public class DefaultPanel extends UserPanel {
 		
 		gbc.gridx =0;
 		gbc.gridy = 0;
-		gbc.ipadx = 30;
-		gbc.ipady = 75;
-		gbc.insets = new Insets(0,10,10,10);
+		gbc.ipadx = 20;
+		gbc.ipady = 93;
+		gbc.insets = new Insets(0,0,0,0);
 		
 		DefaultListModel m = new DefaultListModel();
 		for (GameType t: IGameFactory.GameType.values()){
@@ -129,9 +134,9 @@ public class DefaultPanel extends UserPanel {
 		
 		leftPanel.add(newGameList,gbc);
 		gbc.gridy = 1;
-		gbc.ipadx = 10;
+		gbc.ipadx = 57;
 		gbc.ipady = 30;
-		gbc.insets = new Insets(3,3,3,3);
+		gbc.insets = new Insets(10,0,0,0);
 		leftPanel.add(startButton,gbc);
 		leftPanel.setBorder(BorderFactory.createEtchedBorder());
 		
@@ -182,7 +187,7 @@ public class DefaultPanel extends UserPanel {
 
 		gbc.gridx =0;
 		gbc.gridy = 0;
-		gbc.ipadx = 75;
+		gbc.ipadx = 70;
 		gbc.ipady = 0;
 		gbc.insets = new Insets(0,0,0,0);
 	
@@ -193,10 +198,11 @@ public class DefaultPanel extends UserPanel {
 		activeGameScroller.setBorder(BorderFactory.createTitledBorder("Join A Game"));
 		middlePanel.add(activeGameScroller,gbc);
 		
+		
 		gbc.gridy = 1;
-		gbc.ipadx = 10;
+		gbc.ipadx = 65;
 		gbc.ipady = 30;
-		gbc.insets = new Insets(12,3,3,3);
+		gbc.insets = new Insets(10,0,0,0);
 		
 		middlePanel.add(joinButton,gbc);
 		middlePanel.setBorder(BorderFactory.createEtchedBorder());
@@ -216,9 +222,12 @@ public class DefaultPanel extends UserPanel {
 	@Override
 	public String getJoinGameString() {
 		return (String)activeGamesToJoin.getSelectedValue();
-	};
+	}
 	
-
+	@Override
+	public String getCreateGameString(){
+		return (String)newGameList.getSelectedValue();
+	}
 
 	
 	@Override

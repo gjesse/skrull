@@ -110,7 +110,7 @@ public class TicTacToePanel extends UserPanel {
 			System.out.println("token!!! "+player.getPlayerToken()+" for player:"+player);
 			System.out.println("our player"+this.player.getPlayerToken()+" for player:"+player);
 		}
-		for( IMove buttonMove : model.getBoard().getBoard() ){
+		for( IMove buttonMove : model.getBoard().getBoardMoves() ){
 			if (buttonMove != null){
 				ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );
 				ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);

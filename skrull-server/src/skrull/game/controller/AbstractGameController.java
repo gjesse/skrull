@@ -29,19 +29,6 @@ public abstract class AbstractGameController implements IGameController {
 	AbstractGameController(IGameModel model){
 		this.gameModel = model;
 	}
-	
-	// TODO: remove these next 2 if they are really not needed
-	@Override
-	public void RunGame() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void EndGame() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void setServerController(IServerController serverController) {

@@ -68,7 +68,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 				// verify move is legal
 				if (!isOccupied(boardLoc)){
 					
-					board.setBoard(action.getMove(), boardLoc);
+					board.setBoardMove(action.getMove(), boardLoc);
 					setMoveCount(getMoveCount() + 1);
 					if(getMoveCount() == getMaxMoves())
 						finished = true;

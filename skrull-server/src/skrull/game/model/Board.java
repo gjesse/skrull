@@ -18,7 +18,7 @@ public class Board implements IBoard{
 	}
 
 	@Override
-	public boolean setBoard(IMove m, int loc){
+	public boolean setBoardMove(IMove m, int loc){
 		if( this.boardLocations[loc] == null){
 			this.boardLocations[loc] = m;
 			return true;
@@ -32,7 +32,7 @@ public class Board implements IBoard{
 	}
 	
 	@Override
-	public IMove[] getBoard(){
+	public IMove[] getBoardMoves(){
 		return boardLocations;		
 	}
 	

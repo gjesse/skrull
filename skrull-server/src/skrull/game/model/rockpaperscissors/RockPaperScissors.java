@@ -57,7 +57,7 @@ public class RockPaperScissors extends AbstractGameModel{
 			if (getActiveplayer().equals(action.getPlayer()) && !gameStop){
 		
 				// Store the moves.  Player1 in board[0], PLayer2 in board[1].  The moves contain the index of the choice.
-				board.setBoard(action.getMove(), getMoveCount()); 
+				board.setBoardMove(action.getMove(), getMoveCount()); 
 				
 				// Announce that a move was made.
 				setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " has chosen. ");

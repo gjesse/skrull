@@ -1,5 +1,12 @@
 package skrull;
 
+/**
+ * Exception class for communicating general information from the game model
+ * back to the client view
+ * 
+ * @author jesse
+ *
+ */
 public class SkrullGameException extends SkrullException {
 
 	public SkrullGameException(String msg) {

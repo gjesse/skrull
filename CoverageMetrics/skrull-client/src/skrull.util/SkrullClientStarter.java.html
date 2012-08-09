@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullClientStarter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.util</a> &gt; <span class="el_source">SkrullClientStarter.java</span></div><h1>SkrullClientStarter.java</h1><pre class="source lang-java linenums">package skrull.util;
+
+import java.rmi.Remote;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.UUID;
+
+import org.apache.log4j.Logger;
+
+import skrull.game.model.IPlayer;
+import skrull.game.view.ClientInputHandler;
+import skrull.game.view.GameClientView;
+import skrull.game.view.IClientAction;
+import skrull.game.view.IGameClientView;
+import skrull.game.view.Player;
+import skrull.rmi.client.ClientListener;
+import skrull.rmi.client.IClientListener;
+import skrull.rmi.client.ServerUpdater;
+import skrull.util.logging.SkrullLogger;
+
+<span class="fc" id="L22">public class SkrullClientStarter extends RmiStarter {</span>
+
+<span class="fc" id="L24">	private static final Logger logger = SkrullLogger.getLogger(SkrullClientStarter.class);</span>
+
+	public SkrullClientStarter() throws Exception {
+<span class="fc" id="L27">		super();</span>
+<span class="fc" id="L28">	}</span>
+
+	public static void main(String[] args) throws Exception {	
+		@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L32">		SkrullClientStarter starter = new SkrullClientStarter();</span>
+		
+<span class="nc" id="L34">	}</span>
+
+	@Override
+	public void doCustomRmiHandling() {
+		try {
+			
+<span class="fc" id="L40">			final ServerUpdater serverUpdater = new ServerUpdater();</span>
+<span class="fc" id="L41">			final IPlayer player = new Player( UUID.randomUUID());</span>
+<span class="fc" id="L42">			final ClientInputHandler cih = new ClientInputHandler(serverUpdater, player);</span>
+<span class="fc" id="L43">			final IGameClientView view = new GameClientView(cih, player);</span>
+<span class="fc" id="L44">			cih.setView(view);</span>
+
+<span class="fc" id="L46">			final IClientListener listener = new ClientListener(view);</span>
+            
+<span class="fc" id="L48">            final Registry registry = LocateRegistry.getRegistry();</span>
+
+<span class="fc" id="L50">            final Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);</span>
+
+<span class="fc" id="L52">            registry.rebind(IClientListener.SERVICE_NAME + &quot;.&quot; + player.getPlayerId(), engineStub);</span>
+            
+            
+<span class="fc" id="L55">            IClientAction action = cih.getStartupAction();</span>
+<span class="fc" id="L56">            serverUpdater.processClientAction(action);</span>
+            
+<span class="fc" id="L58">            logger.info(&quot;initialization completed&quot;);</span>
+            
+            
+<span class="nc" id="L61">		}catch(Exception e){</span>
+<span class="nc" id="L62">        	logger.fatal(&quot;error encountered initializing&quot;, e);</span>
+		}		
+		
+<span class="fc" id="L65">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

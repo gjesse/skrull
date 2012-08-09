@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AbstractGameController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.controller</a> &gt; <span class="el_source">AbstractGameController.java</span></div><h1>AbstractGameController.java</h1><pre class="source lang-java linenums">package skrull.game.controller;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+
+import skrull.SkrullException;
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
+import skrull.game.view.IClientAction;
+import skrull.util.logging.SkrullLogger;
+
+/**
+ * Common operations for all game controllers
+ * @author jesse
+ *
+ */
+<span class="fc" id="L21">public abstract class AbstractGameController implements IGameController {</span>
+
+
+	private IGameModel gameModel;
+	private IServerController serverController;
+<span class="fc" id="L26">	private static final Logger logger = SkrullLogger.getLogger(AbstractGameController.class);</span>
+
+
+<span class="fc" id="L29">	AbstractGameController(IGameModel model){</span>
+<span class="fc" id="L30">		this.gameModel = model;</span>
+<span class="fc" id="L31">	}</span>
+	
+	// TODO: remove these next 2 if they are really not needed
+	@Override
+	public void RunGame() {
+		// TODO Auto-generated method stub
+
+<span class="nc" id="L38">	}</span>
+
+	@Override
+	public void EndGame() {
+		// TODO Auto-generated method stub
+
+<span class="nc" id="L44">	}</span>
+
+	@Override
+	public void setServerController(IServerController serverController) {
+<span class="fc" id="L48">		this.serverController = serverController;</span>
+<span class="fc" id="L49">	}	</span>
+	
+	@Override
+	public void checkActivity() {
+<span class="fc" id="L53">		gameModel.checkActivity();</span>
+<span class="fc" id="L54">	}</span>
+
+	@Override
+	public void processGameAction(IClientAction action) throws SkrullException {
+<span class="fc" id="L58">		logger.debug(&quot;processing game action &quot; + action.getActionType());</span>
+		
+<span class="fc" id="L60">		gameModel.setActiveGames(getActiveGames());</span>
+<span class="pc bpc" id="L61" title="1 of 6 branches missed.">		switch (action.getActionType())</span>
+		{
+			case CHAT:
+<span class="fc" id="L64">				gameModel.chatUpdate(action);</span>
+<span class="fc" id="L65">			break;</span>
+				
+			case MOVE:
+<span class="fc" id="L68">				gameModel.processMove(action);</span>
+<span class="fc" id="L69">			break;</span>
+			
+			case JOIN_GAME:
+			case JOIN_SERVER:
+<span class="fc" id="L73">				gameModel.joinGame(action);</span>
+<span class="fc" id="L74">			break;</span>
+			case CREATE_GAME:
+<span class="fc" id="L76">				gameModel.createGame(action);</span>
+<span class="fc" id="L77">			break;</span>
+			
+
+			case QUIT:
+<span class="fc" id="L81">				gameModel.quit(action);</span>
+<span class="fc" id="L82">			break;</span>
+			
+			default:
+<span class="nc" id="L85">				throw new SkrullException(&quot;Action type &quot; + action.getActionType() + &quot; was unexpected here&quot;);</span>
+		
+		} // end switch
+		
+		// gameModel.processMove(action);
+
+<span class="fc" id="L91">	}</span>
+
+	private Collection&lt;IGameModel&gt; getActiveGames() {
+		
+<span class="fc" id="L95">		Set&lt;IGameModel&gt; games = new HashSet&lt;IGameModel&gt;();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (IGameController c : serverController.getControllers()){</span>
+<span class="fc" id="L97">			games.add(c.getGameModel());</span>
+		}
+		
+<span class="fc" id="L100">		return Collections.unmodifiableSet(games);</span>
+		
+	}
+
+	@Override
+	public GameType getGameType() {
+<span class="fc" id="L106">		return gameModel.getGameType();</span>
+	}
+
+	@Override
+	public int getGameId() {
+<span class="fc" id="L111">		return gameModel.getGameId();</span>
+	}
+	
+	@Override
+	public IGameModel getGameModel() {
+		
+<span class="fc" id="L117">		return gameModel;</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

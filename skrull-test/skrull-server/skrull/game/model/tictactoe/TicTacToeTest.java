@@ -5,6 +5,7 @@
  */
 package skrull.game.model.tictactoe;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import skrull.SkrullGameException;
@@ -85,14 +87,14 @@ public class TicTacToeTest {
 		
 		move2.setMoveIndex(2);
 		move2.setPlayer(player2);
-		actionMove2 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
 		mygame.doProcessMove(actionMove2);
 		
 		assertEquals(2,mygame.getMoveCount());
 	}
 
 	@Test
-	public void testDoProcessMove() {
+	public void testDoProcessMove() throws SkrullGameException {
 		
 		// TODO play a game here
 		
@@ -101,17 +103,19 @@ public class TicTacToeTest {
 		move1.setMoveIndex(1);
 		move1.setPlayer(player1);		
 		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
-		
+		mygame.doProcessMove(actionIsOccupied);
 		assertEquals(1,mygame.getMoveCount());
-		
+		assertTrue(mygame.getBoard().getBoardLoc(1).equals(move1));
 		move2.setMoveIndex(2);
 		move2.setPlayer(player2);
-		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
-		
+		actionIsOccupied = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionIsOccupied);
+		assertTrue(mygame.getBoard().getBoardLoc(2).equals(move2));
+
 		assertEquals(2,mygame.getMoveCount());
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testTicTacToe() {
 		fail("Not yet implemented"); // TODO

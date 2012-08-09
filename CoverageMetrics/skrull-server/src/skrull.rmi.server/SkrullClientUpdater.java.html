@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullClientUpdater.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.rmi.server</a> &gt; <span class="el_source">SkrullClientUpdater.java</span></div><h1>SkrullClientUpdater.java</h1><pre class="source lang-java linenums">package skrull.rmi.server;
+
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.UUID;
+
+import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
+import skrull.rmi.SkrullRMIException;
+import skrull.rmi.client.IClientListener;
+
+public class SkrullClientUpdater implements IClientUpdater {
+
+
+	private static final long serialVersionUID = 1308396593090902859L;
+	Registry registry;
+	// private static final Logger logger = SkrullLogger.getLogger(SkrullClientUpdater.class);
+
+<span class="fc" id="L22">	public SkrullClientUpdater() throws RemoteException{</span>
+<span class="fc" id="L23">		registry = LocateRegistry.getRegistry();		</span>
+<span class="fc" id="L24">	}</span>
+
+	@Override
+	public void modelChanged(IGameModel model) throws SkrullRMIException {
+<span class="fc bfc" id="L28" title="All 2 branches covered.">		for (IPlayer player: model.getPlayers()){</span>
+			// here we need to get the rmi exposed interface for each player, and call it
+<span class="fc" id="L30">			notifyListener(model, player);</span>
+		}
+
+<span class="fc" id="L33">	}</span>
+
+	private void notifyListener(IGameModel model, IPlayer player) throws SkrullRMIException{
+		 try {
+<span class="fc" id="L37">			getListener(player.getPlayerId()).modelChanged(model);</span>
+<span class="nc" id="L38">		} catch (Exception e) {</span>
+<span class="nc" id="L39">			throw new SkrullRMIException(e);</span>
+		}		
+<span class="fc" id="L41">	}</span>
+
+	private IClientListener getListener(UUID playerId) throws AccessException, RemoteException, NotBoundException {
+		// TODO Cache this!
+		// TODO: figure out how to deal with failure
+
+<span class="fc" id="L47">		final IClientListener listener = (IClientListener)registry.lookup(IClientListener.SERVICE_NAME + &quot;.&quot; + playerId);</span>
+<span class="fc" id="L48">		return listener;</span>
+		
+	}
+
+	@Override
+	public void checkPlayerConnected(IPlayer p) throws SkrullRMIException {
+			try {
+				// can we call a method on the client w/out exception?
+<span class="nc" id="L56">				getListener(p.getPlayerId()).isConnected();</span>
+<span class="nc" id="L57">			} catch (Exception e) {</span>
+				//logger.error(&quot;Player &quot; + p.getPlayerId() + &quot; is unreachable&quot;, e);
+<span class="nc" id="L59">				throw new SkrullRMIException(&quot;Player &quot; + p.getPlayerId() + &quot; is unreachable&quot;, e);</span>
+			}
+		
+<span class="nc" id="L62">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

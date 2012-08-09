@@ -80,7 +80,7 @@ public class SkrullServerEndToEndTest {
 		// should be the result
 		clientListener.modelChanged(EasyMock.anyObject(IGameModel.class));
 		EasyMock.expectLastCall();
-		EasyMock.expect(player.getPlayerId()).andReturn(playerId);
+		EasyMock.expect(player.getPlayerId()).andReturn(playerId).atLeastOnce();
 		
 		EasyMock.replay(player, clientListener);
 		// this would be called by the client

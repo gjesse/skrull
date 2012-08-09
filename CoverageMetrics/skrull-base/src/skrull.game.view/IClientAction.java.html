@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>IClientAction.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">IClientAction.java</span></div><h1>IClientAction.java</h1><pre class="source lang-java linenums"><span class="pc" id="L1">package skrull.game.view;</span>
+
+import java.io.Serializable;
+
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IMove;
+import skrull.game.model.IPlayer;
+
+/**
+ * A single action from a single player.
+ * All fields should be final and immutable
+ * @author jesse
+ *
+ */
+public interface IClientAction extends Serializable {
+
+<span class="fc" id="L17">	public enum ActionType {</span>
+<span class="fc" id="L18">		JOIN_SERVER, CREATE_GAME, JOIN_GAME, MOVE, CHAT, QUIT;</span>
+	}
+
+	public ActionType getActionType();
+	
+	/**
+	 * other details depending on the actionType
+	 * @return
+	 */
+	public String getActionMessage();
+	
+	public IPlayer getPlayer();
+	
+	public GameType getGameType();
+	
+	public int getGameId();
+	
+	public IMove getMove();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

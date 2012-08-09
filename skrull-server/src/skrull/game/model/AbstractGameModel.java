@@ -318,11 +318,12 @@ public abstract class AbstractGameModel implements IGameModel {
 		this.broadcastMsg = msg;
 	}
 	
+	@Override
 	public boolean isDraw() {
 		return draw;
 	}
-
-	public void setDraw(boolean draw) {
+	
+	protected void setDraw(boolean draw) {
 		this.draw = draw;
 	}
 }

@@ -156,6 +156,8 @@ public interface IGameModel extends Serializable {
 	 * @return IBoard the active board object
 	 */
 	public abstract IBoard getBoard();
+
+	public boolean isDraw();
 	
 	
 }

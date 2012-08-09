@@ -16,6 +16,16 @@ import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.game.model.Move;
 
+
+/**
+ * WinnerPanel is a panel that will be
+ * displayed when a user wins. Currently
+ * both users will see the panel which 
+ * contains the user id of the winner. 
+ * From here the chatPanel has been overridden 
+ * to provide the functionality of taking 
+ * the user back to the default screen.
+ * */
 public class WinnerPanel extends UserPanel {
 
 	String newline ="\n";
@@ -32,7 +42,7 @@ public class WinnerPanel extends UserPanel {
 	@Override
 	public GameType getGameType() {
 		// TODO Auto-generated method stub
-		return null;
+		return gameType;
 	}
 	
 	private void winnerPanel(){
@@ -53,8 +63,8 @@ public class WinnerPanel extends UserPanel {
 		winnerField.setForeground(Color.cyan);
 		winnerField.setEditable(false);
 		this.add(winnerField,winnerConstraints);
-		//ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
-		//this.add(returnToMain,BorderLayout.SOUTH);
+/*		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+		this.add(returnToMain,BorderLayout.SOUTH);*/
 /*		JButton winnerButton = new JButton("WINNER is... ");
 		JButton lowerButton = new JButton(player+"");
 		lowerButton.setForeground(Color.cyan);
@@ -85,7 +95,7 @@ public class WinnerPanel extends UserPanel {
 	@Override
 	public void modelChanged(IGameModel model) {
 		// TODO Auto-generated method stub
-
+		gameType = model.getGameType();
 	}
 
 	@Override

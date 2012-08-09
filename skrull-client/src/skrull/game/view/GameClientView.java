@@ -11,6 +11,12 @@ import skrull.game.factory.IGameFactory.GameType;
 import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.util.logging.SkrullLogger;
+/**
+ * GameClientView extends JFrame and implements IGameClientView.
+ * GameClientView shall be the starter for all other views to
+ * be built. It also provides a model changed function for the
+ * view.
+ * */
 
 public class GameClientView extends JFrame implements IGameClientView{
 
@@ -35,12 +41,12 @@ public class GameClientView extends JFrame implements IGameClientView{
 	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();
 	String sendChat = IClientAction.ActionType.CHAT.toString();
 	String pickMe = "Choose Me!";
-
+	
 	IPlayer whoWon;
 	
 	private GameType gameType;
 	private ChatPanel chatPanel;
-	private IPlayer player;
+	private IPlayer player = null;
 	
 
 	public GameClientView(ActionListener cih, IPlayer player) {
@@ -116,15 +122,23 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private void updateBoard(IGameModel model) {
 			
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
-		if( model.isGameOver() ){
+		if( model.getWinner() != null ){
 			//if there is a winner then display the winner panel
 			whoWon = model.getWinner();	
-				userPanel = new WinnerPanel(cih, whoWon);
-				mainFrame.removeAll();
-				mainFrame.setVisible(false);
-				userPanel.repaint();
-				mainFrame.repaint();
-				buildClientMainView(userPanel);
+			userPanel = new WinnerPanel(cih, whoWon);
+			mainFrame.removeAll();
+			
+			//chat panel needs to either chat or come off
+
+			gameType = model.getGameType();
+			
+			mainFrame.setVisible(false);
+			
+			userPanel.repaint();
+			mainFrame.repaint();
+			
+			buildClientMainView(userPanel);
+			
 		}
 		userPanel.modelChanged(model);
 		chatPanel.setText(model.getChatContents());
@@ -132,6 +146,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		gameType = model.getGameType();
 
 	}
+
 	@Override	
 	public void setBroadcastMessage(String broadcastMessage) {
 		//TODO check if blank or null string
@@ -139,10 +154,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 		if(broadcastMessage == null){
 			System.out.println("nothing to broadcast");
 		}
-		else
-			if(gameType == GameType.ROCK_PAPER_SCISSORS)
-				userPanel.getMessage();
-			chatPanel.addMessage(broadcastMessage);
+		chatPanel.addMessage(broadcastMessage);
 	}
 	public String getMessage(){
 		return userPanel.getMessage();
@@ -170,11 +182,24 @@ public class GameClientView extends JFrame implements IGameClientView{
 		right = new JPanel();
 		
 		right.setPreferredSize(new Dimension(200,0));
-	
-		chatPanel = new ChatPanel(cih);
-		//ADDING THE CHAT PANEL TO THE RIGHT SIDE OF THE WINDOW
-		right.add( chatPanel );
 		
+		if(whoWon == null){			//if there was not a winner then we will create the chat panel to display
+			chatPanel = new ChatPanel(cih);
+		
+			//ADDING THE CHAT PANEL TO THE RIGHT SIDE OF THE WINDOW
+			right.add( chatPanel );
+		}
+		else{
+			GridBagLayout gb = new GridBagLayout();
+			GridBagConstraints c = new GridBagConstraints();
+			right.setLayout(gb);
+			c.ipadx = 50;
+			c.ipady = 50;
+			c.insets = new Insets(0,0,0,0);
+			ReturnToMainButton returnToMain = new ReturnToMainButton(cih);
+			right.add(returnToMain,c);
+			whoWon = null;
+		}
 		right.setBorder(BorderFactory.createEtchedBorder());
 		
 		//SETTING THE LAYOUT OF THE OVERALL FRAME
@@ -204,7 +229,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	   @Override
        public void actionPerformed(ActionEvent e) {
 		   
-
+		   
 		   JOptionPane.showMessageDialog(null,"In the handler for GameClientView");
 		   //cih.handleInput(e);
        }

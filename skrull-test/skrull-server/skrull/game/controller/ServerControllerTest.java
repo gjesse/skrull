@@ -26,7 +26,7 @@ public class ServerControllerTest {
 		action = EasyMock.createNiceMock(IClientAction.class);
 		defaultGameController = EasyMock.createNiceMock(IGameController.class);
 		gameController = EasyMock.createNiceMock(IGameController.class);
-		EasyMock.expect(gameFactory.setupGame(GameType.DEFAULT, null,0)).andReturn(defaultGameController);
+		EasyMock.expect(gameFactory.setupGame(GameType.DEFAULT,null, 0)).andReturn(defaultGameController);
 
 	}
 

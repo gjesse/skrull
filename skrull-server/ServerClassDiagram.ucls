@@ -1,0 +1,321 @@
+<class-diagram version="1.0.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.rockpaperscissors.RockPaperScissors" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/model/rockpaperscissors/RockPaperScissors.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="834" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="2" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.IServerController" 
+    project="skrull-base" file="/skrull-base/src/skrull/game/controller/IServerController.java" binary="false">    
+    <position height="-1" width="-1" x="217" y="-37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="skrull.rmi.server.SkrullClientUpdater" 
+    project="skrull-server" file="/skrull-server/src/skrull/rmi/server/SkrullClientUpdater.java" binary="false">    
+    <position height="-1" width="-1" x="918" y="82"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.DefaultGameController" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/controller/DefaultGameController.java" binary="false">    
+    <position height="-1" width="-1" x="525" y="379"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="skrull.rmi.server.ServerListener" project="skrull-server" 
+    file="/skrull-server/src/skrull/rmi/server/ServerListener.java" binary="false">    
+    <position height="-1" width="-1" x="-3" y="30"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="6" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.IMove" project="skrull-base" 
+    file="/skrull-base/src/skrull/game/model/IMove.java" binary="false">    
+    <position height="-1" width="-1" x="512" y="603"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="7" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.Board" project="skrull-server" 
+    file="/skrull-server/src/skrull/game/model/Board.java" binary="false">    
+    <position height="-1" width="-1" x="664" y="603"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="8" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.IActivityMonitor" 
+    project="skrull-base" file="/skrull-base/src/skrull/game/controller/IActivityMonitor.java" binary="false">    
+    <position height="-1" width="-1" x="120" y="258"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" name="skrull.game.factory.GameFactory" project="skrull-server" 
+    file="/skrull-server/src/skrull/game/factory/GameFactory.java" binary="false">    
+    <position height="-1" width="-1" x="275" y="272"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.tictactoe.TicTacToe" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/model/tictactoe/TicTacToe.java" binary="false">    
+    <position height="-1" width="-1" x="1016" y="531"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="11" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.ServerController" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/controller/ServerController.java" binary="false">    
+    <position height="-1" width="-1" x="276" y="154"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.ActivityMonitor" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/controller/ActivityMonitor.java" binary="false">    
+    <position height="-1" width="-1" x="119" y="136"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="13" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.IGameController" 
+    project="skrull-base" file="/skrull-base/src/skrull/game/controller/IGameController.java" binary="false">    
+    <position height="-1" width="-1" x="472" y="3"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="14" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.RockPaperScissorsController" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/controller/RockPaperScissorsController.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="320" y="379"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="15" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.IBoard" project="skrull-base" 
+    file="/skrull-base/src/skrull/game/model/IBoard.java" binary="false">    
+    <position height="-1" width="-1" x="675" y="442"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface id="16" corner="BOTTOM_RIGHT" language="java" name="skrull.rmi.server.IServerListener" 
+    project="skrull-base" file="/skrull-base/src/skrull/rmi/server/IServerListener.java" binary="false">    
+    <position height="-1" width="-1" x="5" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="17" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.TicTacToeController" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/controller/TicTacToeController.java" binary="false">    
+    <position height="-1" width="-1" x="412" y="494"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="18" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.DefaultGameModel" project="skrull-server" 
+    file="/skrull-server/src/skrull/game/model/DefaultGameModel.java" binary="false">    
+    <position height="-1" width="-1" x="1120" y="409"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="19" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.IGameModel" project="skrull-base" 
+    file="/skrull-base/src/skrull/game/model/IGameModel.java" binary="false">    
+    <position height="-1" width="-1" x="667" y="115"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="20" corner="BOTTOM_RIGHT" language="java" name="skrull.game.controller.AbstractGameController" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/controller/AbstractGameController.java" binary="false">    
+    <position height="-1" width="-1" x="458" y="219"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface id="21" corner="BOTTOM_RIGHT" language="java" name="skrull.rmi.server.IClientUpdater" project="skrull-base" 
+    file="/skrull-base/src/skrull/rmi/server/IClientUpdater.java" binary="false">    
+    <position height="-1" width="-1" x="919" y="-55"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class id="22" corner="BOTTOM_RIGHT" language="java" name="skrull.game.model.AbstractGameModel" 
+    project="skrull-server" file="/skrull-server/src/skrull/game/model/AbstractGameModel.java" binary="false">    
+    <position height="49" width="191" x="827" y="231"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <association id="23">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="24" name="gameModel"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="26">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <realization id="30">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <realization id="31">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="32">    
+    <bendpoint x="1050" y="339"/>    
+    <bendpoint x="1057" y="48"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="33" name="clientUpdater"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="36" name="activeGameControllers"/>      
+      <multiplicity id="37" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="38">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <generalization id="39">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <association id="40">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="41" name="defaultGameController"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="44" name="activeGames"/>      
+      <multiplicity id="45" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <association id="47">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="48" name="serverController"/>      
+      <multiplicity id="49" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="50">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="51">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="52" name="boardLocations"/>      
+      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="54">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="55">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="56" name="serverController"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="58">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="22"/>  
+  </generalization>  
+  <association id="59">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="60" name="serverController"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="62">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="63" name="board"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <realization id="65">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" 
+    visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false"/>    
+    <operations public="true" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="true"/>
+</class-diagram>

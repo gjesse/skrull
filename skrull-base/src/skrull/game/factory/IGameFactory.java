@@ -2,6 +2,7 @@ package skrull.game.factory;
 
 import skrull.game.controller.IGameController;
 import skrull.game.model.IPlayer;
+import skrull.rmi.server.IClientUpdater;
 
 public interface IGameFactory {
 
@@ -27,6 +28,7 @@ public interface IGameFactory {
 	 *  with attendant gameModel and all leaf objects instantiated (except players)
 	 *  
 	 *  Should handle every type of GameType
+	 * @param updater TODO
 	 */
 	public IGameController setupGame(GameType type, IPlayer startingPlayer, int gameId);
 

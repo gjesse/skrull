@@ -171,8 +171,12 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		userPanel = myPanel;
 		
+		Point location = null;
+		if (mainFrame != null){
+			location = mainFrame.getLocation();
+		}
+		
 		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player );
-
 		mainFrame.addWindowListener((WindowListener)cih);
 		
 		
@@ -212,7 +216,11 @@ public class GameClientView extends JFrame implements IGameClientView{
 		
 		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		mainFrame.setSize(800,600);
-		mainFrame.setLocationRelativeTo(null);
+		if (location != null){
+			mainFrame.setLocation(location);
+		}else{
+			mainFrame.setLocationRelativeTo(null);
+		}
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
 				

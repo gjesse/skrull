@@ -197,7 +197,8 @@ public abstract class AbstractGameModel implements IGameModel {
 	 * @return number of milliseconds to timeout on
 	 */
 	protected long getInactivityTimeout(){
-		return Long.parseLong(System.getProperty("inactivity.timeout", String.valueOf( 5 * 60 * 1000 )));
+		final Long t = Long.parseLong(System.getProperty("inactivity.timeout", String.valueOf( 25 * 60 * 1000 )));
+		return t;
 	}
 	
 	public void updateListener() {

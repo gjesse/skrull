@@ -10,6 +10,9 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import skrull.SkrullException;
+import skrull.SkrullGameException;
+import skrull.game.view.IClientAction;
 import skrull.rmi.SkrullRMIException;
 import skrull.rmi.server.IClientUpdater;
 
@@ -88,49 +91,38 @@ public class AbstractGameModelTest {
 	
 	
 	@Test
-	public void testChatUpdate() {
-		fail("Not yet implemented");
-	}
+	public void testChatUpdate() throws SkrullRMIException {
+		
+		IClientAction action = EasyMock.createMock(IClientAction.class);
+		updater.modelChanged(game);
+		EasyMock.expectLastCall();
+		
+		EasyMock.expect(action.getActionMessage()).andReturn("chat");
+		
+		EasyMock.replay(updater, action);
+		game.chatUpdate(action);
+		EasyMock.verify(updater, action);
 
-	@Test
-	public void testGetChatContents() {
-		fail("Not yet implemented");
-	}
+		assertEquals("chat\n", game.getChatContents());
 
-	@Test
-	public void testJoinGame() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testProcessMove() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsGameOver() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetWinner() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPlayers() {
-		fail("Not yet implemented");
 	}
 
 
 	@Test
-	public void testUpdateListener() {
-		fail("Not yet implemented");
+	public void testJoinGame() throws SkrullException {
+		IClientAction action = EasyMock.createMock(IClientAction.class);
+		updater.modelChanged(game);
+		EasyMock.expectLastCall();
+		
+		EasyMock.expect(action.getPlayer()).andReturn(player1).atLeastOnce();
+	
+		EasyMock.replay(updater, action);
+		game.joinGame(action);
+		EasyMock.verify(updater, action);
+		
+		assertTrue(game.getPlayers().contains(player1));
 	}
 
-	@Test
-	public void testQuit() {
-		fail("Not yet implemented");
-	}
+
 
 }

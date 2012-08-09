@@ -48,8 +48,19 @@ public abstract class UserPanel extends JPanel {
 	    super.paintComponent( g );
 	    setOpaque( true );  
 	}
+	/**
+	 * Returns the game type for the specific game/panel
+	 * @return
+	 */
 	public abstract GameType getGameType();
+	
+	/**
+	 * Handle view updates based on the current state of 
+	 * the model
+	 * @param model
+	 */
 	public abstract void modelChanged(IGameModel model);
+
 	public String getJoinGameString() {
 		return "";
 	}

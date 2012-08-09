@@ -62,20 +62,12 @@ public class RockPaperScissorsPanel extends UserPanel {
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		
-/*		BufferedImage buttonIcon = null;
-		BufferedImage buttonIcon2 = null;
-		BufferedImage buttonIcon3 = null;*/
 
 		
 		try {
 			buttonIcons[0] = ImageIO.read(new File(IMAGE_DIR + "Rockscaled2.jpg"));
 			buttonIcons[1] = ImageIO.read(new File(IMAGE_DIR + "Paperscaled.jpg"));
 			buttonIcons[2] = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));
-			
-/*			buttonIcon = ImageIO.read(new File(IMAGE_DIR + "Paperscaled.jpg"));
-			buttonIcon2 = ImageIO.read(new File(IMAGE_DIR + "Rockscaled2.jpg"));
-			buttonIcon3 = ImageIO.read(new File(IMAGE_DIR + "Scissorsscaled.jpg"));*/
 			
 		} catch (IOException e) {
 			logger.error("error reading from " + IMAGE_DIR, e);
@@ -97,47 +89,7 @@ public class RockPaperScissorsPanel extends UserPanel {
 			c.gridy++;	
 		}
 		
-/*		paperButton = new JButton(new ImageIcon(buttonIcon));
-		rockButton = new JButton(new ImageIcon(buttonIcon2));
-		scissorButton = new JButton(new ImageIcon(buttonIcon3));
 
-		paperButton.setBackground(Color.WHITE);
-		rockButton.setBackground(Color.WHITE);
-		scissorButton.setBackground(Color.WHITE);
-		
-		paperButton.setActionCommand("MOVE");
-		rockButton.setActionCommand("MOVE");
-		scissorButton.setActionCommand("MOVE");
-		
-		rockButton.setText("1");
-		paperButton.setText("2");
-		scissorButton.setText("3");
-		
-		rockButton.setBorder(null);
-		paperButton.setBorder(null);
-		scissorButton.setBorder(null);
-		//rockButton.setForeground(getBackground());
-		//paperButton.setForeground(getBackground());
-		//scissorButton.setForeground(getBackground());
-
-		rockButton.addActionListener(cih);
-		paperButton.addActionListener(cih);
-		scissorButton.addActionListener(cih);
-		*/
-		
-
-	/*	c.gridx = 0;
-		c.gridy = 0;
-		
-		this.add(rockButton,c);
-		c.gridx = 0;
-		c.gridy = 1;
-		this.add(paperButton,c);
-		c.gridx = 0;
-		c.gridy = 2;
-
-		this.add(scissorButton,c);
-*/
 		c.gridx = 0;
 		c.gridy = 3;
 		this.add(returnToMain, c);
@@ -172,8 +124,11 @@ public class RockPaperScissorsPanel extends UserPanel {
 		//we want to update the board with their moves
 		System.out.println("about to set TOKENS");
 		for(IPlayer player: model.getPlayers() ){
-			this.player.setPlayerToken(player.getPlayerToken());
-			System.out.println("player token: "+ player.getPlayerToken() );
+			if (this.player.equals(player)){
+				this.player.setPlayerToken(player.getPlayerToken());
+				System.out.println("player token: "+ player.getPlayerToken() );
+
+			}
 		}
 /*				for( IPlayer player: model.getPlayers() ){
 					if(player.equals(this.player)){

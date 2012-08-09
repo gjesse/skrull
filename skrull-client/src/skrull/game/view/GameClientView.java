@@ -122,7 +122,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private void updateBoard(IGameModel model) {
 			
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
-		if( model.getWinner() != null ){
+		if( model.getWinner() != null){
 			//if there is a winner then display the winner panel
 			whoWon = model.getWinner();	
 			userPanel = new WinnerPanel(cih, whoWon);
@@ -140,6 +140,11 @@ public class GameClientView extends JFrame implements IGameClientView{
 			buildClientMainView(userPanel);
 			
 		}
+/*		if( model.getWinner() != null && model.getGameType() == GameType.TIC_TAC_TOE){
+			System.out.println("Winner is "+model.getWinner());
+			setBroadcastMessage( model.getWinner()+" is the winner!");
+		}
+		*/
 		userPanel.modelChanged(model);
 		chatPanel.setText(model.getChatContents());
 		setBroadcastMessage( model.getBroadcastMessage() );
@@ -170,9 +175,13 @@ public class GameClientView extends JFrame implements IGameClientView{
 		//THE WINNER PANEL, OR THE LOSER PANEL
 		
 		userPanel = myPanel;
-		
+/*		if(player.getPlayerToken() == null){
+			mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player );
+		}
+		else{
+			mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player.getPlayerToken() );
+		}*/
 		mainFrame = new JFrame("gameId: "+gameId+"---"+"GameType: "+gameType+"---"+"User: " + player );
-
 		mainFrame.addWindowListener((WindowListener)cih);
 		
 		

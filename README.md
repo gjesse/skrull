@@ -9,7 +9,7 @@ Components will include a single Game Engine that will handle overall management
 
 Additional detail and project metrics is available at https://github.com/gjesse/skrull/wiki/Requirements
 
-## Core Functional Requirements
+## Core Functional Requirements (see Testing document for screen shots of interface).
 
 1. Users will choose a unique non-persistent username when first connecting to the engine.
 

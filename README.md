@@ -7,6 +7,8 @@ Skrull is a project to create a simple multiplayer gaming framework that will al
 
 Components will include a single Game Engine that will handle overall management and individual game logic and implementations, and 1 or more Game View Clients (or Users) that connect to the central Game Engine.
 
+Additional detail and project metrics is available at https://github.com/gjesse/skrull/wiki/Requirements
+
 ## Core functional requirements
 
 1. Users will choose a unique non-persistent username when first connecting to the engine.

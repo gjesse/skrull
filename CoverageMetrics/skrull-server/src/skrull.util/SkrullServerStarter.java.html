@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SkrullServerStarter.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.util</a> &gt; <span class="el_source">SkrullServerStarter.java</span></div><h1>SkrullServerStarter.java</h1><pre class="source lang-java linenums">package skrull.util;
+
+import java.rmi.Remote;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.Logger;
+
+import skrull.game.controller.ActivityMonitor;
+import skrull.game.controller.IActivityMonitor;
+import skrull.game.controller.IServerController;
+import skrull.game.controller.ServerController;
+import skrull.game.factory.GameFactory;
+import skrull.game.factory.IGameFactory;
+import skrull.rmi.server.IClientUpdater;
+import skrull.rmi.server.IServerListener;
+import skrull.rmi.server.ServerListener;
+import skrull.rmi.server.SkrullClientUpdater;
+import skrull.util.logging.SkrullLogger;
+
+<span class="fc" id="L25">public class SkrullServerStarter extends RmiStarter {</span>
+
+
+<span class="fc" id="L28">	private static final Logger logger = SkrullLogger.getLogger(SkrullServerStarter.class);</span>
+
+	public SkrullServerStarter() throws Exception {
+<span class="fc" id="L31">		super();</span>
+<span class="fc" id="L32">	}</span>
+	public static void main(String[] args) throws Exception {
+
+		@SuppressWarnings(&quot;unused&quot;)
+<span class="nc" id="L36">		SkrullServerStarter starter = new SkrullServerStarter();</span>
+<span class="nc" id="L37">	}</span>
+
+	/**
+	 * Just a note that this is doing all the application initialization and
+	 * dependency injection. It would be nice to have this organized a little better
+	 */
+	@Override
+	public void doCustomRmiHandling() {
+       try {
+<span class="fc" id="L46">    	    IClientUpdater updater = new SkrullClientUpdater();</span>
+<span class="fc" id="L47">    	    IGameFactory factory = new GameFactory(updater);</span>
+<span class="fc" id="L48">    	    IServerController controller = new ServerController(factory);</span>
+<span class="fc" id="L49">    	    IActivityMonitor monitor = new ActivityMonitor(controller);</span>
+<span class="fc" id="L50">    	    spawnThread(monitor);</span>
+<span class="fc" id="L51">            IServerListener listener = new ServerListener(controller);</span>
+<span class="fc" id="L52">            Remote engineStub = UnicastRemoteObject.exportObject(listener, 0);</span>
+
+<span class="fc" id="L54">            Registry registry = LocateRegistry.createRegistry(1099);</span>
+<span class="fc" id="L55">            registry.rebind(IServerListener.SERVICE_NAME, engineStub);</span>
+<span class="fc" id="L56">            logger.info(&quot;initialization completed&quot;);</span>
+
+        }
+<span class="nc" id="L59">        catch(Exception e) {</span>
+<span class="nc" id="L60">        	logger.fatal(&quot;error encountered initializing&quot;, e);</span>
+        }
+
+		
+<span class="fc" id="L64">	}</span>
+
+	private void spawnThread(Runnable monitor) {
+
+<span class="fc" id="L68">		ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor();</span>
+		// svc.execute(monitor);
+<span class="fc" id="L70">		long interval = Long.parseLong(</span>
+<span class="fc" id="L71">				System.getProperty(&quot;activity.monitor.interval&quot;, String.valueOf(IActivityMonitor.CHECK_INTERVAL_MS))</span>
+				);
+<span class="fc" id="L73">		svc.scheduleAtFixedRate(monitor, 1000, interval, TimeUnit.MILLISECONDS);</span>
+<span class="fc" id="L74">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AbstractGameModelTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-test</a> &gt; <a href="../index.html" class="el_bundle">skrull-server</a> &gt; <a href="index.html" class="el_package">skrull.game.model</a> &gt; <span class="el_source">AbstractGameModelTest.java</span></div><h1>AbstractGameModelTest.java</h1><pre class="source lang-java linenums">package skrull.game.model;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.easymock.EasyMock;
+import org.junit.Before;
+import org.junit.Test;
+
+import skrull.SkrullException;
+import skrull.SkrullGameException;
+import skrull.game.view.IClientAction;
+import skrull.rmi.SkrullRMIException;
+import skrull.rmi.server.IClientUpdater;
+
+<span class="fc" id="L19">public class AbstractGameModelTest {</span>
+
+	private IClientUpdater updater;
+	private AbstractGameModel game;
+	private List&lt;IPlayer&gt; players;
+	private IPlayer player1;
+	private IPlayer player2;
+<span class="fc" id="L26">	private final static UUID p1Id = UUID.randomUUID();;</span>
+<span class="fc" id="L27">	private final static UUID p2Id = UUID.randomUUID();;</span>
+
+	@Before
+	public void setUp() throws Exception {
+		
+	
+<span class="fc" id="L33">		updater = EasyMock.createMock(IClientUpdater.class);</span>
+<span class="fc" id="L34">		game = new DefaultGameModel(1, updater);</span>
+
+<span class="fc" id="L36">		players = new ArrayList&lt;IPlayer&gt;();</span>
+
+<span class="fc" id="L38">		players.add( player1 = EasyMock.createMock(IPlayer.class));</span>
+<span class="fc" id="L39">		players.add( player2 = EasyMock.createMock(IPlayer.class));</span>
+		
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		for (IPlayer p: players){</span>
+<span class="fc" id="L42">			game.addPlayer(p);</span>
+		}
+		
+<span class="fc" id="L45">		EasyMock.expect(player1.getPlayerId()).andReturn(p1Id).anyTimes();</span>
+<span class="fc" id="L46">		EasyMock.expect(player2.getPlayerId()).andReturn(p2Id).anyTimes();</span>
+
+		
+<span class="fc" id="L49">	}</span>
+
+
+	@Test
+	public void testCheckActivity() throws Exception {
+
+<span class="fc" id="L55">		updater.checkPlayerConnected(player1);</span>
+<span class="fc" id="L56">		EasyMock.expectLastCall();</span>
+<span class="fc" id="L57">		updater.checkPlayerConnected(player2);</span>
+<span class="fc" id="L58">		EasyMock.expectLastCall();</span>
+
+			
+<span class="fc" id="L61">		EasyMock.replay(updater,player1, player2);</span>
+<span class="fc" id="L62">		game.checkActivity();</span>
+<span class="fc" id="L63">		EasyMock.verify(updater, player1, player2);</span>
+
+		
+	
+<span class="fc" id="L67">	}</span>
+	
+	@Test
+	public void testCheckActivityDisconnected() throws SkrullRMIException {
+<span class="fc" id="L71">		final String msg = &quot;abcdefg&quot;;</span>
+<span class="fc" id="L72">		updater.checkPlayerConnected(player1);</span>
+<span class="fc" id="L73">		EasyMock.expectLastCall();</span>
+<span class="fc" id="L74">		updater.checkPlayerConnected(player2);</span>
+<span class="fc" id="L75">		EasyMock.expectLastCall().andThrow(new SkrullRMIException(msg));</span>
+		
+		
+<span class="fc" id="L78">		updater.modelChanged(game);</span>
+<span class="fc" id="L79">		EasyMock.expectLastCall();</span>
+
+
+			
+<span class="fc" id="L83">		EasyMock.replay(updater,player1, player2);</span>
+<span class="fc" id="L84">			game.checkActivity();</span>
+<span class="fc" id="L85">			assertEquals(msg, game.getBroadcastMessage());</span>
+<span class="fc" id="L86">			assertFalse(game.getPlayers().contains(player2));</span>
+<span class="fc" id="L87">		EasyMock.verify(updater, player1, player2);</span>
+	
+<span class="fc" id="L89">	}</span>
+	
+	
+	
+	@Test
+	public void testChatUpdate() throws SkrullRMIException {
+		
+<span class="fc" id="L96">		IClientAction action = EasyMock.createMock(IClientAction.class);</span>
+<span class="fc" id="L97">		updater.modelChanged(game);</span>
+<span class="fc" id="L98">		EasyMock.expectLastCall();</span>
+		
+<span class="fc" id="L100">		EasyMock.expect(action.getActionMessage()).andReturn(&quot;chat&quot;);</span>
+		
+<span class="fc" id="L102">		EasyMock.replay(updater, action);</span>
+<span class="fc" id="L103">		game.chatUpdate(action);</span>
+<span class="fc" id="L104">		EasyMock.verify(updater, action);</span>
+
+<span class="fc" id="L106">		assertEquals(&quot;chat\n&quot;, game.getChatContents());</span>
+
+<span class="fc" id="L108">	}</span>
+
+
+	@Test
+	public void testJoinGame() throws SkrullException {
+<span class="fc" id="L113">		IClientAction action = EasyMock.createMock(IClientAction.class);</span>
+<span class="fc" id="L114">		updater.modelChanged(game);</span>
+<span class="fc" id="L115">		EasyMock.expectLastCall();</span>
+		
+<span class="fc" id="L117">		EasyMock.expect(action.getPlayer()).andReturn(player1).atLeastOnce();</span>
+	
+<span class="fc" id="L119">		EasyMock.replay(updater, action);</span>
+<span class="fc" id="L120">		game.joinGame(action);</span>
+<span class="fc" id="L121">		EasyMock.verify(updater, action);</span>
+		
+<span class="fc" id="L123">		assertTrue(game.getPlayers().contains(player1));</span>
+<span class="fc" id="L124">	}</span>
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

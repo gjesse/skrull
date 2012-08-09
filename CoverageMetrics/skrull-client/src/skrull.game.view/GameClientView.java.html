@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GameClientView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">GameClientView.java</span></div><h1>GameClientView.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+import org.apache.log4j.Logger;
+
+import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
+import skrull.util.logging.SkrullLogger;
+
+<span class="fc" id="L15">public class GameClientView extends JFrame implements IGameClientView{</span>
+
+<span class="fc" id="L17">	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);</span>
+	private static final long serialVersionUID = 733356106858477245L;
+	private ActionListener cih;
+
+<span class="fc" id="L21">	private int gameId = IGameFactory.DEFAULT_GAME_ID;</span>
+
+	JButton exitButton;
+
+	JButton startButton;
+	JButton joinButton;
+	JPanel right;
+	JList newGameList;
+	JList activeGamesToJoin;
+	JPanel gameBoardPanel;
+	UserPanel userPanel;
+	JPanel winnerPanel;
+	JFrame mainFrame;
+<span class="fc" id="L34">	String createGame = IClientAction.ActionType.CREATE_GAME.toString();</span>
+<span class="fc" id="L35">	String joinGame = IClientAction.ActionType.JOIN_GAME.toString();</span>
+<span class="fc" id="L36">	String sendChat = IClientAction.ActionType.CHAT.toString();</span>
+<span class="fc" id="L37">	String pickMe = &quot;Choose Me!&quot;;</span>
+
+	IPlayer whoWon;
+	
+	private GameType gameType;
+	private ChatPanel chatPanel;
+	private IPlayer player;
+	
+
+<span class="fc" id="L46">	public GameClientView(ActionListener cih, IPlayer player) {</span>
+<span class="fc" id="L47">		this.cih = cih;</span>
+<span class="fc" id="L48">		this.player = player;</span>
+<span class="fc" id="L49">		this.gameType = GameType.DEFAULT; // start in default game</span>
+		
+
+<span class="fc" id="L52">		userPanel = new DefaultPanel(cih, player);</span>
+<span class="fc" id="L53">		buildClientMainView(userPanel);	</span>
+		
+<span class="fc" id="L55">	}</span>
+	/*
+	 * @see skrull.game.view.IGameClientView#modelChanged(skrull.game.model.IGameModel)
+	 * */
+	
+	 @Override
+	public void modelChanged(IGameModel model) {
+		 
+		 //if game id from game is not equal to model.getGameId
+		 //then want to create the new view 
+		 
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		 if(gameId != model.getGameId() ){</span>
+<span class="nc" id="L67">			 logger.debug(&quot;game id &quot; + gameId + &quot; not old game id, creating a new view&quot;);</span>
+<span class="nc" id="L68">			 this.gameId = model.getGameId();</span>
+<span class="nc" id="L69">			 updateView(model);</span>
+		 }
+		 
+<span class="nc" id="L72">		 updateBoard(model);</span>
+		
+
+<span class="nc" id="L75">	}</span>
+	private void updateView(IGameModel model){
+		
+
+		//if we are still on the main screen with the default panel (or have switched bac)
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if( model.getGameType() == GameType.DEFAULT ){</span>
+			
+<span class="nc" id="L82">			mainFrame.removeAll();</span>
+<span class="nc" id="L83">			mainFrame.setVisible(false);</span>
+<span class="nc" id="L84">			userPanel = new DefaultPanel(cih, player);</span>
+<span class="nc" id="L85">			userPanel.repaint();</span>
+<span class="nc" id="L86">			mainFrame.repaint();</span>
+<span class="nc" id="L87">			buildClientMainView(userPanel);</span>
+		}
+		else
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if(model.getGameType() == GameType.TIC_TAC_TOE){</span>
+<span class="nc" id="L91">			System.out.println(&quot;INSIDE THE TTT PART OF UPDATE BOARD&quot;);</span>
+<span class="nc" id="L92">			System.out.println(&quot;game Type  =&quot;+ gameType + &quot; model.getGameType = &quot;+model.getGameType() );</span>
+	
+<span class="nc" id="L94">			mainFrame.removeAll();</span>
+<span class="nc" id="L95">			mainFrame.setVisible(false);</span>
+
+<span class="nc" id="L97">			userPanel = new TicTacToePanel(cih, player);</span>
+<span class="nc" id="L98">			userPanel.repaint();</span>
+<span class="nc" id="L99">			mainFrame.repaint();</span>
+<span class="nc" id="L100">			buildClientMainView(userPanel);</span>
+
+		}
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		else if(model.getGameType() == GameType.ROCK_PAPER_SCISSORS){</span>
+			//JOptionPane.showMessageDialog(null,&quot;about to make a new RPS Panel&quot;);
+			
+<span class="nc" id="L106">			userPanel = new RockPaperScissorsPanel(cih, player);</span>
+<span class="nc" id="L107">			mainFrame.removeAll();</span>
+<span class="nc" id="L108">			mainFrame.setVisible(false);</span>
+
+<span class="nc" id="L110">			userPanel.repaint();</span>
+<span class="nc" id="L111">			mainFrame.repaint();</span>
+<span class="nc" id="L112">			buildClientMainView(userPanel);</span>
+		}
+
+<span class="nc" id="L115">	}</span>
+	private void updateBoard(IGameModel model) {
+			
+		//chatTextInputField.setText(&quot;got a message from the model - player id &quot; + playerId + &quot; &quot; + model.getGameType());
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if( model.isGameOver() ){</span>
+			//if there is a winner then display the winner panel
+<span class="nc" id="L121">			whoWon = model.getWinner();	</span>
+<span class="nc" id="L122">				userPanel = new WinnerPanel(cih, whoWon);</span>
+<span class="nc" id="L123">				mainFrame.removeAll();</span>
+<span class="nc" id="L124">				mainFrame.setVisible(false);</span>
+<span class="nc" id="L125">				userPanel.repaint();</span>
+<span class="nc" id="L126">				mainFrame.repaint();</span>
+<span class="nc" id="L127">				buildClientMainView(userPanel);</span>
+		}
+<span class="nc" id="L129">		userPanel.modelChanged(model);</span>
+<span class="nc" id="L130">		chatPanel.setText(model.getChatContents());</span>
+<span class="nc" id="L131">		setBroadcastMessage( model.getBroadcastMessage() );</span>
+<span class="nc" id="L132">		gameType = model.getGameType();</span>
+
+<span class="nc" id="L134">	}</span>
+	@Override	
+	public void setBroadcastMessage(String broadcastMessage) {
+		//TODO check if blank or null string
+		//if its blank or null do nothing otherwise print out
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if(broadcastMessage == null){</span>
+<span class="nc" id="L140">			System.out.println(&quot;nothing to broadcast&quot;);</span>
+		}
+		else
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if(gameType == GameType.ROCK_PAPER_SCISSORS)</span>
+<span class="nc" id="L144">				userPanel.getMessage();</span>
+<span class="nc" id="L145">			chatPanel.addMessage(broadcastMessage);</span>
+<span class="nc" id="L146">	}</span>
+	public String getMessage(){
+<span class="nc" id="L148">		return userPanel.getMessage();</span>
+	}
+	public IPlayer getWinner(){
+<span class="nc" id="L151">		return whoWon;</span>
+	}
+
+	private void buildClientMainView(UserPanel myPanel){
+		
+		//USER PANEL WILL EITHER BE THE DEFAULT PANEL, 
+		//TIC TAC TOE PANEL, ROCK PAPER SCISSORS PANEL,
+		//THE WINNER PANEL, OR THE LOSER PANEL
+		
+<span class="fc" id="L160">		userPanel = myPanel;</span>
+		
+<span class="fc" id="L162">		mainFrame = new JFrame(&quot;gameId: &quot;+gameId+&quot;---&quot;+&quot;GameType: &quot;+gameType+&quot;---&quot;+&quot;User: &quot; + player );</span>
+
+<span class="fc" id="L164">		mainFrame.addWindowListener((WindowListener)cih);</span>
+		
+		
+		
+		/*******************RIGHT PROPERTIES************************/	
+		
+<span class="fc" id="L170">		right = new JPanel();</span>
+		
+<span class="fc" id="L172">		right.setPreferredSize(new Dimension(200,0));</span>
+	
+<span class="fc" id="L174">		chatPanel = new ChatPanel(cih);</span>
+		//ADDING THE CHAT PANEL TO THE RIGHT SIDE OF THE WINDOW
+<span class="fc" id="L176">		right.add( chatPanel );</span>
+		
+<span class="fc" id="L178">		right.setBorder(BorderFactory.createEtchedBorder());</span>
+		
+		//SETTING THE LAYOUT OF THE OVERALL FRAME
+<span class="fc" id="L181">		GridLayout mainGrid = new GridLayout(0,2);</span>
+		
+<span class="fc" id="L183">		mainFrame.setLayout(mainGrid);</span>
+
+<span class="fc" id="L185">		mainFrame.getContentPane().add(userPanel);		</span>
+<span class="fc" id="L186">		mainFrame.getContentPane().add(right);</span>
+		
+<span class="fc" id="L188">		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);</span>
+<span class="fc" id="L189">		mainFrame.setSize(800,600);</span>
+<span class="fc" id="L190">		mainFrame.setLocationRelativeTo(null);</span>
+<span class="fc" id="L191">		mainFrame.setVisible(true);</span>
+<span class="fc" id="L192">		mainFrame.setResizable(false);</span>
+				
+<span class="fc" id="L194">	}</span>
+
+	public String getChatText(){
+		//lJOptionPane.showMessageDialog(null,&quot;INSIDE GAMECLIENTVIEW--about to get text from the GameClientView calling chatPanel.text()&quot;);
+<span class="nc" id="L198">		return chatPanel.getChatText();</span>
+	}
+	
+
+	@Override
+	public int getGameId() {
+<span class="nc" id="L204">		return gameId;</span>
+	}
+	
+	@Override
+	public GameType getGameType() {
+<span class="nc" id="L209">		return userPanel.getGameType();</span>
+	}
+
+	@Override
+	public String getJoinGameString() {
+<span class="nc" id="L214">		return userPanel.getJoinGameString();</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

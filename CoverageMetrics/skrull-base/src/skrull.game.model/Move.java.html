@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Move.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-base</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.model</a> &gt; <span class="el_source">Move.java</span></div><h1>Move.java</h1><pre class="source lang-java linenums">package skrull.game.model;
+
+<span class="fc" id="L3">public class Move implements IMove {</span>
+
+	private static final long serialVersionUID = 3692646851275065925L;
+	private int moveIndex;    // Location of move on board
+	private IPlayer player;   // UUID
+	
+	// moves are all ints for now, representing the location of the move
+	// 0 thru 8 for tic tac toe, 0 thru 2 for rock paper scissors.
+	// the game model will know who made the move and what to put in the location.
+	public void setMoveIndex(int m){
+<span class="fc" id="L13">		moveIndex = m;</span>
+<span class="fc" id="L14">	}</span>
+	
+	@Override
+	public int getMoveIndex(){
+<span class="fc" id="L18">		return moveIndex;</span>
+	}
+	
+	@Override
+	public IPlayer getPlayer() {
+<span class="nc" id="L23">		return player;</span>
+	}
+
+	public void setPlayer(IPlayer player) {
+<span class="fc" id="L27">		this.player = player;</span>
+<span class="fc" id="L28">	}</span>
+	
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

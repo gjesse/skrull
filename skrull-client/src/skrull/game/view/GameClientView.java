@@ -122,7 +122,7 @@ public class GameClientView extends JFrame implements IGameClientView{
 	private void updateBoard(IGameModel model) {
 			
 		//chatTextInputField.setText("got a message from the model - player id " + playerId + " " + model.getGameType());
-		if( model.getWinner() != null){
+		if( model.getWinner() != null && model.getGameType() != GameType.TIC_TAC_TOE){
 			//if there is a winner then display the winner panel
 			whoWon = model.getWinner();	
 			userPanel = new WinnerPanel(cih, whoWon);
@@ -140,11 +140,9 @@ public class GameClientView extends JFrame implements IGameClientView{
 			buildClientMainView(userPanel);
 			
 		}
-/*		if( model.getWinner() != null && model.getGameType() == GameType.TIC_TAC_TOE){
-			System.out.println("Winner is "+model.getWinner());
-			setBroadcastMessage( model.getWinner()+" is the winner!");
-		}
-		*/
+		//wanted to setBroadcast message to show the winner
+		//of the TTT game but isnt updating to show.
+		
 		userPanel.modelChanged(model);
 		chatPanel.setText(model.getChatContents());
 		setBroadcastMessage( model.getBroadcastMessage() );

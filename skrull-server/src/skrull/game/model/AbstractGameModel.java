@@ -172,6 +172,7 @@ public abstract class AbstractGameModel implements IGameModel {
 			
 			this.broadcastMsg = e.getMessage();
 			this.players.remove(playerBeingChecked);
+			logger.info(this.players);
 			try {
 				clientUpdater.modelChanged(this);
 			} catch (SkrullRMIException e1) {

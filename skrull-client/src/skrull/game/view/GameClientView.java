@@ -213,9 +213,6 @@ public class GameClientView extends JFrame implements IGameClientView{
 	public String getJoinGameString() {
 		return userPanel.getJoinGameString();
 	}
-	public int getSelectedButton(){
-		return userPanel.getSelectedButton();
-	}
 
 
 }

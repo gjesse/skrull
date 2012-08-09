@@ -59,7 +59,7 @@ public class RockPaperScissorsTest {
 		mygame.joinGame(actionJoin);
 	}
 
-	@Test
+	@Test(expected = SkrullGameException.class)
 	public void testJoinGame() throws Exception {
 		actionJoin = new ClientAction(gameId, player3, ActionType.JOIN_GAME, GameType.TIC_TAC_TOE, "", null);
 		mygame.joinGame(actionJoin);
@@ -79,7 +79,7 @@ public class RockPaperScissorsTest {
 		
 		move2.setMoveIndex(2);
 		move2.setPlayer(player2);
-		actionMove2 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move2);
 		mygame.doProcessMove(actionMove2);
 		
 		assertEquals(2,mygame.getMoveCount());
@@ -92,32 +92,50 @@ public class RockPaperScissorsTest {
 		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move1);
 		mygame.doProcessMove(actionMove1); // TODO
 		
+		assertEquals(1,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("1",actionMove1.getPlayer().getPlayerToken());
+		
 		move2.setMoveIndex(2);
 		move2.setPlayer(player2);		
-		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move1);
-		mygame.doProcessMove(actionMove1);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move2);
+		mygame.doProcessMove(actionMove2);
 		
-		assertEquals(player2,mygame.getWinner());
+		assertEquals(2,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(true,mygame.isGameOver());
+		assertEquals("2",actionMove2.getPlayer().getPlayerToken());
+		
+		assertEquals(player1,mygame.getWinner());
 	}
 
 	@Test
 	public void testDoProcessMoveDraw() throws SkrullGameException {
+		
+		assertEquals(0,mygame.getMoveCount());
+		
 		move1.setMoveIndex(0);
-		move1.setPlayer(player1);		
+		move1.setPlayer(player1);	
 		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move1);
-		mygame.doProcessMove(actionMove1); // TODO
+		mygame.doProcessMove(actionMove1); 
+		
+		assertEquals(1,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("1",actionMove1.getPlayer().getPlayerToken());
 		
 		move2.setMoveIndex(0);
 		move2.setPlayer(player2);		
-		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move1);
-		mygame.doProcessMove(actionMove1);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.ROCK_PAPER_SCISSORS, "", move2);
+		mygame.doProcessMove(actionMove2);
 		
-		assertEquals(player2,mygame.getWinner());
+		assertEquals(2,mygame.getMoveCount());
+		assertEquals(true,mygame.isDraw());
+		assertEquals(true,mygame.isGameOver());
+		assertEquals("2",actionMove2.getPlayer().getPlayerToken());
+		
+		assertEquals(null,mygame.getWinner());
 	}
 	
-	@Test
-	public void testRockPaperScissors() {
-		fail("Not yet implemented"); // TODO
-	}
-
 }

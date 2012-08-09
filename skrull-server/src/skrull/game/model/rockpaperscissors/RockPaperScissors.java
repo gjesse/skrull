@@ -61,6 +61,7 @@ public class RockPaperScissors extends AbstractGameModel{
 				
 				// Announce that a move was made.
 				setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " has chosen. ");
+				setBroadcastMessage("Player " + action.getPlayer() + " joined");
 				
 				setMoveCount(getMoveCount() + 1);
 				if (getMoveCount() == getMaxMoves()){

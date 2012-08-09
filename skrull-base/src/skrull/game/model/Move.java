@@ -10,7 +10,7 @@ public class Move implements IMove {
 	// 0 thru 8 for tic tac toe, 0 thru 2 for rock paper scissors.
 	// the game model will know who made the move and what to put in the location.
 	public void setMoveIndex(int m){
-		moveIndex = m;
+		this.moveIndex = m;
 	}
 	
 	@Override

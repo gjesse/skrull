@@ -9,10 +9,11 @@ import skrull.game.view.IClientAction;
 import skrull.game.view.IClientAction.ActionType;
 
 /**
- * Common interface for all game models. 
- * 
- * @author jesse
+ *   IGameModel 
  *
+ *   The Interface for the game model.
+ *   Blocks out the constructors, getters, and setters for the abstract model
+ *   and specific game models.
  */
 public interface IGameModel extends Serializable {
 
@@ -29,8 +30,11 @@ public interface IGameModel extends Serializable {
 	 * Validation must be done by the implementation before
 	 * adding the new player to the game
 	 * 
+<<<<<<< HEAD
 	 * Failure to add the player should throw {@link SkrullGameException}
 	 * 
+=======
+>>>>>>> refs/remotes/origin/khmasterlast102pm
 	 * @param aAction
 	 * @throws SkrullGameException 
 	 */
@@ -117,14 +121,12 @@ public interface IGameModel extends Serializable {
 	 */
 	public abstract Collection<IGameModel> getActiveGames();
 
-
 	/**
 	 * 
 	 * @return the current count of moves
 	 */
 	public int getMoveCount();
 
-//	public void setMoveCount(int moveCount);
 
 	/**
 	 * 
@@ -132,7 +134,6 @@ public interface IGameModel extends Serializable {
 	 */
 	public int getMaxMoves();
 
-//	public void setMaxMoves(int maxMoves);
 
 	/**
 	 * Process an {@link IClientAction.ActionType} of type CREATE_GAME

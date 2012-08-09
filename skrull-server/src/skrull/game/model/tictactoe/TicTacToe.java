@@ -1,8 +1,3 @@
-/**
- * 
- * @author kyle
- *
- */
 package skrull.game.model.tictactoe;
 
 import skrull.SkrullGameException;
@@ -12,7 +7,13 @@ import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
 
-
+/**
+ * 
+ * @author Kyle.Higgins
+ *
+ * Tic Tax Toe class extending the abstract game model with TTT specific methods.
+ *
+ */
 public class TicTacToe extends AbstractGameModel{
 
 
@@ -47,7 +48,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 		super.addPlayer(action.getPlayer());
 		action.getPlayer().setPlayerToken("O");
 		this.setLastAction(action);
-		setBroadcastMessage("Player " + action.getPlayer().getPlayerId() + " joined");
+		setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " joined");
 
 		gameStop = false;	// Allow starting player to start game
 		super.updateListener();

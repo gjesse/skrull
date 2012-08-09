@@ -1,9 +1,3 @@
-/**
- * 
- * @author kyle
- *
- */
-
 package skrull.game.model.rockpaperscissors;
 
 import skrull.SkrullGameException;
@@ -13,7 +7,13 @@ import skrull.game.model.IPlayer;
 import skrull.game.view.IClientAction;
 import skrull.rmi.server.IClientUpdater;
 
-
+/**
+ * 
+ * @author Kyle.Higgins
+ * 
+ * RockPaperScissors (RPS) Model - extends the abstract game with methods specific to Rock paper scissors.
+ * 
+ */
 public class RockPaperScissors extends AbstractGameModel{
 
 
@@ -49,6 +49,22 @@ public class RockPaperScissors extends AbstractGameModel{
 		
 	}
 
+	/**
+	 * Process the incoming action from the player.
+	 * 
+	 * Process:
+	 * 	1.  Determine if game is over, if so ignore input and throw "Game Over" exception.
+	 *  2.  Determine if expected player is making a move and throw "Wait Turn" exception.
+	 *  3.  In RPS all moves are legal if the player is legal.
+	 *  4.  If both players have move set finished flag and...
+	 *  	a.  Check for winner
+	 *  	b.  If a winner exists find it by seeing if player 1 won.
+	 *  	c.  If player one did not winner, then winner must be player 2.
+	 *  5.  If game was not finished
+	 *  	a. Change active player and wait for next move.
+	 *      b. Tell all players that a player moved.
+	 *  6.  Update listener so both 
+	 */
 	@Override
 	public void doProcessMove(IClientAction action) throws SkrullGameException {
 		
@@ -61,7 +77,7 @@ public class RockPaperScissors extends AbstractGameModel{
 				
 				// Announce that a move was made.
 				setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " has chosen. ");
-				setBroadcastMessage("Player " + action.getPlayer() + " joined");
+				// setBroadcastMessage("Player " + action.getPlayer() + " joined");
 				
 				setMoveCount(getMoveCount() + 1);
 				if (getMoveCount() == getMaxMoves()){
@@ -101,7 +117,10 @@ public class RockPaperScissors extends AbstractGameModel{
 	updateListener();
 	
 	}
-	
+	/**
+	 * 
+	 * @return  If the moves indexes do not match and both players have moved there is a winner.
+	 */
 	private boolean haveWinner() {
 		
 		int p1Choice = board.getBoardLoc(0).getMoveIndex();

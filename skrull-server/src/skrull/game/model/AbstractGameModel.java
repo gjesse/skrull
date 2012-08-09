@@ -35,8 +35,6 @@ public abstract class AbstractGameModel implements IGameModel {
 	protected boolean finished;
 	protected boolean draw;
 	
-
-
 	private long lastMoveTime;
 	private IClientAction lastAction;
 	

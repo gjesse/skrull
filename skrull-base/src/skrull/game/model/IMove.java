@@ -10,9 +10,10 @@ import java.io.Serializable;
  */
 public interface IMove extends Serializable{
 
-	/**
-	 * the index location on the board where the move is mad
-	 * @return
+
+	/** 
+	 * @return index to the board location chosen by player for their move.
+	 * 
 	 */
 	int getMoveIndex();
 
@@ -21,5 +22,17 @@ public interface IMove extends Serializable{
 	 * @return
 	 */
 	IPlayer getPlayer();
+
+	/**
+	 * Stores the location on the board for the move
+	 * @param m
+	 */
+	void setMoveIndex(int m);
+
+	/**
+	 * Stores the player UUID that made the move.
+	 * @param player
+	 */
+	void setPlayer(IPlayer player);
 
 }

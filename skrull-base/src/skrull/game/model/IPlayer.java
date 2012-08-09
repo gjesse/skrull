@@ -27,9 +27,9 @@ public interface IPlayer extends Serializable {
 	 */
 	public String getPlayerToken();
 
-	/**
-	 * Used to update the player token
-	 * @param c
+	/** 
+	 * @param String token for this player as set by game model
+	 * 
 	 */
 	public void setPlayerToken(String c);
 

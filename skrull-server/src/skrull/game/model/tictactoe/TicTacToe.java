@@ -108,7 +108,7 @@ public void joinGame(IClientAction action) throws SkrullGameException {
 	}
 		
 	private boolean haveWinner() {
-		System.out.println("in the have winner function!");
+		// TODO:  take this line out -- System.out.println("in the have winner function!");
 		boolean winnerDetected = false;
 		
 		// winning combinations  rows, columns, diagonals

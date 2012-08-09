@@ -57,6 +57,7 @@ public class RockPaperScissors extends AbstractGameModel{
 				
 				// Announce that a move was made.
 				setBroadcastMessage("Player " + action.getPlayer().getPlayerToken() + " has chosen. ");
+				setBroadcastMessage("Player " + action.getPlayer() + " joined");
 				
 				setMoveCount(getMoveCount() + 1);
 				if (getMoveCount() == getMaxMoves()){
@@ -66,13 +67,13 @@ public class RockPaperScissors extends AbstractGameModel{
 					// WINNER Check
 					if(haveWinner()){
 					
-						int p1Choice = board.getBoardLoc(1).getMoveIndex();
+						int p1Choice = board.getBoardLoc(0).getMoveIndex();
 						int p2Choice = board.getBoardLoc(1).getMoveIndex();
 						
 						if((p1Choice == 0 && p2Choice == 2) || (p1Choice == 1 && p2Choice == 0) || (p1Choice == 2 && p2Choice == 1))
-							winner = board.getBoardLoc(1).getPlayer();
+							winner = board.getBoardLoc(0).getPlayer();
 						else {
-							winner = board.getBoardLoc(2).getPlayer();
+							winner = board.getBoardLoc(1).getPlayer();
 						}
 						setBroadcastMessage("We have a winner:  " + winner);  // TODO: Comment me out before turn in, View side will take care of this.
 					}
@@ -102,7 +103,7 @@ public class RockPaperScissors extends AbstractGameModel{
 	
 	private boolean haveWinner() {
 		
-		int p1Choice = board.getBoardLoc(1).getMoveIndex();
+		int p1Choice = board.getBoardLoc(0).getMoveIndex();
 		int p2Choice = board.getBoardLoc(1).getMoveIndex();
 		
 		boolean winnerDetected = false;

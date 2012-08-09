@@ -85,36 +85,191 @@ public class TicTacToeTest {
 		
 		move2.setMoveIndex(2);
 		move2.setPlayer(player2);
-		actionMove2 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
 		mygame.doProcessMove(actionMove2);
 		
 		assertEquals(2,mygame.getMoveCount());
+		
+		
 	}
 
 	@Test
-	public void testDoProcessMove() {
+	public void testDoProcessNineMoveDrawGame() throws SkrullGameException {
 		
-		// TODO play a game here
+		/*
+		 *                   MOVES           MOVE ORDER 
+		 *                   x   o   o       7   2   6  
+		 *                   o   x   x       4   1   3
+		 *                   x   x   o       5   9   8
+		 *   
+		 */
+		
 		
 		assertEquals(0,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
 		
-		move1.setMoveIndex(1);
+		move1.setMoveIndex(4);
 		move1.setPlayer(player1);		
-		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
-		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
 		assertEquals(1,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("X",actionMove1.getPlayer().getPlayerToken());
+		
+		move2.setMoveIndex(1);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(2,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		
+		move1.setMoveIndex(5);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(3,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		
+		move2.setMoveIndex(3);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(4,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		
+		move1.setMoveIndex(6);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(5,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
 		
 		move2.setMoveIndex(2);
 		move2.setPlayer(player2);
-		actionIsOccupied = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(6,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
 		
-		assertEquals(2,mygame.getMoveCount());
+		move1.setMoveIndex(0);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(7,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		
+		move2.setMoveIndex(8);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(8,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		
+		move1.setMoveIndex(7);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(9,mygame.getMoveCount());
+		assertEquals(true,mygame.isDraw());
+		assertEquals(true,mygame.isGameOver());
 	}
 	
 	
 	@Test
-	public void testTicTacToe() {
-		fail("Not yet implemented"); // TODO
+	public void testDoProcessEightMoveWinGame() throws SkrullGameException {
+		/*
+		 *      MOVES         MOVE ORDER 
+		 *    o   o   o       8   2   6  
+		 *    o   x   x       4   1   3
+		 *    x   x   -       5   7   -  
+		 */
+		
+		assertEquals(0,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		
+		move1.setMoveIndex(4);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(1,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("X",actionMove1.getPlayer().getPlayerToken());
+		
+		move2.setMoveIndex(1);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(2,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("O",actionMove2.getPlayer().getPlayerToken());
+		
+		move1.setMoveIndex(5);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(3,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("X",actionMove1.getPlayer().getPlayerToken());
+		
+		move2.setMoveIndex(3);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(4,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("O",actionMove2.getPlayer().getPlayerToken());
+		
+		move1.setMoveIndex(6);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(5,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("X",actionMove1.getPlayer().getPlayerToken());
+		
+		move2.setMoveIndex(2);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(6,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("O",actionMove2.getPlayer().getPlayerToken());
+		
+		move1.setMoveIndex(7);
+		move1.setPlayer(player1);		
+		actionMove1 = new ClientAction(gameId, player1, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move1);
+		mygame.doProcessMove(actionMove1);
+		assertEquals(7,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(false,mygame.isGameOver());
+		assertEquals("X",actionMove1.getPlayer().getPlayerToken());
+		
+		move2.setMoveIndex(0);
+		move2.setPlayer(player2);
+		actionMove2 = new ClientAction(gameId, player2, ActionType.MOVE, GameType.TIC_TAC_TOE, "", move2);
+		mygame.doProcessMove(actionMove2);
+		assertEquals(8,mygame.getMoveCount());
+		assertEquals(false,mygame.isDraw());
+		assertEquals(true,mygame.isGameOver());
+		assertEquals(player2, mygame.getWinner());
+		assertEquals("O",actionMove2.getPlayer().getPlayerToken());
+		
 	}
 
 	@Test

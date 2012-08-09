@@ -72,6 +72,8 @@ public interface IGameModel extends Serializable {
 	public abstract boolean needsPlayers();
 
 	public abstract IBoard getBoard();
+
+	public boolean isDraw();
 	
 	
 }

@@ -14,10 +14,21 @@ import skrull.game.model.IPlayer;
  */
 public interface IClientAction extends Serializable {
 
+	/**
+	 * 
+	 * Each {@link IClientAction} must declare one of these.
+	 * 
+	 * @author jesse
+	 *
+	 */
 	public enum ActionType {
 		JOIN_SERVER, CREATE_GAME, JOIN_GAME, MOVE, CHAT, QUIT;
 	}
 
+	/**
+	 * The  {@link IClientAction.ActionType} of this object
+	 * @return
+	 */
 	public ActionType getActionType();
 	
 	/**

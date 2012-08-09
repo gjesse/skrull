@@ -8,7 +8,7 @@ import skrull.game.view.IClientAction;
 
 
 /**
- * This class should really be a singleton and enforce that.
+ * The implementation of this should really be a singleton and enforce that.
  * 
  * responsible for receiving input from clients and dispatching worker threads
  * to handle that input

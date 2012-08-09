@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * class to locate our most "secure" policy file
+ * helper class to locate our most "secure" policy file.
+ * 
+ * file should be defined in system property policy.file
  *
  */
 public class PolicyFileLocater {

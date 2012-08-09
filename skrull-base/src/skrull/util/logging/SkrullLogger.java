@@ -7,7 +7,14 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 
-
+/**
+ * provides a log4j logger with our properties specified either in system property
+ * log4j.config, or a file in this package named log4j.properties, or failing that, 
+ * a basic log4j configuration
+ * 
+ * @author jesse
+ *
+ */
 public class SkrullLogger {
 
 	static {

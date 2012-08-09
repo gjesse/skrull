@@ -6,7 +6,7 @@ import skrull.rmi.PolicyFileLocater;
 import skrull.util.logging.SkrullLogger;
 
 /**
- * handles bootstrapping and starting of client/server apps
+ * handles bootstrapping, reading system properties and starting of client/server apps
  *
  * @author jhodges, with thanks to http://code.nomad-labs.com/2010/03/26/an-improved-rmi-tutorial-with-eclipse/
  *
@@ -33,7 +33,9 @@ public abstract class RmiStarter {
     }
 
     /**
-     * extend this class and do RMI handling here
+     * extend this class and do RMI handling here and 
+     * additional initialization there
+     * 
      */
     public abstract void doCustomRmiHandling();
 

@@ -2,6 +2,14 @@ package skrull.rmi;
 
 import skrull.SkrullException;
 
+/**
+ * 
+ * This exception can be used to wrap general RMI exceptions 
+ * relaying error messages back to the client views.
+ * 
+ * @author jesse
+ *
+ */
 public class SkrullRMIException extends SkrullException {
 
 

@@ -7,6 +7,15 @@ import skrull.game.model.IGameModel;
 import skrull.game.model.IPlayer;
 import skrull.rmi.SkrullRMIException;
 
+/**
+ * Provides a proxy for communicating with the clients. Outgoing game model updates are routed from here to 
+ * interested clients
+ * 
+ * All the details about contacting and communicating to the view/client are isolated here
+ * 
+ * @author jesse
+ *
+ */
 public interface IClientUpdater extends Serializable {
 
 	/**
@@ -17,7 +26,7 @@ public interface IClientUpdater extends Serializable {
 	public void modelChanged(IGameModel model) throws SkrullRMIException;
 
 	/**
-	 * Verify that the player client is connected still
+	 * Verify that the player client is still connected
 	 * @param p
 	 * @throws SkrullGameException 
 	 */

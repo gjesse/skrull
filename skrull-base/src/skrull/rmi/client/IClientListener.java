@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 import skrull.game.model.IGameModel;
 
 /**
- * entry point for updates to the client/player side.
+ * entry point for updates to the view/client/player side.
  * @author jesse
  *
  */
@@ -14,6 +14,13 @@ public interface IClientListener extends Remote {
 
 	public final String SERVICE_NAME = "Skrull.Client.Listener";
 
+	/**
+	 * Any action successfully processed by the game model should call this
+	 * after processing.
+	 * 
+	 * @param model
+	 * @throws RemoteException
+	 */
 	public void modelChanged(IGameModel model) throws RemoteException;
 
 	/**

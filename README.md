@@ -54,3 +54,9 @@ Additional detail and project metrics is available at https://github.com/gjesse/
 
 1. Must be run on a computer capable of running Java 1.6.
 
+## References and sources of information
+
+1. Jesse Hodges - Java syntax reference.
+
+2. Deitel & Deitel. "Java How to Program." Unknown. 1999.
+

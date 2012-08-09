@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ClientAction.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">ClientAction.java</span></div><h1>ClientAction.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IMove;
+import skrull.game.model.IPlayer;
+
+public final class ClientAction implements IClientAction {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2751588500379934614L;
+	private final int gameId;
+	private final IPlayer player;
+	private final ActionType actionType;
+	private final String actionMessage;
+	private final IMove move;
+	private final GameType gameType;
+
+<span class="fc" id="L20">	public ClientAction(int gameId, IPlayer player, ActionType actionType, GameType gameType, String actionMessage, IMove move){</span>
+<span class="fc" id="L21">		this.gameId =gameId;</span>
+<span class="fc" id="L22">		this.player = player;</span>
+<span class="fc" id="L23">		this.actionType = actionType;</span>
+<span class="fc" id="L24">		this.gameType = gameType;</span>
+<span class="fc" id="L25">		this.actionMessage = actionMessage;</span>
+<span class="fc" id="L26">		this.move = move;</span>
+<span class="fc" id="L27">	}</span>
+
+	@Override
+	public ActionType getActionType() {
+<span class="fc" id="L31">		return actionType;</span>
+	}
+	@Override
+	public String getActionMessage() {
+<span class="nc" id="L35">		return actionMessage;</span>
+	}
+	@Override
+	public IPlayer getPlayer() {
+<span class="fc" id="L39">		return player;</span>
+	}
+	@Override
+	public GameType getGameType() {
+<span class="fc" id="L43">		return gameType;</span>
+	}
+	@Override
+	public int getGameId() {
+<span class="fc" id="L47">		return gameId;</span>
+	}
+	@Override
+	public IMove getMove() {
+<span class="fc" id="L51">		return move;</span>
+	}
+	@Override
+	public String toString() {
+<span class="fc" id="L55">		return &quot;ClientAction [gameId=&quot; + gameId + &quot;, player=&quot; + player</span>
+<span class="fc" id="L56">				+ &quot;, actionType=&quot; + actionType + &quot;, gameType=&quot; + gameType + &quot;]&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

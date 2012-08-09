@@ -1,0 +1,12 @@
+skrull
+skrull.game.controller
+skrull.game.factory
+skrull.game.model
+skrull.game.model.rockpaperscissors
+skrull.game.model.tictactoe
+skrull.game.view
+skrull.rmi
+skrull.rmi.client
+skrull.rmi.server
+skrull.util
+skrull.util.logging

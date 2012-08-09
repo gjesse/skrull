@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>ServerController.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.controller</a> &gt; <span class="el_source">ServerController.java</span></div><h1>ServerController.java</h1><pre class="source lang-java linenums">package skrull.game.controller;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.log4j.Logger;
+
+import skrull.SkrullException;
+import skrull.game.factory.IGameFactory;
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.view.IClientAction;
+import skrull.util.logging.SkrullLogger;
+
+<span class="fc" id="L17">public class ServerController implements IServerController {</span>
+<span class="fc" id="L18">	private List&lt;IGameController&gt; activeGameControllers = new CopyOnWriteArrayList&lt;IGameController&gt;();</span>
+	private IGameFactory gameFactory;
+	private IGameController defaultGameController;
+<span class="fc" id="L21">	private static final Logger logger = SkrullLogger.getLogger(ServerController.class);</span>
+
+
+	// maintains a sequence of id numbers for each game
+<span class="fc" id="L25">	private AtomicInteger gameIdSequence = new AtomicInteger( IGameFactory.DEFAULT_GAME_ID );	</span>
+
+<span class="fc" id="L27">	public ServerController(IGameFactory gameFactory){</span>
+<span class="fc" id="L28">		this.gameFactory = gameFactory;</span>
+<span class="fc" id="L29">		int next =  nextGameId();</span>
+<span class="fc" id="L30">		this.defaultGameController = gameFactory.setupGame(IGameFactory.GameType.DEFAULT, null, next);</span>
+<span class="fc" id="L31">		defaultGameController.setServerController(this);</span>
+<span class="fc" id="L32">		activeGameControllers.add(defaultGameController);</span>
+<span class="fc" id="L33">	}</span>
+	/* (non-Javadoc)
+	 * @see skrull.game.controller.IServerController#ProcessClientAction(skrull.game.view.ClientAction)
+	 */
+	@Override
+	public void processClientAction(IClientAction action) throws SkrullException {
+<span class="fc" id="L39">		logger.debug(&quot;processing action: &quot; + action);</span>
+<span class="pc bpc" id="L40" title="1 of 4 branches missed.">		switch (action.getActionType())</span>
+		{
+			case CHAT:
+			case MOVE:
+			case JOIN_GAME:
+			case JOIN_SERVER: // TODO: join server is not needed - we can just use JOIN_GAME for the default game in this case
+			{
+<span class="fc" id="L47">				final IGameController gameController = getActiveGameController(action);</span>
+				// for now if the game isn't found this will throw  
+				// NullPointerException. 
+<span class="fc" id="L50">				gameController.processGameAction(action);</span>
+			}	
+<span class="fc" id="L52">			break;</span>
+	
+			// first-time connection, come on!
+			//case JOIN_SERVER:
+				// what to do here?
+				// assign player into the default game, give them a player id
+				// 1. hook up the client listener for later notifications
+				//defaultGameController.processGameAction(action);
+			//break;
+			
+
+			case QUIT:
+				// something bad happened or the client 
+				// was closed. Hey, it happens
+				// what to do here?
+				// 1. remove the player from any game (handled by game)
+				// 2. maybe remove the game if the player was the only member(handled by game)
+				// 3. notify other clients (handled by game)
+				// 4. notify default game clients
+				{
+<span class="fc" id="L72">					final IGameController gameController = getActiveGameController(action);</span>
+					// for now if the game isn't found this will throw  
+					// NullPointerException. 
+<span class="fc" id="L75">					gameController.processGameAction(action);</span>
+<span class="fc" id="L76">					defaultGameController.processGameAction(action);</span>
+					
+				}	
+<span class="fc" id="L79">			break;</span>
+			
+			// setting up a new game
+			case CREATE_GAME:
+			{
+<span class="fc" id="L84">				logger.debug(&quot;create game of type &quot; + action.getGameType());</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (action.getGameType().equals(GameType.DEFAULT)){</span>
+<span class="fc" id="L86">					throw new UnsupportedOperationException(&quot;Cannot create additional default games&quot;);</span>
+				}
+
+				// then setup a new game and assign this player
+<span class="fc" id="L90">				final IGameController gameController = gameFactory.setupGame(action.getGameType(), action.getPlayer(), nextGameId());</span>
+<span class="fc" id="L91">				gameController.setServerController(this);</span>
+<span class="fc" id="L92">				activeGameControllers.add(gameController);</span>
+				
+				// finally process the action via the game controller
+<span class="fc" id="L95">				gameController.processGameAction(action);</span>
+			}	
+<span class="fc" id="L97">			break;</span>
+			
+			default:
+<span class="nc" id="L100">				throw new SkrullException(&quot;Action type &quot; + action.getActionType() + &quot; is not handled - it must be handled!&quot;);</span>
+		
+		} // end switch
+	
+<span class="fc" id="L104">	}</span>
+
+	private int nextGameId() {
+<span class="fc" id="L107">		return gameIdSequence.getAndIncrement();</span>
+	}
+	
+	/**
+	 * Get the controller matched to the current game action
+	 * @param action
+	 * @return the active game, or default game if no match
+	 */
+	private IGameController getActiveGameController(IClientAction action) {
+		
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		for (IGameController gameController : activeGameControllers)</span>
+		{
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			if (gameController.getGameType().equals(action.getGameType())</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">					&amp;&amp; gameController.getGameId() == action.getGameId()){</span>
+<span class="fc" id="L121">				return gameController;</span>
+			}
+		}
+		
+<span class="nc" id="L125">		return null;</span>
+	}
+
+	protected void addGameController(IGameController controller){
+<span class="fc" id="L129">		activeGameControllers.add(controller);</span>
+<span class="fc" id="L130">	}</span>
+	
+	/* (non-Javadoc)
+	 * @see skrull.game.controller.IServerController#getControllers()
+	 */
+	@Override
+	public Collection&lt;IGameController&gt; getControllers() {
+<span class="fc" id="L137">		return Collections.unmodifiableList(activeGameControllers);</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

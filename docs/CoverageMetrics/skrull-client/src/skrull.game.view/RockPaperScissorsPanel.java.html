@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>RockPaperScissorsPanel.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-client</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.view</a> &gt; <span class="el_source">RockPaperScissorsPanel.java</span></div><h1>RockPaperScissorsPanel.java</h1><pre class="source lang-java linenums">package skrull.game.view;
+
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import org.apache.log4j.Logger;
+
+import skrull.game.factory.IGameFactory.GameType;
+import skrull.game.model.IGameModel;
+
+import skrull.game.model.IPlayer;
+
+import skrull.game.model.Move;
+
+import skrull.util.logging.SkrullLogger;
+
+<span class="nc" id="L26">public class RockPaperScissorsPanel extends UserPanel {</span>
+	
+
+	private static final long serialVersionUID = 7079367552263468840L;
+<span class="nc" id="L30">	private static final Logger logger = SkrullLogger.getLogger(GameClientView.class);</span>
+<span class="nc" id="L31">	private static final String IMAGE_DIR = System.getProperty(&quot;image.dir&quot;);</span>
+	ActionListener cih;
+	JButton rockButton;
+	JButton paperButton;
+	JButton scissorButton;
+	JButton selected;
+	int indexOfButton;
+<span class="nc" id="L38">	private boolean eventFired = false;</span>
+	String activePlayer;
+<span class="nc" id="L40">	private JButton[] rpsButtons = new JButton[3];</span>
+<span class="nc" id="L41">	private BufferedImage[] buttonIcons = new BufferedImage[3];</span>
+	
+	public RockPaperScissorsPanel(ActionListener cih, IPlayer player){
+<span class="nc" id="L44">		super(player);</span>
+<span class="nc" id="L45">		this.cih = cih;</span>
+<span class="nc" id="L46">		sampleRockPaperScissorBoard();</span>
+<span class="nc" id="L47">	}</span>
+	
+	private void sampleRockPaperScissorBoard(){
+		
+	
+<span class="nc" id="L52">		this.setLayout(new GridBagLayout());</span>
+		
+
+<span class="nc" id="L55">		ReturnToMainButton returnToMain = new ReturnToMainButton(cih);</span>
+		
+<span class="nc" id="L57">		GridBagConstraints c = new GridBagConstraints();</span>
+		
+		
+/*		BufferedImage buttonIcon = null;
+		BufferedImage buttonIcon2 = null;
+		BufferedImage buttonIcon3 = null;*/
+
+		
+		try {
+<span class="nc" id="L66">			buttonIcons[0] = ImageIO.read(new File(IMAGE_DIR + &quot;Rockscaled2.jpg&quot;));</span>
+<span class="nc" id="L67">			buttonIcons[1] = ImageIO.read(new File(IMAGE_DIR + &quot;Paperscaled.jpg&quot;));</span>
+<span class="nc" id="L68">			buttonIcons[2] = ImageIO.read(new File(IMAGE_DIR + &quot;Scissorsscaled.jpg&quot;));</span>
+			
+/*			buttonIcon = ImageIO.read(new File(IMAGE_DIR + &quot;Paperscaled.jpg&quot;));
+			buttonIcon2 = ImageIO.read(new File(IMAGE_DIR + &quot;Rockscaled2.jpg&quot;));
+			buttonIcon3 = ImageIO.read(new File(IMAGE_DIR + &quot;Scissorsscaled.jpg&quot;));*/
+			
+<span class="nc" id="L74">		} catch (IOException e) {</span>
+<span class="nc" id="L75">			logger.error(&quot;error reading from &quot; + IMAGE_DIR, e);</span>
+		}
+		
+<span class="nc" id="L78">		this.setBackground(Color.white);</span>
+<span class="nc" id="L79">		c.insets = new Insets(25,0,15,5);</span>
+<span class="nc" id="L80">		c.gridx = 0;</span>
+<span class="nc" id="L81">		c.gridy =0;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		for(int i = 0; i &lt; 3; i++){</span>
+			//should assign into button 1 icon of rock,
+			//button 2 with icon of paper, and button 3
+			//with icon of scissors
+<span class="nc" id="L86">			rpsButtons[i]= new JButton(new ImageIcon(buttonIcons[i]));</span>
+<span class="nc" id="L87">			rpsButtons[i].setActionCommand(&quot;MOVE&quot;);</span>
+<span class="nc" id="L88">			rpsButtons[i].addActionListener(cih);</span>
+<span class="nc" id="L89">			rpsButtons[i].setText(i+&quot;&quot;);</span>
+<span class="nc" id="L90">			this.add(rpsButtons[i],c);</span>
+<span class="nc" id="L91">			c.gridy++;	</span>
+		}
+		
+/*		paperButton = new JButton(new ImageIcon(buttonIcon));
+		rockButton = new JButton(new ImageIcon(buttonIcon2));
+		scissorButton = new JButton(new ImageIcon(buttonIcon3));
+
+		paperButton.setBackground(Color.WHITE);
+		rockButton.setBackground(Color.WHITE);
+		scissorButton.setBackground(Color.WHITE);
+		
+		paperButton.setActionCommand(&quot;MOVE&quot;);
+		rockButton.setActionCommand(&quot;MOVE&quot;);
+		scissorButton.setActionCommand(&quot;MOVE&quot;);
+		
+		rockButton.setText(&quot;1&quot;);
+		paperButton.setText(&quot;2&quot;);
+		scissorButton.setText(&quot;3&quot;);
+		
+		rockButton.setBorder(null);
+		paperButton.setBorder(null);
+		scissorButton.setBorder(null);
+		//rockButton.setForeground(getBackground());
+		//paperButton.setForeground(getBackground());
+		//scissorButton.setForeground(getBackground());
+
+		rockButton.addActionListener(cih);
+		paperButton.addActionListener(cih);
+		scissorButton.addActionListener(cih);
+		*/
+		
+
+	/*	c.gridx = 0;
+		c.gridy = 0;
+		
+		this.add(rockButton,c);
+		c.gridx = 0;
+		c.gridy = 1;
+		this.add(paperButton,c);
+		c.gridx = 0;
+		c.gridy = 2;
+
+		this.add(scissorButton,c);
+*/
+<span class="nc" id="L135">		c.gridx = 0;</span>
+<span class="nc" id="L136">		c.gridy = 3;</span>
+<span class="nc" id="L137">		this.add(returnToMain, c);</span>
+
+<span class="nc" id="L139">	}</span>
+
+
+	@Override
+	public GameType getGameType() {
+
+<span class="nc" id="L145">		return gameType = GameType.ROCK_PAPER_SCISSORS;</span>
+	}
+	
+	@Override
+	public void modelChanged(IGameModel model) {
+		//TODO: this needs work
+<span class="nc" id="L151">		System.out.println(&quot;INSIDE THE modelChanged OF ROCK PAPER SCISSORS!&quot;);</span>
+<span class="nc" id="L152">		System.out.println(&quot;move count &quot;+model.getMoveCount());</span>
+<span class="nc" id="L153">		System.out.println( &quot;number of players &quot;+model.getPlayers().size() );</span>
+		
+		
+<span class="nc" id="L156">		System.out.println(&quot;active player is &quot;+ model.getActivePlayer() );</span>
+		
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if(model.getMoveCount() == 0){</span>
+			//we are in a new game where nobody has clicked
+<span class="nc" id="L160">			System.out.println( &quot;number of players &quot;+model.getPlayers().size() );</span>
+<span class="nc" id="L161">			System.out.println(&quot;active player is &quot;+ model.getActivePlayer() );</span>
+			
+		}
+		else
+		{
+			//at least one player has made a move
+			Move move ;
+			IPlayer iPlayer;
+			
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if( model.getMoveCount() == 2){</span>
+				//if both players have input their moves
+				//we want to update the board with their moves
+				
+<span class="nc bnc" id="L174" title="All 2 branches missed.">				for(IPlayer player: model.getPlayers() ){</span>
+					
+<span class="nc" id="L176">					this.player.setPlayerToken(player.getPlayerToken());</span>
+<span class="nc" id="L177">					System.out.println(&quot;player token: &quot;+ player.getPlayerToken() );</span>
+				}
+/*				for( IPlayer player: model.getPlayers() ){
+					if(player.equals(this.player)){
+						this.player.setPlayerToken(player.getPlayerToken() );
+					}
+					System.out.println(&quot;token!!! &quot;+player.getPlayerToken()+&quot; for player:&quot;+player);
+					System.out.println(&quot;our player&quot;+this.player.getPlayerToken()+&quot; for player:&quot;+player);
+				}
+				
+				for( IMove buttonMove : model.getBoard().getBoard() ){
+					if (buttonMove != null){
+						//ticTacToeButtons[buttonMove.getMoveIndex()].setText( buttonMove.getPlayer().getPlayerToken() );
+						//ticTacToeButtons[buttonMove.getMoveIndex()].setEnabled(false);		
+					}
+				}*/
+				
+			}
+		}
+		
+		
+/*		if( !model.isGameOver() ){
+			System.out.println(&quot;game isnt over so..&quot;);
+			if(model.getMoveCount() != 0){
+				System.out.println(&quot;game has more than 0 moves &quot;+ model.getMoveCount() );
+				
+				ClientAction ca = (ClientAction)((AbstractGameModel)model).getLastAction();
+				Move move = (Move)ca.getMove();
+				
+				activePlayer = &quot;Active Player:&quot;+model.getActivePlayer();
+				this.setMessage(activePlayer);
+				
+				//index of the button that changed
+				int idx = move.getMoveIndex();
+				this.getComponent(idx);
+				selected = (JButton)this.getComponent(idx);
+				selected.setEnabled(false);
+				
+				
+				String mySelection =  model.getActivePlayer().getPlayerToken();
+				
+				System.out.println(&quot;Player Token: &quot;+mySelection);
+				selected.setText(mySelection );
+			
+	
+				this.repaint();
+			}
+
+		}*/
+	
+<span class="nc" id="L227">	}</span>
+	public void setMessage(String s){
+<span class="nc" id="L229">		activePlayer = s;</span>
+		
+<span class="nc" id="L231">	}</span>
+	public String getMessage(){
+<span class="nc" id="L233">		return activePlayer;</span>
+	}
+	public void setSelectedButton(String s){
+<span class="nc" id="L236">		indexOfButton = Integer.parseInt(s);</span>
+<span class="nc" id="L237">		System.out.println(&quot;setSelectedButton &quot;+indexOfButton);</span>
+<span class="nc" id="L238">	}</span>
+
+	@Override
+	public int getSelectedButton() {
+<span class="nc" id="L242">		return indexOfButton;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

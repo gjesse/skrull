@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GameFactory.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Aug 8, 2012 10:53:56 PM)</a> &gt; <a href="../../index.html" class="el_group">skrull-server</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">skrull.game.factory</a> &gt; <span class="el_source">GameFactory.java</span></div><h1>GameFactory.java</h1><pre class="source lang-java linenums">package skrull.game.factory;
+
+import skrull.game.controller.*;
+import skrull.game.model.DefaultGameModel;
+import skrull.game.model.IGameModel;
+import skrull.game.model.IPlayer;
+import skrull.game.model.rockpaperscissors.RockPaperScissors;
+import skrull.game.model.tictactoe.TicTacToe;
+import skrull.rmi.server.IClientUpdater;
+
+public class GameFactory implements IGameFactory {
+
+	private IClientUpdater updater;
+	
+<span class="fc" id="L15">	public GameFactory(IClientUpdater updater) {</span>
+<span class="fc" id="L16">		this.updater = updater;</span>
+<span class="fc" id="L17">	}</span>
+	
+
+	/* (non-Javadoc)
+	 * @see skrull.game.factory.IGameFactory#setupGame(java.lang.String, skrull.game.model.IPlayer)
+	 */
+	@Override
+	public IGameController setupGame(GameType type, IPlayer startingPlayer,  int gameId) {
+		
+<span class="pc bpc" id="L26" title="1 of 4 branches missed.">		switch(type)</span>
+		{
+		case DEFAULT:
+<span class="fc" id="L29">			return setupDefaultGame(gameId);</span>
+		
+		case TIC_TAC_TOE:
+<span class="fc" id="L32">			return setupTicTacToeGame(startingPlayer, gameId);</span>
+			
+		case ROCK_PAPER_SCISSORS:
+<span class="fc" id="L35">			return setupRockPaperScissorsGame(startingPlayer, gameId);</span>
+
+		default:
+<span class="nc" id="L38">			throw new UnsupportedOperationException(&quot;unexpected game type received&quot;);</span>
+	
+		}
+		
+	}
+
+	// default game is setup before any players connect
+	private IGameController setupDefaultGame(int gameId) {
+<span class="fc" id="L46">		IGameModel model = new DefaultGameModel(gameId, updater);</span>
+<span class="fc" id="L47">		IGameController defaultController = new DefaultGameController(model);</span>
+<span class="fc" id="L48">		System.out.println(&quot;return Default Gamecontroller...&quot;);</span>
+<span class="fc" id="L49">		return defaultController;</span>
+	}
+	
+	// TIC_TAC_TOE
+	private IGameController setupTicTacToeGame(IPlayer startingPlayer, int gameId) {
+<span class="fc" id="L54">		IGameModel model = new TicTacToe(startingPlayer, gameId, updater);</span>
+<span class="fc" id="L55">		IGameController GameController = new TicTacToeController(model);</span>
+<span class="fc" id="L56">		System.out.println(&quot;returning TTT GameController...&quot;);</span>
+<span class="fc" id="L57">		return GameController;</span>
+	}
+	
+	// ROCK_PAPER_SCISSORS
+	private IGameController setupRockPaperScissorsGame(IPlayer startingPlayer, int gameId) {
+<span class="fc" id="L62">		IGameModel model = new RockPaperScissors(startingPlayer, gameId, updater);</span>
+<span class="fc" id="L63">		IGameController GameController = new RockPaperScissorsController(model);</span>
+<span class="fc" id="L64">		System.out.println(&quot;returning RPS GameController...&quot;);</span>
+<span class="fc" id="L65">		return GameController;</span>
+	}
+	
+	public IClientUpdater getUpdater() {
+<span class="nc" id="L69">		return updater;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.5.8.201207111220</span>AllTests (Aug 8, 2012 10:53:56 PM)</div></body></html>

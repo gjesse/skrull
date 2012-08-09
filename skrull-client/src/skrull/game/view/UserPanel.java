@@ -61,5 +61,8 @@ public abstract class UserPanel extends JPanel {
 
 	public abstract int getSelectedButton();
 	public abstract String getMessage();
+	public String getCreateGameString() {
+		return "";
+	}
 
 }

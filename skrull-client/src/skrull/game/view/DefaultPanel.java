@@ -222,9 +222,12 @@ public class DefaultPanel extends UserPanel {
 	@Override
 	public String getJoinGameString() {
 		return (String)activeGamesToJoin.getSelectedValue();
-	};
+	}
 	
-
+	@Override
+	public String getCreateGameString(){
+		return (String)newGameList.getSelectedValue();
+	}
 
 	
 	@Override

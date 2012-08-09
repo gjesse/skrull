@@ -249,7 +249,18 @@ public class GameClientView extends JFrame implements IGameClientView{
 
 	@Override
 	public String getJoinGameString() {
+		if(userPanel.getJoinGameString() == null){
+			setBroadcastMessage("You need to make a selection first!");
+		}
 		return userPanel.getJoinGameString();
+	}
+	@Override
+	public String getCreateGameString(){
+		System.out.println("newgamelist!!!!!!!! "+userPanel.getCreateGameString());
+		if(userPanel.getCreateGameString()== null){
+			setBroadcastMessage("You need to make a selection first!");
+		}
+		return userPanel.getCreateGameString();
 	}
 	public int getSelectedButton(){
 		return userPanel.getSelectedButton();

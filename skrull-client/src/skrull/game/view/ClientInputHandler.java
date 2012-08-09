@@ -50,6 +50,10 @@ public class ClientInputHandler implements WindowListener, ActionListener{
 				break;
 				
 			case CREATE_GAME:
+				//need to handle when no selection was made in the list and the user
+				//chooses to start a new game
+				
+					
 				// TODO: a builder or factory seems to be in order for the ClientActions
 				GameType gameType = view.getGameType();
 				serverUpdater.processClientAction(new ClientAction(gameId, player, type, gameType, view.getChatText(), null));	
@@ -59,6 +63,7 @@ public class ClientInputHandler implements WindowListener, ActionListener{
 				break;
 				
 			case JOIN_GAME:
+				//need to handle when user hits join but nothing is selected in the list
 
 				String selectedGame[] =  view.getJoinGameString().split(":");
 				int index = Integer.parseInt(selectedGame[0]);
